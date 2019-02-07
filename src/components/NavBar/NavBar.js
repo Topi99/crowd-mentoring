@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './index.module.scss';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -11,8 +12,10 @@ class NavBar extends React.Component {
 
   render() {
     return(
-      <nav>
-        { this.state.title }
+      <nav className={ [styles.navBar].join(' ') }>
+        <h1>
+          { this.state.title }
+        </h1>
       </nav>
     );
   }

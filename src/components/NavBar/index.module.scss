@@ -1,0 +1,44 @@
+@import '../../partials/constants';
+
+@mixin navBar-base() {
+  background-color: rgb(156, 59, 59);
+  height: $NAV_HEIGTH;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100vw;
+}
+
+/* SMARTPHONES PORTRAIT */
+@media only screen and (min-width: 300px) {
+  nav.navBar {
+    @include navBar-base;
+    color: white;
+  }
+}
+
+/* SMARTPHONES LANDSCAPE */
+@media only screen and (min-width: 480px) {
+  nav.navBar {
+    @include navBar-base;
+    color: blue;
+  }
+}
+
+/* TABLETS PORTRAIT */
+@media only screen and (min-width: 768px) {
+  nav.navBar {
+    @include navBar-base;
+    color: green;
+  }
+}
+
+
+/* TABLET LANDSCAPE / DESKTOP */
+@media only screen and (min-width: 1024px) {
+  nav.navBar {
+    @include navBar-base;
+    color: purple;
+  }
+}    
