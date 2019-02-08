@@ -6,14 +6,16 @@ import Landing from './components/Landing';
 class App extends React.Component {
   render() {
     return(
-      <>
-        <NavBar />
-        <Router>
+      <Router>
+        <>
+          <NavBar />
           <Switch>
-            <Route exact to='/' component={ Landing } />
+            <main>
+              <Route exact path="/" component={ Landing } />
+            </main>
           </Switch>
-        </Router>
-      </>
+        </>
+      </Router>
     );
   }
 }

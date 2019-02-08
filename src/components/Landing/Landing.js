@@ -3,7 +3,7 @@ import React from 'react';
 const Landing = props => {
   return(
     <section className="Landing">
-      Home
+      <h2>Home</h2>
     </section>
   );
 };

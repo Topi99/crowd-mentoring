@@ -2,42 +2,72 @@
 
 @mixin navBar-base() {
   background-color: rgb(156, 59, 59);
-  height: $NAV_HEIGTH;
+  height: $NAVBAR_HEIGTH;
   display: flex;
   align-items: center;
   position: fixed;
   width: 100vw;
 }
 
-/* SMARTPHONES PORTRAIT */
-@media only screen and (min-width: 300px) {
+nav.navBar {
+  margin: 0; 
+  .navBar__MenuButton {
+    height: 100%;
+  }
+
+  .navBar__Logo {
+    background-color: rgb(78, 22, 22);
+  }
+
+  .navBar__Links {
+    height: 100%;
+
+    ul {
+      margin: 0;
+      list-style: none;
+    }
+  }
+
+  .navBar__Side {
+    height: 100vh;
+    background-color: #fff;
+  }
+}
+
+/* FLEXBOX GRID XS */
+@media only screen and (min-width: 0px) {
   nav.navBar {
     @include navBar-base;
     color: white;
+
+    .navBar__Logo {
+      height: 100%;
+    }
   }
 }
 
-/* SMARTPHONES LANDSCAPE */
-@media only screen and (min-width: 480px) {
-  nav.navBar {
-    @include navBar-base;
-    color: blue;
-  }
+/* FLEXBOX GRID SM */
+@media only screen and (min-width: 576px) {
+  
 }
 
-/* TABLETS PORTRAIT */
+/* FLEXBOX GRID MD */
 @media only screen and (min-width: 768px) {
   nav.navBar {
     @include navBar-base;
-    color: green;
+
+    .navBar__Logo {
+      height: 100%;
+    }
   }
 }
 
+/* FLEXBOX GRID LG */
+@media only screen and (min-width: 992px) {
 
-/* TABLET LANDSCAPE / DESKTOP */
-@media only screen and (min-width: 1024px) {
-  nav.navBar {
-    @include navBar-base;
-    color: purple;
-  }
-}    
+}
+
+/* FLEXBOX GRID XL */
+@media only screen and (min-width: 1200px) {
+
+}
