@@ -1,11 +1,18 @@
 @import './partials/constants';
+@import './partials/fonts';
+@import './partials/colors';
 
 html, body, h1, h2, h3, p {
   margin: 0;
   font-weight: normal;
+  overflow-x: hidden;
+  @include normalFont();
+}
+
+body {
+  color: $black;
 }
 
 main {
   padding-top: $NAVBAR_HEIGTH;
-  height: 100vh ;
 }
