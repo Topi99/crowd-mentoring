@@ -1,0 +1,15 @@
+.formFull {
+  box-shadow: 0px 2px 5px rgba(0,0,0,.3);
+  border-radius: 5px;
+  margin: 10vh 0;
+  background-color: #fff;
+  padding: 0;
+
+  .formFull--header {
+    border-bottom: 1px solid rgba(0,0,0,.2);
+    
+    .formFull--title {
+      padding: 15px 0;
+    }
+  }
+}

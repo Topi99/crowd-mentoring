@@ -2,6 +2,20 @@
 
 .Section {
   padding-bottom: 80px;
+  background-position: center;
+  position: relative;
+  div.row {
+    z-index: 10;
+  }
+}
+
+.Section.bgImage::before {
+  width: 100%;
+  content: '';
+  position: absolute;
+  height: 100%;
+  z-index: 0;
+  background-color: rgba(22, 12, 77, 0.6);
 }
 
 .CallToAction {
@@ -32,8 +46,8 @@
   padding: 70px 20px;
 }
 
-input[type="text"], textarea {
-  padding: 5px 0px !important;
+input[type="password"], input[type="text"], textarea {
+  padding: 10px 0px !important;
   font-size: 1.2em;
   border: 1px solid rgba(32, 36, 40, 0.15);
   border-top: 0;
