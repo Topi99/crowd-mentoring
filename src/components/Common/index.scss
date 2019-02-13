@@ -1,0 +1,49 @@
+@import '../../partials/colors';
+
+.Section {
+  padding-bottom: 80px;
+}
+
+.CallToAction {
+  padding: 25px 0px;
+  
+  h4 {
+    font-size: 2em;
+  }
+
+}
+
+.button {
+  text-decoration: none;
+  background-color: $blue;
+  padding: 15px 30px;
+  font-weight: bold;
+  border-radius: 5px;
+  color: white;
+  transition: .4s ease-out;
+  border: none;
+}
+
+.button:hover {
+  box-shadow: 0px 0px 10px rgba(0,0,0,.35);
+}
+
+.form1 {
+  padding: 70px 20px;
+}
+
+input[type="text"], textarea {
+  padding: 5px 0px !important;
+  font-size: 1.2em;
+  border: 1px solid rgba(32, 36, 40, 0.15);
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  margin: 15px 0px;
+  transition: .4s ease-out;
+}
+
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: $bluishGreen;
+}

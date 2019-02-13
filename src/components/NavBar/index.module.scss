@@ -1,0 +1,73 @@
+@import '../../partials/constants';
+
+@mixin navBar-base() {
+  height: $NAVBAR_HEIGTH;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0.33333rem 0 1.33333rem rgba(87,87,87,.1);
+}
+
+nav.navBar {
+  margin: 0; 
+  .navBar__MenuButton {
+    height: 100%;
+  }
+
+  .navBar__Logo {
+  }
+
+  .navBar__Links {
+    height: 100%;
+
+    ul {
+      margin: 0;
+      list-style: none;
+    }
+  }
+
+  .navBar__Side {
+    height: 100vh;
+    background-color: #fff;
+  }
+}
+
+/* FLEXBOX GRID XS */
+@media only screen and (min-width: 0px) {
+  nav.navBar {
+    @include navBar-base;
+
+    .navBar__Logo {
+      height: 100%;
+    }
+  }
+}
+
+/* FLEXBOX GRID SM */
+@media only screen and (min-width: 576px) {
+  
+}
+
+/* FLEXBOX GRID MD */
+@media only screen and (min-width: 768px) {
+  nav.navBar {
+    @include navBar-base;
+
+    .navBar__Logo {
+      height: 100%;
+    }
+  }
+}
+
+/* FLEXBOX GRID LG */
+@media only screen and (min-width: 992px) {
+
+}
+
+/* FLEXBOX GRID XL */
+@media only screen and (min-width: 1200px) {
+
+}

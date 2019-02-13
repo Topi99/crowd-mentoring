@@ -1,0 +1,48 @@
+@import './partials/constants';
+@import './partials/fonts';
+@import './partials/colors';
+
+html, body, h1, h2, h3, p, textarea {
+  margin: 0;
+  font-weight: normal;
+  overflow-x: hidden;
+  @include normalFont();
+}
+
+body {
+  color: $black;
+}
+
+main {
+  padding-top: $NAVBAR_HEIGTH;
+}
+
+.img-slider {
+  img {
+    width: 100%;
+  }
+}
+
+.be-blue {
+  background-color: $blue;
+}
+
+.blue {
+  color: $blue;
+}
+
+.be-white {
+  background-color: #fff;
+}
+
+.white {
+  color: white;
+}
+
+.be-bluishGreen {
+  background-color: $bluishGreen !important;
+}
+
+.bluishGreen {
+  color: $bluishGreen;
+}
