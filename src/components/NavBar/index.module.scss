@@ -18,6 +18,10 @@ nav.navBar {
   }
 
   .navBar__Logo {
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
   }
 
   .navBar__Links {
@@ -26,7 +30,15 @@ nav.navBar {
     ul {
       margin: 0;
       list-style: none;
+      li {
+        a{
+          color: initial;
+          text-decoration: none;
+          opacity: .8;
+        }
+      }
     }
+
   }
 
   .navBar__Side {
