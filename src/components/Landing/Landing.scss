@@ -2,12 +2,14 @@
 
 .first-banner {
   position: relative;
+  top:-10vh;
   z-index: 1;
 }
 
 .banner {
   background-image: linear-gradient(to right, $blue, $bluishGreen);
   min-height: 90vh;
+  height: 100vh;
   overflow: hidden;
   
   .banner--left, .banner--img {
@@ -72,5 +74,6 @@ section {
   .bot {
     opacity: .8;
     font-size: 1.1em;
+    padding-bottom: 50px;
   }
 }
