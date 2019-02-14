@@ -13,6 +13,9 @@ const Login = props => {
         <div className="formFull--inputs col-xs-12 row center-xs">
           <input className="col-xs-12" type="text" placeholder="Nombre de Usuario" />
           <input className="col-xs-12" type="password" placeholder="Contraseña" />
+
+          <p className="col-xs-12 formFull--info">¿Olvidaste tu contraseña? <Link to="/recover-password">Recuperala aquí</Link> </p>
+          
           <button className="col-xs-3 button">Entrar</button>
 
           <p className="col-xs-12 formFull--info">¿No tienes una cuenta? <Link to="/register">Regístrate</Link> </p>
