@@ -15,16 +15,16 @@ const Login = props => {
           <input className="col-xs-12" type="password" placeholder="Contraseña" />
 
           <p className="col-xs-12 formFull--info">¿Olvidaste tu contraseña? <Link to="/recover-password">Recuperala aquí</Link> </p>
-          
+
           <button className="col-xs-3 button">Entrar</button>
 
           <p className="col-xs-12 formFull--info">¿No tienes una cuenta? <Link to="/register">Regístrate</Link> </p>
           
-          <div className="col-xs-6">
+          <div className="col-xs-12 col-md-6">
             <button className="button button-border blue">Entrar con Facebook</button>
           </div>
           
-          <div className="col-xs-6">
+          <div className="col-xs-12 col-md-6">
             <button className="button button-border red">Entrar con Google</button>
           </div>
         </div>
