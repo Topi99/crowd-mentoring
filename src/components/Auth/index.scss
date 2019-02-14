@@ -1,9 +1,15 @@
 .formFull {
   box-shadow: 0px 2px 5px rgba(0,0,0,.3);
   border-radius: 5px;
-  margin: 10vh 0;
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   background-color: #fff;
   padding: 0 0 70px;
+  min-height: 85vh;
 
   .formFull--header {
     border-bottom: 1px solid rgba(0,0,0,.2);

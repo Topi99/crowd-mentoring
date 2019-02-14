@@ -8,8 +8,8 @@
 
 .banner {
   background-image: linear-gradient(to right, $blue, $bluishGreen);
-  min-height: 90vh;
-  height: 100vh;
+  min-height: 100vh;
+  padding-top: 20vh;
   overflow: hidden;
   
   .banner--left, .banner--img {

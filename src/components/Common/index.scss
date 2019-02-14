@@ -9,6 +9,10 @@
   }
 }
 
+.Section.full {
+  min-height: 90vh;
+}
+
 .Section.bgImage::before {
   width: 100%;
   content: '';
@@ -36,6 +40,7 @@
   color: white;
   transition: .4s ease-out;
   border: none;
+  cursor: pointer;
 }
 
 .button:hover {
@@ -60,7 +65,7 @@
   padding: 70px 20px;
 }
 
-input[type="password"], input[type="text"], textarea {
+input[type="password"], input[type="text"], textarea, select {
   padding: 15px !important;
   font-size: 1.2em;
   border: 1px solid rgba(32, 36, 40, 0.15);
@@ -69,7 +74,7 @@ input[type="password"], input[type="text"], textarea {
   border-radius: 5px;
 }
 
-input:focus, textarea:focus {
+input:focus, textarea:focus, select:focus {
   outline: 0;
   border-color: $bluishGreen;
 }
