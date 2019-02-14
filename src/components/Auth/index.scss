@@ -3,13 +3,24 @@
   border-radius: 5px;
   margin: 10vh 0;
   background-color: #fff;
-  padding: 0;
+  padding: 0 0 70px;
 
   .formFull--header {
     border-bottom: 1px solid rgba(0,0,0,.2);
     
     .formFull--title {
       padding: 15px 0;
+      font-weight: bold;
+      font-size: 1.85em;
     }
+  }
+
+  .formFull--inputs {
+    margin: 0;
+    padding: 15px 30px;
+  }
+
+  .formFull--info {
+    padding: 20px 0;
   }
 }

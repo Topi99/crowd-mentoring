@@ -42,19 +42,31 @@
   box-shadow: 0px 0px 10px rgba(0,0,0,.35);
 }
 
+.button.button-border {
+  background-color: rgba(0,0,0,0);
+}
+
+.button.button-border.blue {
+  border: 1px solid $blue;
+  color: $blue;
+}
+
+.button.button-border.red {
+  border: 1px solid #E24336;
+  color: #E24336;
+}
+
 .form1 {
   padding: 70px 20px;
 }
 
 input[type="password"], input[type="text"], textarea {
-  padding: 10px 0px !important;
+  padding: 15px !important;
   font-size: 1.2em;
   border: 1px solid rgba(32, 36, 40, 0.15);
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
   margin: 15px 0px;
   transition: .4s ease-out;
+  border-radius: 5px;
 }
 
 input:focus, textarea:focus {
