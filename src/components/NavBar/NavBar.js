@@ -29,7 +29,7 @@ class NavBar extends React.Component {
           </Link>
         </div>
         <div className={ `row middle-xs end-xs hidden-md hidden-sm hidden-xs col-lg-offset-3 col-lg-6 ${styles.navBar__Links}` }>
-          <LinksList user={ null } />
+          <LinksList authUser={ this.props.authUser } />
         </div>
       </nav>
     );

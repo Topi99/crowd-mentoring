@@ -2,22 +2,44 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Routes from './components/Routes';
+import { withFirebase } from './components/Firebase';
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      authUser: null
+    };
+  }
+
+  componentDidMount() {
+    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState({ authUser })
+        : this.setState({ authUser: null })
+    });
+  }
+
+  componentWillUnmount() {
+    this.listener();
+  }
+  
   render() {
     return(
       <Router>
         <>
-          <NavBar />
-          <Switch>
+          <NavBar authUser={this.state.authUser} />
             <main>
-              <Routes {...this.props} />
+              <Switch>
+                  <Routes {...this.props} />
+              </Switch>
             </main>
-          </Switch>
         </>
       </Router>
     );
   }
 }
 
-export default App;
+export default withFirebase(App);

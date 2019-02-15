@@ -1,28 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { withFirebase } from '../Firebase';
 
 class LinksList extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      user: props.user
-    }
+  logout = e => {
+    this.props.firebase.doSignOut();
   }
-
+  
   getLinks = () => {
-    if(this.state.user) {
+    if(this.props.authUser) {
       return(
         <>
           <li className="col-md-offset-6 col-md-3 link">
-            <Link to="/">
-              {this.state.user.userName}
+            <Link to="/profile">
+              Perfil
             </Link>
           </li>
           <li className="col-md-3 link">
-            <Link to="/">
+            <a href="/" onClick={this.logout}>
               Cerrar Sesión
-            </Link>
+            </a>
           </li>
         </>
       );
@@ -53,4 +51,4 @@ class LinksList extends React.Component {
   }
 };
 
-export default LinksList;
+export default withFirebase(LinksList);

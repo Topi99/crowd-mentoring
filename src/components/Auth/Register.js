@@ -20,7 +20,13 @@ class Register extends React.Component {
     }
   } 
 
-  render() {
+  handleInputChange = e => {
+    const id = e.target.id;
+    const value = e.target.value;
+    this.setState({[id]:value});
+  }
+
+  render = () => {
     return(
       <Section noTitle bgImage={`/image3.jpg`} className={ `login full bgImage` }>
         <div className="col-xs-12 col-md-6 formFull row">
@@ -28,10 +34,10 @@ class Register extends React.Component {
             <p className="formFull--title">¡Regístrate!</p>
           </div>
           <div className="formFull--inputs col-xs-12 row center-xs">
-            <input className="col-xs-12" type="text" placeholder="Nombre" />
-            <input className="col-xs-12" type="text" placeholder="Apellido" />
-            <input className="col-xs-12" type="text" placeholder="Carrera(s) separada(s) por comas" />
-            <select className="col-xs-12" placeholder="Semestre" >
+            <input value={this.state.nombre} onChange={this.handleInputChange} id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
+            <input value={this.state.apellido} onChange={this.handleInputChange} id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
+            <input value={this.state.carrera} onChange={this.handleInputChange} id="carrera" className="col-xs-12" type="text" placeholder="Carrera(s) separada(s) por comas" />
+            <select value={this.state.semestre} onChange={this.handleInputChange} id="semestre" className="col-xs-12" placeholder="Semestre" >
               <option value="0">Semestre...</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -45,15 +51,15 @@ class Register extends React.Component {
               <option value="otro">otro</option>
               <option value="egresado">egresado</option>
             </select>
-            <select className="col-xs-12" placeholder="Universidad" >
+            <select value={this.state.universidad} onChange={this.handleInputChange} id="universidad" className="col-xs-12" placeholder="Universidad" >
               <option value="0">Universidad...</option>
               <option value="1">ITESM</option>
               <option value="2">Otra</option>
             </select>
-            <input className="col-xs-12" type="text" placeholder="Ciudad" />
-            <input className="col-xs-12" type="text" placeholder="Email principal" />
-            <input className="col-xs-12" type="text" placeholder="Email secundario" />
-            <input className="col-xs-12" type="text" placeholder="Celular" />
+            <input value={this.state.ciudad} onChange={this.handleInputChange} id="ciudad" className="col-xs-12" type="text" placeholder="Ciudad" />
+            <input value={this.state.emailPrin} onChange={this.handleInputChange} id="emailPrin" className="col-xs-12" type="text" placeholder="Email principal" />
+            <input value={this.state.emailSec} onChange={this.handleInputChange} id="emailSec" className="col-xs-12" type="text" placeholder="Email secundario" />
+            <input value={this.state.celular} onChange={this.handleInputChange} id="celular" className="col-xs-12" type="text" placeholder="Celular" />
 
             <p className="col-xs-12 formFull--info">¿Olvidaste tu contraseña? <Link to="/recover-password">Recuperala aquí</Link> </p>
 
