@@ -1,29 +1,31 @@
 import React from 'react';
 import { Section } from '../Common';
 import { Link } from 'react-router-dom';
+import { withFirebase } from '../Firebase';
+
+const INITIAL_STATE = {
+  nombre: "",
+  apellido: "",
+  carrera: "",
+  semestre: "1",
+  universidad: "0",
+  ciudad: "",
+  emailPrin: "",
+  emailSec: "",
+  celular: "",
+}
 
 class Register extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      nombre: "",
-      apellido: "",
-      carrera: "",
-      semestre: "1",
-      universidad: "",
-      ciudad: "",
-      emailPrin: "",
-      emailSec: "",
-      celular: "",
+      ...INITIAL_STATE
     }
   } 
 
   handleInputChange = e => {
-    const id = e.target.id;
-    const value = e.target.value;
-    this.setState({[id]:value});
+    this.setState({ [e.target.id] : e.target.value });
   }
 
   render = () => {
@@ -61,11 +63,9 @@ class Register extends React.Component {
             <input value={this.state.emailSec} onChange={this.handleInputChange} id="emailSec" className="col-xs-12" type="text" placeholder="Email secundario" />
             <input value={this.state.celular} onChange={this.handleInputChange} id="celular" className="col-xs-12" type="text" placeholder="Celular" />
 
-            <p className="col-xs-12 formFull--info">¿Olvidaste tu contraseña? <Link to="/recover-password">Recuperala aquí</Link> </p>
+            <button className="col-xs-5 button">Enviar Solicitud</button>
 
-            <button className="col-xs-3 button">Entrar</button>
-
-            <p className="col-xs-12 formFull--info">¿No tienes una cuenta? <Link to="/register">Regístrate</Link> </p>
+            <p className="col-xs-12 formFull--info">¿Ya tienes una cuenta? <Link to="/register">Inicia Sesión</Link> </p>
             
             <div className="col-xs-12 col-md-6">
               <button className="button button-border blue">Entrar con Facebook</button>
@@ -81,4 +81,4 @@ class Register extends React.Component {
   }
 };
 
-export default Register;
+export default withFirebase(Register);

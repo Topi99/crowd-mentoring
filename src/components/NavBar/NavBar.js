@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import 'flexboxgrid2';
 import LinksList from './LinksList';
 import { Link } from 'react-router-dom';
+import { AuthUserContext } from '../Auth';
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -29,7 +30,9 @@ class NavBar extends React.Component {
           </Link>
         </div>
         <div className={ `row middle-xs end-xs hidden-md hidden-sm hidden-xs col-lg-offset-3 col-lg-6 ${styles.navBar__Links}` }>
-          <LinksList authUser={ this.props.authUser } />
+          <AuthUserContext.Consumer>
+            { authUser => <LinksList authUser={ authUser } />}
+          </AuthUserContext.Consumer>
         </div>
       </nav>
     );

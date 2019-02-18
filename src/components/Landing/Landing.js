@@ -102,8 +102,7 @@ const Landing = props => {
           </div>
         </article>
         <article className="form1 col-xs-12 col-md-6 row">
-          <h4 className="subtitle col-xs-12 start-xs">Google Map.</h4>
-          <iframe title="google maps" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7468.84153735977!2d-100.40841390000004!3d20.6116992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1550018878206" width="600" height="450" frameborder="0"  allowfullscreen></iframe>
+          <iframe title="google maps" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7468.84153735977!2d-100.40841390000004!3d20.6116992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1550018878206" width="600" height="450" frameBorder="0"  allowFullScreen></iframe>
         </article>
       </Section>
       <Footer></Footer>
