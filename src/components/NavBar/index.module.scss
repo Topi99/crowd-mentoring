@@ -1,4 +1,5 @@
 @import '../../partials/constants';
+@import '../../partials/colors';
 
 @mixin navBar-base() {
   height: $NAVBAR_HEIGTH;
@@ -26,19 +27,42 @@ nav.navBar {
 
   .navBar__Links {
     height: 100%;
+    position: relative;
 
     ul {
       margin: 0;
       list-style: none;
+      position: relative;
+      height: 100%;
+      
       li {
+        box-sizing: border-box;
+        position: relative;
+        height: 100%;
+        padding: 15px;
+        
         a{
           color: initial;
           text-decoration: none;
           opacity: .8;
+          transition: .25s ease-out;
+
+          &:hover {
+            color: $blue;
+          }
+        }
+        
+        .profileIcon {
+          height: 100%;
+        } 
+
+        .profileLinksHover {
+          p {
+            padding: 15px;
+          }
         }
       }
     }
-
   }
 
   .navBar__Side {
@@ -55,6 +79,8 @@ nav.navBar {
     .navBar__Logo {
       height: 100%;
     }
+
+    
   }
 }
 
@@ -70,6 +96,54 @@ nav.navBar {
 
     .navBar__Logo {
       height: 100%;
+    }
+
+    .navBar__Links {
+      height: 100%;
+      position: relative;
+
+      ul {
+        margin: 0;
+        list-style: none;
+        position: relative;
+        height: 100%;
+        
+        li {
+          box-sizing: border-box;
+          position: relative;
+          height: 100%;
+          padding: 15px;
+          
+          .profileIcon {
+            height: 100%;
+            cursor: pointer;
+            border-radius: 50%;
+          }
+
+          .profileLinksHover {
+            visibility: hidden;
+            padding: 15px;
+            // width: 0%;
+            width: 200%;
+            margin: 5% -120%;
+            // border-radius: 50%;
+            opacity: 0;
+            transition: .25s ease-out;
+            background-color: #fff;
+            // background-color: rgb(248, 248, 248);
+            // border: 1px solid rgb(240, 240, 240);
+            box-shadow: 0 0 1.33333rem rgba(87,87,87,.15);
+          }
+          &:hover {
+            .profileLinksHover {
+              visibility: visible;
+              opacity: 1;
+              // width: 200%;
+              // border-radius: 0%;
+            }
+          }
+        }
+      }
     }
   }
 }

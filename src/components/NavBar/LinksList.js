@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import styles from './index.module.scss';
 
 class LinksList extends React.Component {
 
@@ -16,24 +17,27 @@ class LinksList extends React.Component {
           <li className="col-xs-3 link center-xs">
             {
               this.props.authUser.photoURL 
-              ? <img href={this.props.authUser.photoURL} alt="" />
-              : <i className="material-icons">account_circle</i>
+              ? <img className={styles.profileIcon} src={this.props.authUser.photoURL} alt="" />
+              : <img className={styles.profileIcon} src="https://png.pngtree.com/svg/20170602/person_1058425.png" alt="" />
             }
-            <ul className="profile-links-hover center-xs row">
-              <li className="col-xs-12">
+            <div className={`${styles.profileLinksHover}  row middle-xs center-xs`}>
+              <p className="col-xs-12">
                 <Link to={ ROUTES.PROFILE }>
-                    Perfil
+                    Ver Perfil
                 </Link>
-              </li>
-            </ul>
+              </p>
+              <p className="col-xs-12">
+                <button onClick={this.props.firebase.doSignOut} className="button">Cerrar Sesión</button>
+              </p>
+            </div>
           </li>
         </>
       );
     } else {
       return(
         <>
-          <li className="col-md-3 link center-xs">
-            <Link to={ ROUTES.LOGIN }>
+          <li className="col-md-3 link middle-xs row center-xs">
+            <Link className="col-xs-12" to={ ROUTES.LOGIN }>
               Inicia Sesión
             </Link>
           </li>
@@ -44,7 +48,7 @@ class LinksList extends React.Component {
   
   render() {
     return(
-      <ul className="col-md-12 row linksList end-xs">
+      <ul className="col-md-12 row linksList middle-xs end-xs">
         {this.getLinks()}
       </ul>
     );

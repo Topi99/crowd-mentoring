@@ -14,7 +14,7 @@ const Landing = props => {
           <h2 className="banner--title">¿Qué es Crowd Mentoring?</h2>
           <p className="banner--txt">Lorem ipsum dolor sit amet consectetur adipiscing elit aenean, fusce urna vestibulum magnis pulvinar sodales nisl. Habitasse diam imperdiet lobortis neque mattis auctor luctus metus placerat volutpat, eu est conubia dui semper netus curabitur scelerisque erat in, mi litora venenatis tellus iaculis fames interdum quam arcu. </p>
         </div>
-        <div className="hidden-sm hidden-xs col-xs-12 col-md-6 banner--img"><img src="https://trello-attachments.s3.amazonaws.com/5c5b774c569bad264294d19d/5c5c5e8ef48c7e4735bd7f47/456c2f537b769680dd90496d8b0196f6/slider_2.png" alt="" /> </div>
+        <div className="col-md-6 hidden-xs hidden-sm banner--img"><img src="https://trello-attachments.s3.amazonaws.com/5c5b774c569bad264294d19d/5c5c5e8ef48c7e4735bd7f47/456c2f537b769680dd90496d8b0196f6/slider_2.png" alt="" /> </div>
       </section>
     
       <Section title="¿Cómo funciona el sistema?">
