@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
+import * as ROUTES from '../../constants/routes';
 
 class LinksList extends React.Component {
 
@@ -12,29 +13,28 @@ class LinksList extends React.Component {
     if(this.props.authUser) {
       return(
         <>
-          <li className="col-md-offset-6 col-md-3 link">
-            <Link to="/profile">
-              Perfil
-            </Link>
-          </li>
-          <li className="col-md-3 link">
-            <a href="/" onClick={this.logout}>
-              Cerrar Sesión
-            </a>
+          <li className="col-xs-3 link center-xs">
+            {
+              this.props.authUser.photoURL 
+              ? <img href={this.props.authUser.photoURL} alt="" />
+              : <i className="material-icons">account_circle</i>
+            }
+            <ul className="profile-links-hover center-xs row">
+              <li className="col-xs-12">
+                <Link to={ ROUTES.PROFILE }>
+                    Perfil
+                </Link>
+              </li>
+            </ul>
           </li>
         </>
       );
     } else {
       return(
         <>
-          <li className="col-md-offset-6 col-md-3 link">
-            <Link to="/login">
+          <li className="col-md-3 link center-xs">
+            <Link to={ ROUTES.LOGIN }>
               Inicia Sesión
-            </Link>
-          </li>
-          <li className="col-md-3 link">
-            <Link to="/register">
-              Regístrate
             </Link>
           </li>
         </>
@@ -44,7 +44,7 @@ class LinksList extends React.Component {
   
   render() {
     return(
-      <ul className="col-md-12 row linksList center-xs">
+      <ul className="col-md-12 row linksList end-xs">
         {this.getLinks()}
       </ul>
     );
