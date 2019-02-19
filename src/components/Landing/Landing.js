@@ -4,6 +4,7 @@ import './Landing.scss';
 import { ImageCard, IconCard } from '../Cards';
 import { Section, CallToAction } from '../Common';
 import Footer from '../Footer';
+import * as ROUTES from '../../constants/routes';
 
 const Landing = props => {
   return(
@@ -63,8 +64,8 @@ const Landing = props => {
         </div>
       </Section>
 
-      <CallToAction className="be-blue white" btnClassName="be-bluishGreen" text="Soy emprendedor." btnTxt="¡Entra aquí!" to="/" />
-      <CallToAction className="be-bluishGreen white" text="Comparte tus conocimientos." btnTxt="¡Registrate aquí!" to="/" />
+      <CallToAction className="be-blue white" btnClassName="be-bluishGreen" text="Soy emprendedor." btnTxt="¡Entra aquí!" to={ ROUTES.REGISTER+'/emprendedor' } />
+      <CallToAction className="be-bluishGreen white" text="Comparte tus conocimientos." btnTxt="¡Registrate aquí!" to={ ROUTES.REGISTER+'/mentor' } />
     
       <Section title="Contáctanos">
         <section className="col-xs-12 full-width row">
