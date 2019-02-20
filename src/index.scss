@@ -9,6 +9,10 @@ html, body, h1, h2, h3, p, textarea {
   @include normalFont();
 }
 
+button {
+  @include normalFont();
+}
+
 body {
   color: $black;
 }
@@ -45,4 +49,8 @@ main {
 
 .bluishGreen {
   color: $bluishGreen;
+}
+
+.small-padding {
+  padding: 15px;
 }

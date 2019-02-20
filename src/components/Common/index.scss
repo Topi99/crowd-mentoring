@@ -32,7 +32,7 @@
 
 }
 
-.button {
+a.button, .button {
   text-decoration: none;
   background-color: $blue;
   padding: 15px 30px;
@@ -42,6 +42,12 @@
   transition: .4s ease-out;
   border: none;
   cursor: pointer;
+  font-size: small;
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
 }
 
 .button:hover {
@@ -55,6 +61,15 @@
 .button.button-border.blue {
   border: 1px solid $blue;
   color: $blue;
+}
+
+.button.button-border.bluishGreen {
+  border: 1px solid $bluishGreen;
+  color: $bluishGreen;
+
+  a {
+    color: $bluishGreen;
+  }
 }
 
 .button.button-border.red {
