@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '../Common';
 import { withAuthorization } from '../Auth';
+import { withFirebase } from '../Firebase';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -8,17 +9,21 @@ class Profile extends React.Component {
 
     this.state = {
     };
+
+    console.log(props.firebase.auth.currentUser);
   }
 
   render() {
     return(
-      <Section title="Perfil">
+      <div className="row profile-container">
+        <div>
 
-      </Section>
+        </div>
+      </div>
     );
   }
 }
 
 const condition = authUser => !!authUser;
 
-export default withAuthorization(condition)(Profile);
+export default withFirebase(withAuthorization(condition)(Profile));
