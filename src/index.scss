@@ -7,6 +7,8 @@ html, body, h1, h2, h3, p, textarea {
   font-weight: normal;
   overflow-x: hidden;
   @include normalFont();
+  font-size: 15px;
+  line-height: 30px;
 }
 
 button {
@@ -43,6 +45,22 @@ main {
   color: white;
 }
 
+.gray {
+  color: $gray;
+}
+
+.be-gray {
+  color: $gray;
+}
+
+.black {
+  color: $black;
+}
+
+.be-black {
+  color: $black;
+}
+
 .be-bluishGreen {
   background-color: $bluishGreen !important;
 }
@@ -53,4 +71,18 @@ main {
 
 .small-padding {
   padding: 15px;
+}
+
+.medium {
+  font-weight: 500;
+  line-height: 25px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.semi-bold {
+  font-weight: 600;
+  line-height: 33px;
 }

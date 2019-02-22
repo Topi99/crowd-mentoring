@@ -12,7 +12,7 @@ const Routes = props => {
       <Route path={ ROUTES.LOGIN } component={ Login } />
       <Route path={ ROUTES.REGISTER+'/:rol' } component={ Register } />
       <Route path={ ROUTES.RECOVER_PASS } component={ RecoverPassoword } />
-      <Route path={ ROUTES.PROFILE } component={ Profile } />
+      <Route path={ ROUTES.PROFILE+'/:uid' } component={ Profile } />
     </>
   );
 };

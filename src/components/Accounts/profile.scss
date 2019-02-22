@@ -1,0 +1,43 @@
+.profile {
+  width: 90%;
+  padding: 70px 20px ;
+  box-sizing: border-box;
+  margin: auto;
+  height: 90vh;
+
+  .imgContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 55vh;
+    max-width: 55vh;
+    overflow: hidden;
+    border-radius: 50%;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .generalInfo {
+    padding: 0 50px;
+    
+    p {
+      line-height: 25px;
+    }
+    
+    
+    .important {
+      padding: 10px 0;
+    }
+    
+    .name {
+      padding: 15px 0;
+      font-size: x-large;
+    }
+
+    .bio {
+      padding: 15px 0;
+    }
+  }
+}

@@ -14,15 +14,17 @@ class LinksList extends React.Component {
     if(this.props.authUser) {
       return(
         <>
-          <li className="col-xs-3 link center-xs">
-            {
-              this.props.authUser.photoURL 
-              ? <img className={styles.profileIcon} src={this.props.authUser.photoURL} alt="" />
-              : <img className={styles.profileIcon} src="https://png.pngtree.com/svg/20170602/person_1058425.png" alt="" />
-            }
+          <li className="col-xs-1 link center-xs">
+            <div className={styles.imgWrap}>
+              {
+                this.props.authUser.photoURL 
+                ? <img className={styles.profileIcon} src={this.props.authUser.photoURL} alt="" />
+                : <img className={styles.profileIcon} src="https://png.pngtree.com/svg/20170602/person_1058425.png" alt="" />
+              }
+            </div>
             <div className={`${styles.profileLinksHover}  row middle-xs center-xs`}>
               <p className="col-xs-12">
-                <Link to={ ROUTES.PROFILE }>
+                <Link to={ ROUTES.PROFILE+'/'+this.props.authUser.uid }>
                     Ver Perfil
                 </Link>
               </p>
