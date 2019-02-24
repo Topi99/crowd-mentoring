@@ -40,4 +40,65 @@
       padding: 15px 0;
     }
   }
+
+  .gestion {
+    margin: 70px 0px;
+    overflow: hidden;
+
+    .main {
+      padding: 0px 25px;
+    }
+    
+    .side {
+      padding: 0;
+      background-color: rgba(0, 0, 0, .03);
+      position: sticky;
+
+      .option {
+        cursor: pointer;
+        transition: .4s ease-out;
+        padding: 14px;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+
+        * {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+        }
+
+        .material-icons {
+          padding: 0px 7px 0px 0px;
+        }
+
+        &:hover {
+          background-color: rgba(0, 0, 0, .1);
+        }
+      }
+    }
+  }
+}
+
+/* FLEXBOX GRID XS */
+@media only screen and (min-width: 0px) {
+  
+}
+
+/* FLEXBOX GRID MD */
+@media only screen and (min-width: 768px) {
+  .profile {
+    .gestion {
+
+      .main {
+        height: 55vh;
+        overflow-y: scroll;
+        overflow-x: hidden; 
+
+        &::-webkit-scrollbar {
+           width: 0 !important
+        }
+      }
+    }
+  }
 }

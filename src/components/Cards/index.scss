@@ -21,7 +21,11 @@
   }
 }
 
-.card:hover {
+.card.bradius {
+  border-radius: 5px;
+}
+
+.card:hover, .card.active {
   box-shadow: 0px 5px 20px 0px rgba(228, 232, 237, .85);
   top: -1vh;
 }
