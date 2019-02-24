@@ -4,6 +4,7 @@ import Landing from '../Landing';
 import { Login, Register, RecoverPassoword } from '../Auth';
 import Profile from '../Accounts/Profile';
 import * as ROUTES from '../../constants/routes';
+import EditProfile from '../Accounts/EditProfile';
 
 const Routes = props => {
   return(
@@ -13,6 +14,7 @@ const Routes = props => {
       <Route path={ ROUTES.REGISTER+'/:rol' } component={ Register } />
       <Route path={ ROUTES.RECOVER_PASS } component={ RecoverPassoword } />
       <Route path={ ROUTES.PROFILE+'/:uid' } component={ Profile } />
+      <Route path={ '/edit'+ROUTES.PROFILE+'/:uid' } component={ EditProfile } />
     </>
   );
 };

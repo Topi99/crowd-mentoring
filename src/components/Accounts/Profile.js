@@ -2,6 +2,10 @@ import React from 'react';
 import { withAuthorization } from '../Auth';
 import { withFirebase } from '../Firebase';
 import './profile.scss';
+import { QUser } from '../Common';
+import equal from 'fast-deep-equal'
+import { PROFILE } from '../../constants/routes';
+import { Link } from 'react-router-dom';
 
 const Info = props => {
   return(
@@ -40,7 +44,14 @@ class GestionUsuarios extends React.Component {
     this.state = {users:[]};
     let users = [];
 
-    this.unsuscribeListen = this.props.firebase.users().onSnapshot(query => {
+    this.unsuscribeListen = this.props.firebase.users().where('active', '==',false).onSnapshot(query => {
+      query.forEach(user => {
+        users.push(user.data());
+      })
+      this.setState({users});
+    });
+
+    this.unsuscribeListen2 = this.props.firebase.users().where('active', '==','false').onSnapshot(query => {
       query.forEach(user => {
         users.push(user.data());
       })
@@ -50,49 +61,85 @@ class GestionUsuarios extends React.Component {
 
   componentWillUnmount() {
     this.unsuscribeListen();
+    this.unsuscribeListen2();
   }
 
   render() {
     return(
       <div className="row gestionUsuarios">
-        <ul className="row col-xs-12">
+        <p className="medium black">Peticiones de Registro</p>
+        <div className="row col-xs-12">
           {
             this.state.users.map(user => {
-              return(<li className="col-xs-12">{user.nombre}</li>)
+              return(<QUser className="list" key={user.uid} user={user} />)
             })
           }
-        </ul>
+        </div>
       </div>
     );
   }
+}
+
+const INITIAL_STATE = {
+  active: '0',
+  bio:'',
+  nombre:'',
+  apellido:'',
 }
 
 class Profile extends React.Component {
   constructor(props) {
     super(props)
     
-    this.state = {};
+    this.state = {
+      ...INITIAL_STATE
+    };
     
-    props.firebase.user(props.match.params.uid).onSnapshot(doc => {
-      this.setState(doc.data());
-      let rolString = '';
-      if(this.state.rol.path==='roles/0') {
-        rolString = 'Emprendedor'
-      } else if(this.state.rol.path==='roles/1') {
-        rolString = 'Mentor'
-      } else if(this.state.rol.path==='roles/2') {
-        rolString = 'Administrador'
-      }
-      this.setState({rolString});
-    });
+    this.update = () => {
+      props.firebase.user(props.match.params.uid).onSnapshot(doc => {
+        this.setState(doc.data());
+        let rolString = '';
+        if(this.state.rol.path==='roles/0') {
+          rolString = 'Emprendedor'
+        } else if(this.state.rol.path==='roles/1') {
+          rolString = 'Mentor'
+        } else if(this.state.rol.path==='roles/2') {
+          rolString = 'Administrador'
+        }
+        this.setState({rolString});
+      });
+    }
   }
 
+  componentDidMount() {
+    this.update();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(!equal(this.props.match.params.uid, prevProps.match.params.uid)) {
+      this.setState({...INITIAL_STATE})
+          
+      this.props.firebase.user(this.props.match.params.uid).onSnapshot(doc => {
+        this.setState(doc.data());
+        let rolString = '';
+        if(this.state.rol.path==='roles/0') {
+          rolString = 'Emprendedor'
+        } else if(this.state.rol.path==='roles/1') {
+          rolString = 'Mentor'
+        } else if(this.state.rol.path==='roles/2') {
+          rolString = 'Administrador'
+        }
+        this.setState({rolString});
+      });
+    }
+  }
+  
   render() {
     return(
       <div className="row col-xs-12 profile middle-xs">
         <div className="col-xs-4">
           <div className="imgContainer">
-            <img src={this.props.firebase.auth.currentUser.photoURL ? this.props.firebase.auth.currentUser.photoURL : "https://png.pngtree.com/svg/20170602/person_1058425.png"} alt="user profile" />
+            <img src={this.state.photoURL ? this.state.photoURL : "https://png.pngtree.com/svg/20170602/person_1058425.png"} alt="user profile" />
           </div>
         </div>
         <div className="col-xs-8">
@@ -107,7 +154,11 @@ class Profile extends React.Component {
             <p className="gray email"><span className="black ">Email: </span>{this.state.emailPrin}</p>
             <p className="gray celular"><span className="black ">Celular: </span>{this.state.celular}</p>
             <p className="gray bio"><span className="black ">Biografía: </span>{this.state.bio}</p>
-            <button className="button ">Editar</button>
+            {
+              this.state.uid === this.props.firebase.auth.currentUser.uid 
+              ? <Link to={'/edit'+PROFILE+'/'+this.state.uid}><button className="button ">Editar</button></Link>
+              : <></>
+            }
           </div>
         </div>
 
@@ -116,19 +167,19 @@ class Profile extends React.Component {
           ? <div className="col-xs-12 gray row card active bradius gestion">
               <div className="side black medium row col-xs-12 col-md-3">
                 <div className="option col-xs-12">
-                  <span><i className="material-icons">account_circle</i></span><span>Usuarios</span>
+                  <span><i className="material-icons" id="btn0">account_circle</i></span><span>Usuarios</span>
                 </div>
                 <div className="option col-xs-12">
-                  <span><i className="material-icons">favorite</i></span><span>Áreas de especialidad</span>
+                  <span><i className="material-icons" id="btn1">favorite</i></span><span>Áreas de especialidad</span>
                 </div>
                 <div className="option col-xs-12">
-                  <span><i className="material-icons">domain</i></span><span>Industrias</span>
+                  <span><i className="material-icons" id="btn2">domain</i></span><span>Industrias</span>
                 </div>
                 <div className="option col-xs-12">
-                  <span><i className="material-icons">group_work</i></span><span>Temas</span>
+                  <span><i className="material-icons" id="btn3">group_work</i></span><span>Temas</span>
                 </div>
                 <div className="option col-xs-12">
-                  <span><i className="material-icons">list_alt</i></span><span>Etapas de Emprendimiento</span>
+                  <span><i className="material-icons" id="btn4">list_alt</i></span><span>Etapas de Emprendimiento</span>
                 </div>
               </div>
               <div className="main col-xs-12 col-md-9">

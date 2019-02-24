@@ -19,7 +19,7 @@ class LinksList extends React.Component {
               {
                 this.props.authUser.photoURL 
                 ? <img className={styles.profileIcon} src={this.props.authUser.photoURL} alt="" />
-                : <img className={styles.profileIcon} src="https://png.pngtree.com/svg/20170602/person_1058425.png" alt="" />
+                : <img className={styles.profileIcon} src={ROUTES.PROFILE_IMG_DEF} alt="" />
               }
             </div>
             <div className={`${styles.profileLinksHover}  row middle-xs center-xs`}>
