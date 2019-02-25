@@ -5,7 +5,7 @@ import { withAuthorization } from '../Auth';
 import { PROFILE } from '../../constants/routes';
 import './GestionAEsp.scss';
 
-class EditAEsp extends React.Component {
+class EditEtapaEmp extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +15,7 @@ class EditAEsp extends React.Component {
     };
 
     if(!props.new) {
-      this.props.firebase.db.collection('aEsp').doc(this.props.match.params.uid).onSnapshot(doc => {
+      this.props.firebase.db.collection('etapas').doc(this.props.match.params.uid).onSnapshot(doc => {
         this.setState({...doc.data()});
       })
     }
@@ -27,11 +27,11 @@ class EditAEsp extends React.Component {
 
   submit = async e => {
     if(!this.props.new) {
-      await this.props.firebase.db.collection('aEsp').doc(this.props.match.params.uid).set({
+      await this.props.firebase.db.collection('etapas').doc(this.props.match.params.uid).set({
         ...this.state
       });
     } else {
-      let ref = await this.props.firebase.db.collection('aEsp').doc();
+      let ref = await this.props.firebase.db.collection('etapas').doc();
       let uid = ref.id;
       ref.set({
         ...this.state,
@@ -59,4 +59,4 @@ class EditAEsp extends React.Component {
 
 const condition = authUser => !!authUser;
 
-export default withRouter(withFirebase(withAuthorization(condition)(EditAEsp)));
+export default withRouter(withFirebase(withAuthorization(condition)(EditEtapaEmp)));

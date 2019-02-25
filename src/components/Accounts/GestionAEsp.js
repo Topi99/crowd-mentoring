@@ -1,6 +1,7 @@
 import React from 'react';
 import ListElement from '../Common/ListElement';
 import { AEsp } from '../../constants/routes';
+import { Link } from 'react-router-dom';
 
 class GestionAEsp extends React.Component {
   constructor(props) {
@@ -23,17 +24,18 @@ class GestionAEsp extends React.Component {
 
   render() {
     return(
-      <div className="row gestionUsuarios">
+      <div className="row gestionAEsp">
         <p className="medium black">Áreas de Especialidad</p>
         <div className="row list col-xs-12">
           {
             this.state.aEsp.length === 0 
             ? <p>No hay Áreas de Especialidad</p>
             : this.state.aEsp.map(area => {
-                return(<ListElement element={area} to={AEsp} />)
+                return(<ListElement key={area.uid} element={area} to={AEsp} />)
               })
           }
         </div>
+        <div className="col-xs-12"><Link to={`/new${AEsp}`} className="button button-border blue">Nueva área</Link></div>
       </div>
     );
   }

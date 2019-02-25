@@ -7,6 +7,9 @@ import { PROFILE } from '../../constants/routes';
 import { Link } from 'react-router-dom';
 import GestionUsuarios from './GestionUsuarios';
 import GestionAEsp from './GestionAEsp';
+import GestionIndustrias from './GestionIndustrias';
+import GestionTemas from './GestionTemas';
+import GestionEtapaEmp from './GestionEtapaEmp';
 
 const Info = props => {
   return(
@@ -54,7 +57,7 @@ class Profile extends React.Component {
       ...INITIAL_STATE
     };
     
-    console.log(props.firebase.auth.currentUser);
+    // console.log(props.firebase.auth.currentUser);
 
     this.update = () => {
       props.firebase.user(props.match.params.uid).onSnapshot(doc => {
@@ -96,10 +99,16 @@ class Profile extends React.Component {
   }
 
   getActiveTab = () => {
-    if(this.state.activeTab == 1)
+    if(this.state.activeTab === "1")
       return <GestionUsuarios firebase={this.props.firebase} />
-    else if(this.state.activeTab == 2)
+    else if(this.state.activeTab === "2")
       return <GestionAEsp firebase={this.props.firebase} />
+    else if(this.state.activeTab === "3")
+      return <GestionIndustrias firebase={this.props.firebase} />
+    else if(this.state.activeTab === '4')
+      return <GestionTemas firebase={this.props.firebase} />
+      else if(this.state.activeTab === '5')
+        return <GestionEtapaEmp firebase={this.props.firebase} />
   }
 
   onClickOption = e => {
