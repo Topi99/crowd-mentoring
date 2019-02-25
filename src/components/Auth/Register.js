@@ -16,7 +16,8 @@ class Register extends React.Component {
       emailPrin: "",
       emailSec: "",
       celular: "",
-      active: false
+      status: "inactive",
+      bio: ''
     }
     
     const INITIAL_STATE_EMP = {
@@ -64,6 +65,7 @@ class Register extends React.Component {
         uid
       });
 
+      this.props.firebase.doSignOut();
       this.setState({ ...this.INITIAL_STATE });
       this.props.history.push(ROUTES.HOME);
     } catch(error) {

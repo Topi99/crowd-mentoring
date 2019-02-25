@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom';
 
 const EmprendedorForm = props => {
   return(
-    <div className="formFull--inputs col-xs-12 row center-xs">
-      
-      <div className="small-padding col-xs-12">  
-        <Link to={ROUTES.REGISTER+'/mentor'} className="col-xs-5 button button-border bluishGreen">Cambiar a Mentor</Link>
-      </div>
+    <div className={`formFull--inputs col-xs-12 row center-xs emprendedorForm`}>
+    
+      {
+        props.noChange 
+        ? <></>
+        : <div className="small-padding col-xs-12">  
+            <Link to={ROUTES.REGISTER+'/mentor'} className="col-xs-5 button button-border bluishGreen">Cambiar a Mentor</Link>
+          </div>
+      }
 
       <input value={ props.nombre } onChange={ props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
       <input value={ props.apellido } onChange={ props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
@@ -36,18 +40,25 @@ const EmprendedorForm = props => {
       <input value={ props.emailPrin } onChange={ props.handleInputChange } id="emailPrin" className="col-xs-12" type="text" placeholder="Email principal" />
       <input value={ props.emailSec } onChange={ props.handleInputChange } id="emailSec" className="col-xs-12" type="text" placeholder="Email secundario" />
       <input value={ props.celular } onChange={ props.handleInputChange } id="celular" className="col-xs-12" type="text" placeholder="Celular" />
+      <textarea value={ props.bio } onChange={ props.handleInputChange } id="bio" className="col-xs-12" placeholder="Biografía" />
 
-      <button onClick={ props.submit } className="col-xs-5 button">Enviar Solicitud</button>
+      <button onClick={ props.submit } className="col-xs-5 button">{props.noChange ? 'Guardar' : 'Enviar Solicitud'}</button>
 
-      <p className="col-xs-12 formFull--info">¿Ya tienes una cuenta? <Link to={ROUTES.LOGIN}>Inicia Sesión</Link> </p>
-      
-      <div className="col-xs-12 col-md-6">
-        <button className="button button-border blue">Entrar con Facebook</button>
-      </div>
-      
-      <div className="col-xs-12 col-md-6">
-        <button className="button button-border red">Entrar con Google</button>
-      </div>
+      {
+        props.noBtnLogin
+        ? <></>
+        : <> 
+            <p className="col-xs-12 formFull--info">¿Ya tienes una cuenta? <Link to={ROUTES.LOGIN}>Inicia Sesión</Link> </p>
+        
+            <div className="col-xs-12 col-md-6">
+              <button className="button button-border blue">Entrar con Facebook</button>
+            </div>
+            
+            <div className="col-xs-12 col-md-6">
+              <button className="button button-border red">Entrar con Google</button>
+            </div>
+          </>
+      }
     </div>
   );
 }
