@@ -5,6 +5,9 @@ import { Login, Register, RecoverPassoword } from '../Auth';
 import Profile from '../Accounts/Profile';
 import * as ROUTES from '../../constants/routes';
 import EditProfile from '../Accounts/EditProfile';
+import EditAEsp from '../Accounts/EditAEsp';
+
+const NewAEsp = <EditAEsp new />;
 
 const Routes = props => {
   return(
@@ -15,6 +18,8 @@ const Routes = props => {
       <Route path={ ROUTES.RECOVER_PASS } component={ RecoverPassoword } />
       <Route path={ ROUTES.PROFILE+'/:uid' } component={ Profile } />
       <Route path={ '/edit'+ROUTES.PROFILE+'/:uid' } component={ EditProfile } />
+      <Route path={ '/new'+ROUTES.AEsp } component={ NewAEsp } />
+      <Route path={ '/edit'+ROUTES.AEsp+'/:uid' } component={ EditAEsp } />
     </>
   );
 };

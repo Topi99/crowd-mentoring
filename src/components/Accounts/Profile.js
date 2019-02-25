@@ -2,10 +2,11 @@ import React from 'react';
 import { withAuthorization } from '../Auth';
 import { withFirebase } from '../Firebase';
 import './profile.scss';
-import { QUser } from '../Common';
 import equal from 'fast-deep-equal'
 import { PROFILE } from '../../constants/routes';
 import { Link } from 'react-router-dom';
+import GestionUsuarios from './GestionUsuarios';
+import GestionAEsp from './GestionAEsp';
 
 const Info = props => {
   return(
@@ -38,82 +39,8 @@ const Info = props => {
   );
 }
 
-class GestionUsuarios extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {users:[], emp:[], ment:[]};
-    let users = [];
-    let emp = [];
-    let ment = [];
-
-    this.unsuscribeListen = this.props.firebase.users().where('status', '==','inactive').onSnapshot(query => {
-      query.forEach(user => {
-        users.push(user.data());
-      })
-      this.setState({users});
-    });
-
-    this.unsuscribeListen2 = this.props.firebase.users().where('rolString', '==','emprendedor').onSnapshot(query => {
-      query.forEach(user => {
-        emp.push(user.data());
-      })
-      this.setState({emp});
-    });
-
-    this.unsuscribeListen3 = this.props.firebase.users().where('rolString', '==','mentor').onSnapshot(query => {
-      query.forEach(user => {
-        ment.push(user.data());
-      })
-      this.setState({ment});
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsuscribeListen();
-    this.unsuscribeListen2();
-    this.unsuscribeListen3();
-  }
-
-  render() {
-    return(
-      <div className="row gestionUsuarios">
-        <p className="medium black">Peticiones de Registro</p>
-        <div className="row list col-xs-12">
-          {
-            this.state.users.length === 0 
-            ? <p>No hay peticiones pendientes</p>
-            : this.state.users.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
-              })
-          }
-        </div>
-        <p className="medium black">Emprendedores</p>
-        <div className="row list col-xs-12">
-          {
-            this.state.emp.length === 0 
-            ? <p>No hay Emprendedores</p>
-            : this.state.emp.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
-              })
-          }
-        </div>
-        <p className="medium black">Mentores</p>
-        <div className="row list col-xs-12">
-          {
-            this.state.ment.length === 0 
-            ? <p>No hay Mentores</p>
-            : this.state.ment.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
-              })
-          }
-        </div>
-      </div>
-    );
-  }
-}
-
 const INITIAL_STATE = {
-  active: '0',
+  activeTab: "1",
   bio:'',
   nombre:'',
   apellido:'',
@@ -167,6 +94,17 @@ class Profile extends React.Component {
       });
     }
   }
+
+  getActiveTab = () => {
+    if(this.state.activeTab == 1)
+      return <GestionUsuarios firebase={this.props.firebase} />
+    else if(this.state.activeTab == 2)
+      return <GestionAEsp firebase={this.props.firebase} />
+  }
+
+  onClickOption = e => {
+    this.setState({activeTab:e.target.id.split('')[6]});
+  }
   
   render() {
     return(
@@ -200,24 +138,26 @@ class Profile extends React.Component {
           this.state.rolString === 'Administrador'
           ? <div className="col-xs-12 gray row card active bradius gestion">
               <div className="side black medium row col-xs-12 col-md-3">
-                <div className="option col-xs-12">
+                <div className="option col-xs-12" id="option1" onClick={this.onClickOption}>
                   <span><i className="material-icons" id="btn0">account_circle</i></span><span>Usuarios</span>
                 </div>
-                <div className="option col-xs-12">
+                <div className="option col-xs-12" id="option2" onClick={this.onClickOption}>
                   <span><i className="material-icons" id="btn1">favorite</i></span><span>Áreas de especialidad</span>
                 </div>
-                <div className="option col-xs-12">
+                <div className="option col-xs-12" id="option3" onClick={this.onClickOption}>
                   <span><i className="material-icons" id="btn2">domain</i></span><span>Industrias</span>
                 </div>
-                <div className="option col-xs-12">
+                <div className="option col-xs-12" id="option4" onClick={this.onClickOption}>
                   <span><i className="material-icons" id="btn3">group_work</i></span><span>Temas</span>
                 </div>
-                <div className="option col-xs-12">
+                <div className="option col-xs-12" id="option5" onClick={this.onClickOption}>
                   <span><i className="material-icons" id="btn4">list_alt</i></span><span>Etapas de Emprendimiento</span>
                 </div>
               </div>
               <div className="main col-xs-12 col-md-9">
-                <GestionUsuarios firebase={this.props.firebase} />
+                {
+                  this.getActiveTab()
+                }
               </div>
             </div>
           : <div></div>
