@@ -7,4 +7,5 @@ export const AEsp = "/aesp";
 export const INDUSTRIAS = "/industrias";
 export const TEMAS = "/temas";
 export const ETAPAEMP = "/etapas_emprendimiento";
+export const MENTORES = "/mentores";
 export const PROFILE_IMG_DEF = "https://png.pngtree.com/svg/20170602/person_1058425.png";

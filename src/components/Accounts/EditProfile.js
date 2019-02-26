@@ -37,7 +37,17 @@ class EditProfile extends React.Component {
   }
 
   handleChange = e => {
-    this.setState({[e.target.id]:e.target.value});
+    if(e.target.id === "areasEsp" || e.target.id === "etapas" || e.target.id === "industrias" || e.target.id === "temas") {
+      var options = e.target.options;
+      var value = [];
+      for (var i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
+      }
+      this.setState({ [e.target.id] : value });
+    }
+    else this.setState({ [e.target.id] : e.target.value });
   }
 
   submit = async e => {

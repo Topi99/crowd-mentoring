@@ -43,7 +43,7 @@ class Register extends React.Component {
   } 
   
   handleInputChange = e => {
-    if(e.target.id === "areasEsp") {
+    if(e.target.id === "areasEsp" || e.target.id === "etapas" || e.target.id === "industrias" || e.target.id === "temas") {
       var options = e.target.options;
       var value = [];
       for (var i = 0, l = options.length; i < l; i++) {

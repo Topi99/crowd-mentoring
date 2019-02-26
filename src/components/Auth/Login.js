@@ -29,8 +29,6 @@ class LoginBase extends React.Component {
     } catch(error) {
       console.log("Ocurrió un error al iniciar sesión: ", error);
     }
-
-    e.preventDefault();
   }
 
   render = () => {

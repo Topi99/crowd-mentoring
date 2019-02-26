@@ -31,11 +31,13 @@
 }
 
 .imageCard {
-  height: 62.5vh;
+  min-height: 62.5vh;
   
   img {
     padding: 50px;
     padding-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
 

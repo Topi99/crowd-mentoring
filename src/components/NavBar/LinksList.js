@@ -14,6 +14,11 @@ class LinksList extends React.Component {
     if(this.props.authUser) {
       return(
         <>
+          <li className="col-md-3 link middle-xs row center-xs">
+            <Link className="col-xs-12" to={ ROUTES.MENTORES }>
+              Mentores
+            </Link>
+          </li>
           <li className="col-xs-1 link center-xs">
             <div className={styles.imgWrap}>
               {
