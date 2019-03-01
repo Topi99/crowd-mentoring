@@ -17,28 +17,29 @@ const Landing = props => {
         <div className="col-md-6 hidden-xs hidden-sm banner--img"><img src="https://trello-attachments.s3.amazonaws.com/5c5b774c569bad264294d19d/5c5c5e8ef48c7e4735bd7f47/456c2f537b769680dd90496d8b0196f6/slider_2.png" alt="" /> </div>
       </section>
     
-      <Section title="¿Cómo funciona el sistema?">
-        <div className="col-xs-12 col-md-4">
-          <ImageCard img="http://aazztech.com/demos/themes/html/tizara/dist/img/service7.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
+      <Section title="¿Cómo funciona el sistema?" style={{}} className="container waves">
+        {/* <img src={Waves} /> */}
+        <div className="col-xs-12 col-md">
+          <ImageCard className="padding" img="http://aazztech.com/demos/themes/html/tizara/dist/img/service7.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
-        <div className="col-xs-12 col-md-4">
-          <ImageCard img="http://aazztech.com/demos/themes/html/tizara/dist/img/service8.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
+        <div className="col-xs-12 col-md">
+          <ImageCard className="padding" img="http://aazztech.com/demos/themes/html/tizara/dist/img/service8.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
-        <div className="col-xs-12 col-md-4">
-          <ImageCard img="http://aazztech.com/demos/themes/html/tizara/dist/img/service9.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
+        <div className="col-xs-12 col-md">
+          <ImageCard className="padding" img="http://aazztech.com/demos/themes/html/tizara/dist/img/service9.png" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
       </Section>
     
-      <Section title="Beneficios de Pertenecer a la plataforma">
-        <div className="col-xs-12 col-md-4">
+      <Section className="container" title="Beneficios de Pertenecer a la plataforma">
+        <div className="col-xs-12 col-md">
             <IconCard icon="money" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
 
-        <div className="col-xs-12 col-md-4">
+        <div className="col-xs-12 col-md">
           <IconCard icon="graphic_eq" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
 
-        <div className="col-xs-12 col-md-4">
+        <div className="col-xs-12 col-md">
           <IconCard icon="assessment" title="paso 1" body="Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi archi. Totam rem aperiam, eaque ipsa."/>
         </div>
       </Section>

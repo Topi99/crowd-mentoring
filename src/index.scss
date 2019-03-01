@@ -11,6 +11,10 @@ html, body, h1, h2, h3, p, textarea {
   line-height: 30px;
 }
 
+h1, h2, h3, h4, h5 {
+  font-weight: 600 !important;
+}
+
 button {
   @include normalFont();
 }
@@ -26,6 +30,17 @@ main {
 .img-slider {
   img {
     width: 100%;
+  }
+}
+
+.container {
+  width: 100% !important;
+  padding-right: 5vw !important;
+  padding-left: 5vw !important;
+  margin: 0px auto !important;
+
+  .col-md {
+    padding: 0 15px !important;
   }
 }
 
@@ -83,6 +98,10 @@ main {
 }
 
 .semi-bold {
-  font-weight: 600;
-  line-height: 33px;
+  font-weight: 600 !important;
+  line-height: 33px !important;
+}
+
+.large {
+  font-size: large;
 }

@@ -8,8 +8,9 @@
   position: fixed;
   width: 100vw;
   z-index: 1000;
-  background: #fff;
-  box-shadow: 0.33333rem 0 1.33333rem rgba(87,87,87,.1);
+  color: white;
+  // background: #fff;
+  // box-shadow: 0.33333rem 0 1.33333rem rgba(87,87,87,.1);
 }
 
 nav.navBar {
@@ -28,7 +29,7 @@ nav.navBar {
   .navBar__Links {
     height: 100%;
     position: relative;
-
+    
     ul {
       margin: 0;
       list-style: none;
@@ -42,21 +43,16 @@ nav.navBar {
         padding: 15px;
         
         a{
-          color: initial;
+          color: white;
           text-decoration: none;
-          opacity: .8;
-          transition: .25s ease-out;
-
-          &:hover {
-            color: $blue;
-          }
-        }
-        
-        
-
+          font-weight: 500;
+        }        
         .profileLinksHover {
           p {
             padding: 15px;
+            a {
+              color: $black;
+            }
           }
         }
       }

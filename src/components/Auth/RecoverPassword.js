@@ -25,7 +25,7 @@ class RecoverPassword extends React.Component {
           <div className="formFull--inputs col-xs-12 row center-xs">
             <input name="correo" value={this.state.correo} onChange={this.handleInputChange} className="col-xs-12" type="text" placeholder="Correo" />
   
-            <button onClick={this.submit} className="col-xs-3 button">Enviar</button>
+            <button onClick={this.submit} className="col-xs-3 button">Guardar</button>
           </div>
         </div>
       </Section>

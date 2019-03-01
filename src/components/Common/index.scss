@@ -5,9 +5,23 @@
   background-position: center;
   background-attachment: fixed;
   position: relative;
+  border-bottom: 1px solid #e4e8ed;
+  min-height: 50vh;
+  
   div.row {
     z-index: 10;
   }
+
+  .title {
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 42px;
+  }
+}
+
+.Section.waves {
+  background: url(http://aazztech.com/demos/themes/html/tizara/dist/img/shape-wave2.png) center/100% 100% no-repeat;
+  border: 0;
 }
 
 .Section.full {
@@ -36,6 +50,7 @@ a.button, .button {
   text-decoration: none;
   background-color: $blue;
   padding: 15px 30px;
+  box-sizing: border-box;
   font-weight: bold;
   border-radius: 5px;
   color: white;
@@ -43,6 +58,7 @@ a.button, .button {
   border: none;
   cursor: pointer;
   font-size: small;
+  line-height: 20px;
 
   a {
     color: white;
@@ -83,7 +99,7 @@ a.button, .button {
 
 input[type="password"], input[type="text"], textarea, select {
   padding: 15px !important;
-  font-size: 1em;
+  font-size: medium;
   border: 1px solid rgba(32, 36, 40, 0.15);
   margin: 15px 0px;
   transition: .4s ease-out;

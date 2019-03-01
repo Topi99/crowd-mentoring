@@ -5,12 +5,21 @@ import Link from 'react-router-dom/Link';
 const ImageCard = props => {
   return(
     <div className={`card imageCard ${props.className}`} >
-      <img src={props.img} alt="card" />
+      <div className="image--container">
+        <div className="image--wrap">
+          <img src={props.img} alt="card" />
+        </div>
+      </div>
       <h4 className="card--title">{props.title}</h4>
-      <p className="card--body">{props.body.substring(0,90)}</p>
+      <p className="card--body" style={ props.withButton ? {paddingBottom:0} : {}}>{props.body ? props.body.substring(0,100):'Sin descripción'}</p>
       {
         props.withButton
-        ? <Link className="button button-border blue" to={props.btnTo}>{props.btnTxt}</Link>
+        ? <div className="card--button" ><Link className="button button-border blue" to={props.btnTo}>{props.btnTxt}</Link></div>
+        : <></>
+      }
+      {
+        props.aesp
+        ? <div>{props.aesp.map(aesp => <span>{aesp.nombre}</span>)}</div>
         : <></>
       }
     </div>
