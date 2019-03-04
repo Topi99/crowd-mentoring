@@ -37,18 +37,27 @@
 }
 
 .CallToAction {
-  padding: 25px 0px;
+  padding: 50px 0px;
+  background-image: linear-gradient(to right, $blue, $bluishGreen);
+  &.invert {
+    background-image: linear-gradient(to left, $blue, $bluishGreen);
+  }
   
   h4 {
     font-size: 2em;
+    margin: 0;
+    margin-bottom: 15px;
   }
 
+  .btn-container {
+    padding: 50px 0px;
+  }
 }
 
 a.button, .button {
   text-decoration: none;
   background-color: $blue;
-  padding: 15px 30px;
+  padding: 12px 30px;
   box-sizing: border-box;
   font-weight: bold;
   border-radius: 5px;

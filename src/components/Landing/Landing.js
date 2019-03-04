@@ -70,6 +70,14 @@ const Landing = props => {
         </div>
       </Section>
     
+
+      <CallToAction 
+        className="white" 
+        imgSrc="http://aazztech.com/demos/themes/html/tizara/dist/img/sb3_img.png"
+        text="Investiga tiones demonstr averunt lectores legere me lius quod ii qua legunt saepius." 
+        title="Soy emprendedor." 
+        btnTxt="¡Entra aquí!" 
+        to={ ROUTES.REGISTER+'/emprendedor' } />
       <Section title="Partners" className="img-slider container" classNameDiv="around-xs">
         <div className="col-xs-6 col-md-2 row middle-xs">
           <img className="col-xs-12 img-padding" src="http://aazztech.com/demos/themes/html/tizara/dist/img/cl14.png" alt="partners" />
@@ -91,8 +99,14 @@ const Landing = props => {
         </div>
       </Section>
 
-      <CallToAction className="be-blue white" btnClassName="be-bluishGreen" text="Soy emprendedor." btnTxt="¡Entra aquí!" to={ ROUTES.REGISTER+'/emprendedor' } />
-      <CallToAction className="be-bluishGreen white" text="Comparte tus conocimientos." btnTxt="¡Registrate aquí!" to={ ROUTES.REGISTER+'/mentor' } />
+      <CallToAction 
+        invert 
+        className="white" 
+        imgSrc="http://aazztech.com/demos/themes/html/tizara/dist/img/sb3_img.png"
+        text="Investiga tiones demonstr averunt lectores legere me lius quod ii qua legunt saepius." 
+        title="Comparte tus conocimientos." 
+        btnTxt="¡Registrate aquí!" 
+        to={ ROUTES.REGISTER+'/mentor' } />
     
       <Section title="Contáctanos">
         <section className="col-xs-12 full-width row">
