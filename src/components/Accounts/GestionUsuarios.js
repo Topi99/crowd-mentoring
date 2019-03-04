@@ -1,5 +1,6 @@
 import React from 'react';
 import { QUser } from '../Common';
+import { withToast } from 'react-awesome-toasts';
 
 class GestionUsuarios extends React.Component {
   constructor(props) {
@@ -16,18 +17,33 @@ class GestionUsuarios extends React.Component {
       this.setState({users});
     });
 
-    this.unsuscribeListen2 = this.props.firebase.users().where('rolString', '==','emprendedor').onSnapshot(query => {
+    this.unsuscribeListen2 = this.props.firebase.users().where('status','==','active').where('rolString', '==','emprendedor').onSnapshot(query => {
       query.forEach(user => {
         emp.push(user.data());
       })
       this.setState({emp});
     });
 
-    this.unsuscribeListen3 = this.props.firebase.users().where('rolString', '==','mentor').onSnapshot(query => {
+    this.unsuscribeListen3 = this.props.firebase.users().where('status','==','active').where('rolString', '==','mentor').onSnapshot(query => {
       query.forEach(user => {
         ment.push(user.data());
       })
       this.setState({ment});
+    });
+  }
+
+  archiveUser = e => {
+    let userRef = this.props.firebase.db.collection('users').doc(e.target.id);
+    userRef.get().then(doc => {
+      if(doc.data().status === 'active') {
+        userRef.update({
+          status: 'inactive',
+        }).then(() => this.props.toast.show({text:'Usuario Archivado, recarga la pantalla', actionText:'Ok', onActionClick:this.props.toast.hide}));
+      } else {
+        userRef.update({
+          status: 'active',
+        }).then(() => this.props.toast.show({text:'Usuario Desarchivado, recarga la pantalla', actionText:'Ok', onActionClick:this.props.toast.hide}));
+      }
     });
   }
 
@@ -40,13 +56,13 @@ class GestionUsuarios extends React.Component {
   render() {
     return(
       <div className="row gestionUsuarios">
-        <p className="medium black">Peticiones de Registro</p>
+        <p className="medium black">Peticiones de Registro y Usuarios Inactivos</p>
         <div className="row list col-xs-12">
           {
             this.state.users.length === 0 
-            ? <p>No hay peticiones pendientes</p>
+            ? <p>No hay nada por aquí.</p>
             : this.state.users.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
+                return(<QUser className="list" archiveUser={this.archiveUser} key={user.uid} user={user} />)
               })
           }
         </div>
@@ -56,7 +72,7 @@ class GestionUsuarios extends React.Component {
             this.state.emp.length === 0 
             ? <p>No hay Emprendedores</p>
             : this.state.emp.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
+                return(<QUser className="list" archiveUser={this.archiveUser} key={user.uid} user={user} />)
               })
           }
         </div>
@@ -66,7 +82,7 @@ class GestionUsuarios extends React.Component {
             this.state.ment.length === 0 
             ? <p>No hay Mentores</p>
             : this.state.ment.map(user => {
-                return(<QUser className="list" key={user.uid} user={user} />)
+                return(<QUser className="list" archiveUser={this.archiveUser} key={user.uid} user={user} />)
               })
           }
         </div>
@@ -75,4 +91,4 @@ class GestionUsuarios extends React.Component {
   }
 }
 
-export default GestionUsuarios;
+export default withToast(GestionUsuarios);

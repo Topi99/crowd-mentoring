@@ -4,6 +4,7 @@ import styles from './ListMentores.module.scss';
 import { PROFILE_IMG_DEF, PROFILE } from '../../constants/routes';
 import { ImageCard } from '../Cards';
 import { Modal } from '../Common';
+import { withAuthorization } from '../Auth';
 
 class ListMentores extends React.Component {
   constructor(props) {
@@ -192,4 +193,6 @@ class ListMentores extends React.Component {
   }
 }
 
-export default withFirebase(ListMentores);
+const condition = authUser => !!authUser;
+
+export default withFirebase(withAuthorization(condition)(ListMentores));

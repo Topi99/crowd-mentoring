@@ -14,8 +14,10 @@ const QUser = ({...props}) => {
             edit
           </i>
         </Link>
-        <i className={`material-icons ${styles.clear}`}>
-          clear
+        <i onClick={props.archiveUser} id={props.user.uid} className={`material-icons ${styles.clear}`}>
+          {
+            props.user.status === 'active' ? 'archive' : 'unarchive'
+          }
         </i>
       </div>
     </div>
