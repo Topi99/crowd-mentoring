@@ -1,21 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'flexboxgrid2';
 import './Landing.scss';
 import { ImageCard, IconCard } from '../Cards';
-import { Section, CallToAction } from '../Common';
+import { Section, CallToAction, Modal } from '../Common';
 import Footer from '../Footer';
 import * as ROUTES from '../../constants/routes';
+import Img from './simg-2.jpg';
 
 const Landing = props => {
+  const [ videoVisibility, setVideoVisibility ] = useState(false);
+
+  const handleClickOpenVideo = e => {
+    if(videoVisibility) setVideoVisibility(false);
+    else setVideoVisibility(true);
+  }
+  
   return(
     <>
       <section className="banner first-banner row middle-xs">
-        <div className="col-xs-offset-1 col-xs-10 col-md-5 col-md-offset-1 banner--left">
+        <div className="col-xs-offset-1 col-xs-10 col-md-4 col-md-offset-1 banner--left">
           <h2 className="banner--title">¿Qué es Crowd Mentoring?</h2>
           <p className="banner--txt">Lorem ipsum dolor sit amet consectetur adipiscing elit aenean, fusce urna vestibulum magnis pulvinar sodales nisl. Habitasse diam imperdiet lobortis neque mattis auctor luctus metus placerat volutpat, eu est conubia dui semper netus curabitur scelerisque erat in, mi litora venenatis tellus iaculis fames interdum quam arcu. </p>
         </div>
         <div className="col-md-6 hidden-xs hidden-sm banner--img"><img src="https://trello-attachments.s3.amazonaws.com/5c5b774c569bad264294d19d/5c5c5e8ef48c7e4735bd7f47/456c2f537b769680dd90496d8b0196f6/slider_2.png" alt="" /> </div>
       </section>
+
+      <Section noTitle className="middle-xs video row">
+        <div className="col-xs-12 col-md-5 start-xs video--desc">
+          <h2 className="semi-bold xx-large separate">Conoce <span className="bluishGreen">Crowd Mentoring</span></h2>
+          <p className="gray">Investiga tiones demonstr averunt lectores legere me lius quod ii qua legunt saepius. Claritas est etiam pro cessus dynamicus, qui sequitur mutationem consuetudium lecry torum. Mirum est notare quam littera gothica, quam the nunc putamus parum claram, ante posuerit.</p>
+        </div>
+        <div className="col-xs-12 col-md-offset-1 col-md-6">
+          <figure className="video--preview">
+            <img src={Img} alt="preview"/>
+            <div className="overlay">
+              <i onClick={handleClickOpenVideo} className="material-icons">play_arrow</i>
+            </div>
+          </figure>
+        </div>
+        <Modal visibility={videoVisibility} open={handleClickOpenVideo} close={handleClickOpenVideo}>
+
+        </Modal>
+      </Section>
     
       <Section title="¿Cómo funciona el sistema?" style={{}} className="container waves">
         {/* <img src={Waves} /> */}
@@ -44,7 +70,7 @@ const Landing = props => {
         </div>
       </Section>
     
-      <Section title="Partners" className="img-slider" classNameDiv="around-xs">
+      <Section title="Partners" className="img-slider container" classNameDiv="around-xs">
         <div className="col-xs-6 col-md-2 row middle-xs">
           <img className="col-xs-12 img-padding" src="http://aazztech.com/demos/themes/html/tizara/dist/img/cl14.png" alt="partners" />
         </div>

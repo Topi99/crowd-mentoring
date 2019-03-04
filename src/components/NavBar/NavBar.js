@@ -10,13 +10,29 @@ class NavBar extends React.Component {
     super(props);
 
     this.state = { 
-      title: "Crowd Mentoring" 
+      title: "Crowd Mentoring",
+      className: ''
     };
+
+    // console.log(window.location);
   }
+
+  // componentDidMount() {
+  //   document.addEventListener('scroll', this.handleScroll);
+  // }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('scroll', this.handleScroll);
+  // }
+
+  // handleScroll = e => {
+  //   let scrollTop = e.srcElement.body.scrollTop;
+  //   console.log(scrollTop);
+  // }
 
   render() {
     return(
-      <nav className={ `row ${styles.navBar}` }>
+      <nav className={ `row ${styles.navBar} ${this.state.className}` }>
         <div className={ `col-xs-3 row middle-xs center-xs hidden-lg hidden-xl ${styles.navBar__MenuButton}` }>
           <i className="material-icons">
             menu

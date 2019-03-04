@@ -77,3 +77,55 @@ section {
     padding-bottom: 50px;
   }
 }
+
+.video {
+  position: relative;
+  min-height: 90vh; 
+
+  .video--desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+   
+  .video--preview {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(0,0,0,.2);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 101%;
+      height: 100%;
+      z-index: 1000;
+      background-image: url(http://aazztech.com/demos/themes/html/tizara/dist/img/img_shape2.png);
+      background-repeat: no-repeat;
+      background-size: 100% 101%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      i {
+        background-color: $blue;
+        padding: 15px;
+        border-radius: 50%;
+        font-size: xx-large;
+        cursor: pointer;
+      }
+    }
+  }
+}

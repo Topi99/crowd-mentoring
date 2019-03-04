@@ -2,10 +2,13 @@
 @import './partials/fonts';
 @import './partials/colors';
 
+html, body {
+  overflow-x: hidden;
+}
+
 html, body, h1, h2, h3, p, textarea {
   margin: 0;
   font-weight: normal;
-  overflow-x: hidden;
   @include normalFont();
   font-size: 15px;
   line-height: 30px;
@@ -38,6 +41,7 @@ main {
   padding-right: 5vw !important;
   padding-left: 5vw !important;
   margin: 0px auto !important;
+  overflow: hidden !important;
 
   .col-md {
     padding: 0 15px !important;
@@ -89,7 +93,7 @@ main {
 }
 
 .medium {
-  font-weight: 500;
+  font-weight: 500 !important;
   line-height: 25px;
 }
 
@@ -104,4 +108,17 @@ main {
 
 .large {
   font-size: large;
+}
+
+.x-large {
+  font-size: x-large;
+}
+
+.xx-large {
+  font-size: 30px;
+  line-height: 42px;
+}
+
+.separate {
+  margin: 25px 0px;
 }

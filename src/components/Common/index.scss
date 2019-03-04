@@ -9,7 +9,6 @@
   min-height: 50vh;
   
   div.row {
-    z-index: 10;
   }
 
   .title {
@@ -89,8 +88,8 @@ a.button, .button {
 }
 
 .button.button-border.red {
-  border: 1px solid #E24336;
-  color: #E24336;
+  border: 1px solid $red;
+  color: $red;
 }
 
 .form1 {

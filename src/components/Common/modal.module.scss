@@ -1,0 +1,66 @@
+@import '../../partials/colors';
+
+.modal {
+  z-index: 10000;
+  position: relative;
+
+  i {
+    color: $red;
+    position: fixed;
+    font-weight: bold;
+    font-size: xx-large;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    text-shadow: 0px 3px 3px rgba(0,0,0,.7);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .options {
+    padding: 15px;
+    position: fixed;
+    width: 90%;
+    min-height: 10vh;
+    max-height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background: #fff;
+    box-shadow: 0rem 0 1.33333rem rgba(87,87,87,.25);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.4s ease-out;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .search {
+      position: relative;
+      height: 5vh;
+      bottom: 0;
+    }
+    
+    &.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  .cover {
+    content: '';
+    height: 100%;
+    width: 100%;  
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    position: fixed;
+    background-color: rgba(0,0,0,.1);
+  }
+}
+

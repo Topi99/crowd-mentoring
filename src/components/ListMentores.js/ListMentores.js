@@ -3,6 +3,7 @@ import { withFirebase } from '../Firebase';
 import styles from './ListMentores.module.scss';
 import { PROFILE_IMG_DEF, PROFILE } from '../../constants/routes';
 import { ImageCard } from '../Cards';
+import { Modal } from '../Common';
 
 class ListMentores extends React.Component {
   constructor(props) {
@@ -126,8 +127,29 @@ class ListMentores extends React.Component {
   render() {
     return(
       <div className={`${styles.listMentores} col-xs-10`}>
-          <div className={styles.cover} style={this.state.options ? {visibility:'visible',opacity:1} : {visibility:'hidden', opacity:0}}></div>
-          <div className={`${styles.options} center-xs row`} style={this.state.options ? {visibility:'visible',opacity:1} : {visibility:'hidden', opacity:0}}>
+        <div className={`${styles.searchBox} row middle-xs`}>
+          <input value={this.state.searchByName} onChange={this.handleSearchChange} className="col-md-11 col-xs-12" type="text" placeholder="Buscar por nombre" />
+          <div className="col-md-1 col-xs-12 center-xs end-md"><button onClick={this.open} className="button">Opciones</button></div>
+        </div>
+        <div className={`${styles.listContainer} row`}>
+          { 
+            this.state.mentores.map(mentor => {
+              if(this.state.searchByName==='') {
+                return(
+                  this.getMentor(mentor)
+                )
+              } else {
+                if(mentor.nombre.includes(this.state.searchByName) || mentor.apellido.includes(this.state.searchByName)) {
+                  return(
+                    this.getMentor(mentor)
+                  )
+                }
+              }
+              return <></>
+            })
+          }
+        </div>
+        <Modal visibility={this.state.visibility} open={this.open} close={this.close}>
           <div className="col-xs-12 col-md-3">
             <p className="medium large">Areas de Especialidad</p>
             <select multiple value={this.state.aEsps} id="aEsps" onChange={this.handleOptionChange} className="col-xs-12">
@@ -164,30 +186,7 @@ class ListMentores extends React.Component {
             <button className="button" onClick={this.search}>Buscar</button>
             <button className="button button-border red" onClick={this.cancel}>Cerrar</button>
           </div>
-        </div>
-
-        <div className={`${styles.searchBox} row middle-xs`}>
-          <input value={this.state.searchByName} onChange={this.handleSearchChange} className="col-md-11 col-xs-12" type="text" placeholder="Buscar por nombre" />
-          <div className="col-md-1 col-xs-12 center-xs end-md"><button onClick={this.open} className="button">Opciones</button></div>
-        </div>
-        <div className={`${styles.listContainer} row`}>
-          { 
-            this.state.mentores.map(mentor => {
-              if(this.state.searchByName==='') {
-                return(
-                  this.getMentor(mentor)
-                )
-              } else {
-                if(mentor.nombre.includes(this.state.searchByName) || mentor.apellido.includes(this.state.searchByName)) {
-                  return(
-                    this.getMentor(mentor)
-                  )
-                }
-              }
-              return <></>
-            })
-          }
-        </div>
+        </Modal>
       </div>
     );
   }
