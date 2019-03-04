@@ -4,10 +4,13 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Firebase, { FirebaseContext } from './components/Firebase';
+import { ToastProvider } from 'react-awesome-toasts';
 
 ReactDOM.render(
   <FirebaseContext.Provider value={ new Firebase() }>
-    <App />
+    <ToastProvider>
+      <App />
+    </ToastProvider>
   </FirebaseContext.Provider>, 
   
   document.getElementById('root')

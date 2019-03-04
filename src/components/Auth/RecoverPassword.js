@@ -1,6 +1,7 @@
 import React from 'react';
 import { Section } from '../Common';
 import { withFirebase } from '../Firebase';
+import { withToast } from 'react-awesome-toasts';
 
 class RecoverPassword extends React.Component {
   constructor(props) {
@@ -9,11 +10,21 @@ class RecoverPassword extends React.Component {
     this.state = {
       correo: ""
     }
+
+    this.toastProps = {
+      text: 'Se ha enviado un link a tu correo',
+      actionText: 'Ok',
+      onActionClick: this.props.toast.hide,
+    }
   }
 
   handleInputChange = e => this.setState({[e.target.name]:e.target.value});
 
-  submit = e => this.props.firebase.doPasswordReset(this.state.correo);
+  submit = e => {
+    let err = this.props.firebase.doPasswordReset(this.state.correo);
+    if(err) this.toastProps.text = err;
+    this.props.toast.show(this.toastProps);
+  }
 
   render = () => {
     return(
@@ -33,4 +44,4 @@ class RecoverPassword extends React.Component {
   }
 };
 
-export default withFirebase(RecoverPassword);
+export default withToast(withFirebase(RecoverPassword));

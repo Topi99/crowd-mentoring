@@ -1,3 +1,5 @@
+@import '../../partials/colors';
+
 footer {
   background-color: #f4f4f4;
   .subtitle {
@@ -8,11 +10,38 @@ footer {
     padding-bottom: 15px;
   }
 
-  .link {
+  .cont {
+    padding: 000px 30px;
+
+    .social {
+      .links {
+        margin-top: 10px; 
+        
+        a {
+          padding: 10px 12px;
+          margin: 10px;
+          color: $gray;
+          background-color: #fff;
+          border-radius: 50%;
+          box-sizing: content-box; 
+          transition: .2s ease;
+          &:hover {
+            color: white;
+            background-color: $blue;
+          }
+          
+          li {
+            width: 50px !important;
+            height: 50px !important;
+          }
+        }
+      }
+    }
+  }
+
+  .link, p {
     text-align: start !important;
     a {
-      color: initial;
-      opacity: .55;
       text-decoration: none;
     }
   }

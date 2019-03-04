@@ -16,6 +16,7 @@ class Firebase {
     app.initializeApp(config);
 
     this.auth = app.auth();
+    this.auth.useDeviceLanguage();
     this.db = app.firestore();
   }
 
@@ -31,7 +32,11 @@ class Firebase {
 
   doSignOut = () => this.auth.signOut();
 
-  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+  doPasswordReset = email => {
+    let err = null;
+    this.auth.sendPasswordResetEmail(email).catch(e => err = e);
+    return err;
+  }
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 

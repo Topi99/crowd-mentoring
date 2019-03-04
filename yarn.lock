@@ -8408,6 +8408,11 @@ react-app-polyfill@^0.2.0:
     raf "3.4.0"
     whatwg-fetch "3.0.0"
 
+react-awesome-toasts@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/react-awesome-toasts/-/react-awesome-toasts-0.0.9.tgz#079104969c0f29eec1b202e54d3da6f711530c80"
+  integrity sha512-UUTMnUnJIoquncTK5vLs1fdOlUvwBsfPnmA2l5gI18cuCLvZW27MHYbrjux8xXkSWeHWa/4tf/Ack1H9LfMFWw==
+
 react-dev-utils@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-7.0.1.tgz#c53e759a22668ee2c0d146c24ce4bdec2b41e3c8"
