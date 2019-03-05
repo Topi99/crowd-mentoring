@@ -98,3 +98,46 @@
     }
   }
 }
+
+.smallImageCard {
+  box-shadow: 0 5px 20px rgba(105,106,119,.05);
+  padding: 30px;
+  min-height: 388px;
+  border: 1px solid #e4e8ed;
+  box-sizing: border-box;
+
+  .card--title {
+    padding-top: 18px;
+    padding-bottom: 7px;
+  }
+
+  .image--container {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    height: 80px;
+
+    .image--wrap {
+      width: 80px;
+      overflow: hidden;
+      border-radius: 50%;
+      
+      img {
+        width: 100%;
+      }
+    }
+
+  }
+  
+  .card--button {
+    padding-bottom: 0;
+    padding-top: 30px;
+  }
+  
+  &:hover {
+    box-shadow: 0 5px 20px rgba(105,106,119,.05);
+    top: 0;
+    border: 1px solid #e4e8ed;
+  }
+}

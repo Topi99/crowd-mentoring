@@ -91,6 +91,10 @@ a.button, .button {
   border: 1px solid $bluishGreen;
   color: $bluishGreen;
 
+  &:hover {
+    box-shadow: 0px 0px 10px $bluishGreen-s;
+  }
+
   a {
     color: $bluishGreen;
   }

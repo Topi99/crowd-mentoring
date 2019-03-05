@@ -2,7 +2,7 @@ import React from 'react';
 import { withFirebase } from '../Firebase';
 import styles from './ListMentores.module.scss';
 import { PROFILE_IMG_DEF, PROFILE } from '../../constants/routes';
-import { ImageCard } from '../Cards';
+import { SmallImageCard } from '../Cards';
 import { Modal } from '../Common';
 import { withAuthorization } from '../Auth';
 
@@ -65,8 +65,8 @@ class ListMentores extends React.Component {
 
   getMentor = mentor => {
     return(
-      <div key={mentor.uid} className="col-xs-12 col-md-4">
-        <ImageCard 
+      <div key={mentor.uid} className="col-xs-12 col-sm-6 col-md-4">
+        <SmallImageCard 
           className="center-xs bradius" 
           withButton btnTxt="Ver perfil" 
           btnTo={PROFILE+'/'+mentor.uid} 
@@ -127,7 +127,7 @@ class ListMentores extends React.Component {
 
   render() {
     return(
-      <div className={`${styles.listMentores} col-xs-10`}>
+      <div className={`${styles.listMentores} col-xs-9`}>
         <div className={`${styles.searchBox} row middle-xs`}>
           <input value={this.state.searchByName} onChange={this.handleSearchChange} className="col-md-11 col-xs-12" type="text" placeholder="Buscar por nombre" />
           <div className="col-md-1 col-xs-12 center-xs end-md"><button onClick={this.open} className="button">Opciones</button></div>
