@@ -16,26 +16,15 @@ const Info = props => {
     <>
       {
         props.state.rolString==='Emprendedor'
-        ? <div className="important">
-            <p className="carrera medium ">
-              <span className="black">Carrera: </span> 
-              <span className="bluishGreen">
-                {props.state.carrera}
-              </span>
-            </p>
-            <p className="uni medium">
-              <span className="black">Universidad: </span>
-              <span className="bluishGreen">
-                {props.state.universidad}
-              </span>
-            </p>
+        ? <>
+            
             <p className="semestre medium">
               <span className="black">Semestre: </span>
               <span className="bluishGreen">
                 {props.state.semestre}
               </span>
             </p>
-          </div>
+          </>
         : <></>
       }
     </>
@@ -128,7 +117,21 @@ class Profile extends React.Component {
             <p className="name semi-bold blue">{this.state.nombre+" "+this.state.apellido}</p>
             { 
               this.state.rolString === 'Emprendedor' || this.state.rolString === 'Mentor'
-              ? <Info state={this.state} />
+              ? <div className="important">
+                  <p className="carrera medium ">
+                    <span className="black">Carrera: </span> 
+                    <span className="bluishGreen">
+                      {this.state.carrera}
+                    </span>
+                  </p>
+                  <p className="uni medium">
+                    <span className="black">Universidad: </span>
+                    <span className="bluishGreen">
+                      {this.state.universidad}
+                    </span>
+                  </p>
+                  <Info state={this.state} />
+                </div>
               : <></>
             }
             <p className="gray ciudad"><span className="black ">De: </span>{this.state.ciudad}</p>
