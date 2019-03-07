@@ -109,13 +109,20 @@ a.button, .button {
   padding: 70px 20px;
 }
 
-input[type="password"], input[type="text"], textarea, select {
+input[type="password"], input[type="text"], textarea, select, input[type="date"], input[type="time"] {
   padding: 15px !important;
   font-size: medium;
   border: 1px solid rgba(32, 36, 40, 0.15);
   margin: 15px 0px;
   transition: .4s ease-out;
   border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:invalid {
+  border: 1px solid $red;
+  box-shadow: 0 0 5px $red;
 }
 
 input:focus, textarea:focus, select:focus {
