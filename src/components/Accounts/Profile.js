@@ -13,6 +13,7 @@ import GestionEtapaEmp from './GestionEtapaEmp';
 import { Modal } from '../Common';
 import { withToast } from 'react-awesome-toasts';
 import { withRouter } from 'react-router-dom';
+import FormSolicitarAsesoria from '../Asesorias/FormSolicitarAsesoria';
 
 const Info = props => {
   return(
@@ -34,125 +35,33 @@ const Info = props => {
   );
 }
 
-const FormSolicitarAsesoria = props => {
-  return(
-    <div className="row start-xs">
-      <div className="col-xs-12">
-        <p>Asunto: </p><input onChange={props.onChangeF} type="text" id="asesoriaAsunto" value={props.asunto} placeholder="Asunto de Asesoría" />
-      </div>
-      <div className="col-xs-4">
-        <p>Fecha preferida: </p>
-        <input onChange={props.onChangeF} type="date" min={props.today} id="asesoriaFechaP" value={props.fechaPreferidaP} placeholder="Fecha preferida" />
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIP" 
-          value={props.asesoriaHIP} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFP" 
-          value={props.asesoriaHFP} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-
-      
-      <div className="col-xs-4">
-        <p>Fecha alterna 1: </p>
-        <input onChange={props.onChangeF} type="date" min={props.today} id="asesoriaFechaA1" value={props.fechaA1} placeholder="Fecha preferida" />
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIA1" 
-          value={props.asesoriaHIA1}
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFA" 
-          value={props.asesoriaHFA1} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-
-      
-      <div className="col-xs-4">
-        <p>Fecha alterna 2: </p>
-        <input onChange={props.onChangeF} type="date" min={props.today} id="asesoriaFechaA2" value={props.fechaA2} placeholder="Fecha preferida" />
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIA2" 
-          value={props.asesoriaHIA2}
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFA2" 
-          value={props.asesoriaHFA2} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
-      </div>
-      <div className="col-xs-4">
-        <p>Temas (ctrl + click): </p>
-        <select onChange={props.onChangeF} multiple id="asesoriaTema" value={props.temas} placeholder="Asunto de Asesoría" >
-          { props.temasComplete.map(tema => <option key={tema.uid} value={tema.uid}>{tema.nombre}</option>)}
-        </select>
-      </div>
-      <div className="col-xs-12 center-xs">
-        <button className="button" onClick={props.send}>Solicitar</button>
-      </div>
-    </div>
-  );
-}
-
 const INITIAL_STATE = {
   activeTab: "1",
   bio:'',
   nombre:'',
   apellido:'',
+  
   formSolicitarStatus: false,
+
   asesoriaAsunto:'',
+  
+  asesoriaFechaP:'',
+  asesoriaHIP:'',
+  asesoriaHFP:'',
+
+  asesoriaFechaA1:'',
+  asesoriaHIA1:'',
+  asesoriaHFA1:'',
+
+  asesoriaFechaA2:'',
+  asesoriaHIA2:'',
+  asesoriaHFA2:'',
+
   asesoriaTema:[''],
-  asesoriaTemaUID:[''],
-  asesoriaFecha:'',
+
   temas:[''],
-  temasComplete: ['']
+  asesoriaTemaUID:[''],
+  temasComplete: [''],
 }
 
 class Profile extends React.Component {
@@ -243,9 +152,21 @@ class Profile extends React.Component {
       temas: this.state.asesoriaTema,
       solicitadaPorRef: this.props.firebase.db.collection('users').doc(this.props.firebase.auth.currentUser.uid),
       solicitadaPorUID: this.props.firebase.auth.currentUser.uid,
+      
+      asesoriaFechaP: this.state.asesoriaFechaP,
+      hip: this.state.asesoriaHIP,
+      hfp: this.state.asesoriaHFP,
+      
+      fechaA1: this.state.asesoriaFechaA1,
+      hia1: this.state.asesoriaHIA1,
+      hfa1: this.state.asesoriaHFA1,
+      
+      fechaA2: this.state.asesoriaFechaA2,
+      hia2: this.state.asesoriaHIA2,
+      hfa2: this.state.asesoriaHFA2,
+
       mentorUID: this.state.uid,
       mentorREf: this.props.firebase.db.collection('users').doc(this.state.uid),
-      fechaPreferida: this.state.asesoriaFecha,
       status: 'pendiente',
       id: ref.id
     };
@@ -266,6 +187,7 @@ class Profile extends React.Component {
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
         this.props.history.push('/user/'+this.props.firebase.auth.currentUser.uid+'/asesorias/'+ref.id);
       }).catch(err => this.props.toast.show({ text:err,  }));
+      // console.log(asesoriaData)
     }
   }
 
@@ -298,9 +220,9 @@ class Profile extends React.Component {
       }
       this.setState({ 'asesoriaTemaUID' : value });
       this.setState({ 'asesoriaTema' : valueRef });
-      console.log(value);
+      // console.log(value);
     } else this.setState({ [e.target.id] : e.target.value });
-    console.log(this.state);
+    // console.log('chande',e.target.id,this.state);
   }
   
   render() {
@@ -349,10 +271,22 @@ class Profile extends React.Component {
             }
             <Modal visibility={this.state.formSolicitarStatus} open={this.openFormSolicitar} close={this.closeFormSolicitar} >
               <FormSolicitarAsesoria 
+                asunto={this.state.asesoriaAsunto} 
+                
+                fechaPreferida={this.state.asesoriaFechaP} 
+                asesoriaHIP={this.state.asesoriaHIP}
+                asesoriaHFP={this.state.asesoriaHFP}
+
+                fechaA1={this.state.asesoriaFechaA1} 
+                asesoriaHIA1={this.state.asesoriaHIA1}
+                asesoriaHFA1={this.state.asesoriaHFA1}
+
+                fechaA2={this.state.asesoriaFechaA2} 
+                asesoriaHIA2={this.state.asesoriaHIA2}
+                asesoriaHFA2={this.state.asesoriaHFA2}
+                
                 temasComplete={this.state.temasComplete}
                 temas={this.state.asesoriaTemaUID} 
-                asunto={this.state.asesoriaAsunto} 
-                fecha={this.state.asesoriaFecha} 
                 onChangeF={this.handleFormAsChange}
                 send={this.sendSolicitud}
                 today={this.getToday()} />
