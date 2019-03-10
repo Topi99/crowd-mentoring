@@ -8493,6 +8493,11 @@ react-awesome-toasts@^0.0.9:
   resolved "https://registry.yarnpkg.com/react-awesome-toasts/-/react-awesome-toasts-0.0.9.tgz#079104969c0f29eec1b202e54d3da6f711530c80"
   integrity sha512-UUTMnUnJIoquncTK5vLs1fdOlUvwBsfPnmA2l5gI18cuCLvZW27MHYbrjux8xXkSWeHWa/4tf/Ack1H9LfMFWw==
 
+react-confirm-alert@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.3.0.tgz#c8a7282f06855235315840b72ed13374448161eb"
+  integrity sha512-4TWTzI0lx94eCJAnvFMF0ZUgCj680rxkL/0elIyB9uWXrrlKeZ4+84TMePKYWK9WZJIBKx5r87xfCk9c4Bx9Rg==
+
 react-data-table-component@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/react-data-table-component/-/react-data-table-component-1.4.5.tgz#4507977647c477ba0c87239583d626dff5552e87"
