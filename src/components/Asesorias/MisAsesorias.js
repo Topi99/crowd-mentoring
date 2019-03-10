@@ -27,29 +27,12 @@ class MisAsesorias extends React.Component {
     let asesorias = [];
     let asesoria = [];
     let temas = [];
-    
-    refUser.get().then(doc => {
-      rolString = doc.data().rolString;
 
-      // Aplico la condición de que obtenga las asesorías si es mentor o emprendedor
-      ref = ref.where(rolString === 'mentor' ? 'mentorUID' : 'solicitadaPorUID', '==', uid);
-
-      // Aquí obtengo las asesorías del usuario.
-      ref.onSnapshot(query => {
-        query.forEach(doc => {
-          asesoria = doc.data();
-          temas = asesoria.temas;
-          asesoria.temas = "";
-
-          // En esta linea agrego la asesoría a la lista de asesorías.
-          asesorias.push(asesoria);
-        });
-
-        // En esta linea asigno la lista de asesorías al estado. 
-        this.setState({asesorias})
-        console.log(this.state.asesorias);
-      })
-    });
+    this.changing = {
+      name: 'Solicitada Por',
+      selector: 'solicitadaPorUID',
+      sortable: true
+    };
     
     this.columns = [
       {
@@ -62,11 +45,7 @@ class MisAsesorias extends React.Component {
         selector: 'temas',
         sortable: false
       },
-      {
-        name: 'Solicitada Por',
-        selector: 'solicitadaPorUID',
-        sortable: true
-      },
+      this.changing,
       {
         name: 'Fecha Preferida',
         selector: 'asesoriaFechaP',
@@ -88,6 +67,30 @@ class MisAsesorias extends React.Component {
         sortable: true
       }
     ];
+
+    refUser.get().then(doc => {
+      rolString = doc.data().rolString;
+
+      // Aplico la condición de que obtenga las asesorías si es mentor o emprendedor
+      ref = ref.where(rolString === 'mentor' ? 'mentorUID' : 'solicitadaPorUID', '==', uid);
+      this.changing = rolString === 'mentor' ? this.changing : { name:'Solicitada A', selector:'mentorUID', sortable:true };
+
+      // Aquí obtengo las asesorías del usuario.
+      ref.onSnapshot(query => {
+        query.forEach(doc => {
+          asesoria = doc.data();
+          temas = asesoria.temas;
+          asesoria.temas = "";
+
+          // En esta linea agrego la asesoría a la lista de asesorías.
+          asesorias.push(asesoria);
+        });
+
+        // En esta linea asigno la lista de asesorías al estado. 
+        this.setState({asesorias})
+        console.log(this.state.asesorias);
+      })
+    });
   }
 
   getTemaName = tema => {
@@ -95,13 +98,14 @@ class MisAsesorias extends React.Component {
   }
 
   onRowClicked = e => {
-    this.props.history.push(`${ASESORIAS}/${e.id}`);
+    this.props.history.push(`/asesoria/${e.id}`);
   }
   
   render() {
     return(
-      <section className="container">
+      <section className="container padding-bot">
         <DataTable 
+          className="card active bradius"
           title="Mis Asesorías"
           columns={this.columns}
           data={this.state.asesorias}

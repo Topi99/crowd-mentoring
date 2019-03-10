@@ -28,12 +28,31 @@ body {
 
 main {
   padding-top: $NAVBAR_HEIGTH;
+  min-height: 90vh;
 }
 
 .img-slider {
   img {
     width: 100%;
   }
+}
+
+textarea {
+  max-width: 100%;
+}
+
+section.padding-bot {
+  padding-bottom: 25px;
+}
+
+.padding {
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.x-padding {
+  padding: 30px;
+  box-sizing: border-box;
 }
 
 .container {
@@ -125,4 +144,28 @@ main {
 
 .separate {
   margin: 25px 0px;
+}
+
+.pendiente {
+  background-color: rgba(255, 230, 91, .08);
+  border:1px solid rgb(255, 230, 91);
+  padding: 2px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(255, 230, 91, .5);
+}
+
+.aceptada, .finalizada {
+  background-color: rgba(125, 221, 101, .08);
+  border:1px solid rgb(125, 221, 101);
+  padding: 2px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(125, 221, 101, .5);
+}
+
+.cancelada {
+  background-color: rgba(255, 91, 91, .08);
+  border:1px solid rgb(255, 91, 91);
+  padding: 2px 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 3px rgba(255, 91, 91, .5);
 }

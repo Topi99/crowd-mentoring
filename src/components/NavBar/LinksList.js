@@ -19,6 +19,11 @@ class LinksList extends React.Component {
               Mentores
             </Link>
           </li>
+          <li className="col-md-3 link middle-xs row center-xs">
+            <Link className="col-xs-12" to={ ROUTES.ASESORIAS }>
+              Mis Asesorias
+            </Link>
+          </li>
           <li className="col-xs-1 link center-xs">
             <div className={styles.imgWrap}>
               {

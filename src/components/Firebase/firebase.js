@@ -18,6 +18,7 @@ class Firebase {
     this.auth = app.auth();
     this.auth.useDeviceLanguage();
     this.db = app.firestore();
+    this.firestore = app.firestore;
   }
 
   doCreateUserWithEmailAndPassword = (email, password) => {

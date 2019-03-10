@@ -11,6 +11,7 @@ import EditTema from '../Accounts/EditTema';
 import EditEtapaEmp from '../Accounts/EditEtapaEmp';
 import ListMentores from '../ListMentores.js';
 import MisAsesorias from '../Asesorias/MisAsesorias';
+import Detalle from '../Asesorias/Detalle';
 
 const NewAEsp = () => <EditAEsp new />;
 const NewIndustria = () => <EditIndustria new />;
@@ -36,7 +37,7 @@ const Routes = props => {
       <Route path={ '/edit'+ROUTES.ETAPAEMP+'/:uid' } component={ EditEtapaEmp } />
       <Route path={ ROUTES.MENTORES } component={ ListMentores } />
       <Route path={ ROUTES.ASESORIAS } component={ MisAsesorias } />
-      <Route path={ ROUTES.ASESORIAS+'/:id' } component={ MisAsesorias } />
+      <Route path={ '/asesoria/:id' } component={ Detalle } />
     </>
   );
 };
