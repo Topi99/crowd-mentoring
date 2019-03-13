@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chart.js": "^2.7.3",
     "firebase": "^5.8.2",
     "flexboxgrid2": "^7.2.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.3",
     "react-awesome-toasts": "^0.0.9",
+    "react-chartjs-2": "^2.7.4",
     "react-confirm-alert": "^2.3.0",
     "react-data-table-component": "^1.4.5",
     "react-dom": "^16.8.1",
