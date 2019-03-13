@@ -46,16 +46,16 @@ const INITIAL_STATE = {
   asesoriaAsunto:'',
   
   asesoriaFechaP:'',
-  asesoriaHIP:'',
-  asesoriaHFP:'',
+  asesoriaHIP:'09:00',
+  asesoriaHFP:'09:00',
 
   asesoriaFechaA1:'',
-  asesoriaHIA1:'',
-  asesoriaHFA1:'',
+  asesoriaHIA1:'09:00',
+  asesoriaHFA1:'09:00',
 
   asesoriaFechaA2:'',
-  asesoriaHIA2:'',
-  asesoriaHFA2:'',
+  asesoriaHIA2:'09:00',
+  asesoriaHFA2:'09:00',
 
   asesoriaTema:[''],
 
@@ -87,15 +87,21 @@ class Profile extends React.Component {
           rolString = 'Administrador'
         }
         this.setState({rolString});
-        this.state.temas.forEach(tema => {
-          props.firebase.db.collection('temas').doc(tema).get().then(doc => {
-            temas.push(doc.data());
+        if(rolString === 'Mentor') {
+          this.state.temas.forEach(tema => {
+            props.firebase.db.collection('temas').doc(tema).get().then(doc => {
+              temas.push(doc.data());
+            })
+            this.setState({temasComplete:temas});
+            console.log(this.state)
           })
-          this.setState({temasComplete:temas});
-          console.log(this.state)
-        })
+        }
       });
     }
+
+    props.firebase.db.collection('users').doc(props.firebase.auth.currentUser.uid).get().then(doc => {
+      this.setState({authUserName:`${doc.data().nombre} ${doc.data().apellido}`});
+    });
   }
 
   componentDidMount() {
@@ -149,9 +155,13 @@ class Profile extends React.Component {
     this.closeFormSolicitar();
     const asesoriaData = {
       asunto:this.state.asesoriaAsunto,
-      temas: this.state.asesoriaTema,
+      temas: this.state.asesoriaTemaUID.join(', '),
       solicitadaPorRef: this.props.firebase.db.collection('users').doc(this.props.firebase.auth.currentUser.uid),
       solicitadaPorUID: this.props.firebase.auth.currentUser.uid,
+      
+      nombreMentor: `${this.state.nombre} ${this.state.apellido}`,
+      authUserName: this.state.authUserName,
+      mensajeAs: this.state.mensajeAs,
       
       asesoriaFechaP: this.state.asesoriaFechaP,
       hip: this.state.asesoriaHIP,
@@ -185,7 +195,7 @@ class Profile extends React.Component {
     else {
       ref.set(asesoriaData).then(() => {
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
-        this.props.history.push('/user/'+this.props.firebase.auth.currentUser.uid+'/asesorias/'+ref.id);
+        this.props.history.push('/asesoria/'+ref.id);
       }).catch(err => this.props.toast.show({ text:err,  }));
       // console.log(asesoriaData)
     }
@@ -270,6 +280,7 @@ class Profile extends React.Component {
               : <></>
             }
             <Modal visibility={this.state.formSolicitarStatus} open={this.openFormSolicitar} close={this.closeFormSolicitar} >
+              <p className="semi-bold x-large">Solicitar asesoría a {this.state.nombre} {this.state.apellido}</p>
               <FormSolicitarAsesoria 
                 asunto={this.state.asesoriaAsunto} 
                 
@@ -287,6 +298,8 @@ class Profile extends React.Component {
                 
                 temasComplete={this.state.temasComplete}
                 temas={this.state.asesoriaTemaUID} 
+                mensajeAs={this.state.mensajeAs}
+                
                 onChangeF={this.handleFormAsChange}
                 send={this.sendSolicitud}
                 today={this.getToday()} />

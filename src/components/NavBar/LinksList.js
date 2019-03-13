@@ -14,11 +14,24 @@ class LinksList extends React.Component {
     if(this.props.authUser) {
       return(
         <>
-          <li className="col-md-3 link middle-xs row center-xs">
-            <Link className="col-xs-12" to={ ROUTES.MENTORES }>
-              Mentores
-            </Link>
-          </li>
+          {
+            this.props.authUser.rol !== 'mentor'
+              ? <li className="col-md-3 link middle-xs row center-xs">
+                  <Link className="col-xs-12" to={ ROUTES.MENTORES }>
+                    Mentores
+                  </Link>
+                </li>
+              : <></>
+          }
+          {
+            this.props.authUser.rol === 'administrador'
+              ? <li className="col-md-3 link middle-xs row center-xs">
+                  <Link className="col-xs-12" to={ ROUTES.MENTORES }>
+                    Reportes
+                  </Link>
+                </li>
+              : <></>
+          }
           <li className="col-md-3 link middle-xs row center-xs">
             <Link className="col-xs-12" to={ ROUTES.ASESORIAS }>
               Mis Asesorias

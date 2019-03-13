@@ -38,11 +38,21 @@ main {
 }
 
 textarea {
+  min-width: 100%;
   max-width: 100%;
+  min-height: 50px;
 }
 
 section.padding-bot {
   padding-bottom: 25px;
+}
+
+.flex {
+  display: flex;
+}
+
+.middle {
+  justify-content: center;
 }
 
 .padding {

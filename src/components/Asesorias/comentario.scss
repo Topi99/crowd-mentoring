@@ -20,13 +20,28 @@
     }
   }
 
+  &:hover .content .nombre .fecha{
+    opacity: 1;
+  }
+
   .content {
     text-align: start;
-    padding: 5px 15px;
+    padding: 10px 15px;
     overflow: visible;
     width: fit-content;
     max-width: 100%;
     box-sizing: border-box;
+
+
+    .nombre{
+      .fecha {
+        font-size: small;
+        font-weight: normal;
+        opacity: 0;
+        transition: .3s ease;
+      }
+    }
+
 
     &::before {
       content: '';

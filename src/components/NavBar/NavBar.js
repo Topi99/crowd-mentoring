@@ -17,19 +17,6 @@ class NavBar extends React.Component {
     // console.log(window.location);
   }
 
-  // componentDidMount() {
-  //   document.addEventListener('scroll', this.handleScroll);
-  // }
-
-  // componentWillUnmount() {
-  //   document.removeEventListener('scroll', this.handleScroll);
-  // }
-
-  // handleScroll = e => {
-  //   let scrollTop = e.srcElement.body.scrollTop;
-  //   console.log(scrollTop);
-  // }
-
   render() {
     return(
       <nav className={ `row ${styles.navBar} ${this.state.className}` }>
@@ -47,7 +34,7 @@ class NavBar extends React.Component {
         </div>
         <div className={ `row middle-xs end-xs hidden-md hidden-sm hidden-xs col-lg-offset-3 col-lg-6 ${styles.navBar__Links}` }>
           <AuthUserContext.Consumer>
-            { authUser => <LinksList authUser={ authUser } />}
+            { (authUser, rol) => <LinksList authUser={ authUser } rol={ rol } />}
           </AuthUserContext.Consumer>
         </div>
       </nav>

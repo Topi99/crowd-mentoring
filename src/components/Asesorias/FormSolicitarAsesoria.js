@@ -1,5 +1,38 @@
 import React from 'react';
 
+const TimeInput = props => {
+  return(
+    <select value={props.valueIn} onChange={props.onChangeIn} id={props.idIn}>
+      <option value="09:00">09:00</option>
+      <option value="09:30">09:30</option>
+      <option value="10:00">10:00</option>
+      <option value="10:30">10:30</option>
+      <option value="11:00">11:00</option>
+      <option value="11:30">11:30</option>
+      <option value="12:00">12:00</option>
+      <option value="12:30">12:30</option>
+      <option value="13:00">13:00</option>
+      <option value="13:30">13:30</option>
+      <option value="14:00">14:00</option>
+      <option value="14:30">14:30</option>
+      <option value="15:00">15:00</option>
+      <option value="15:30">15:30</option>
+      <option value="16:00">16:00</option>
+      <option value="16:30">16:30</option>
+      <option value="17:00">17:00</option>
+      <option value="17:30">17:30</option>
+      <option value="18:00">18:00</option>
+      <option value="18:30">18:30</option>
+      <option value="19:00">19:00</option>
+      <option value="19:30">19:30</option>
+      <option value="20:00">20:00</option>
+      <option value="20:30">20:30</option>
+      <option value="21:00">21:00</option>
+      <option value="21:30">21:30</option>
+    </select>
+  );
+}
+
 const FormSolicitarAsesoria = props => {
   return(
     /**
@@ -29,7 +62,7 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 (Debe llegar en formato YYYY-MM-DD)
        */
       }
-      <div className="col-xs-4">
+      <div className="col-xs-12 col-md-4">
         <p>Fecha preferida: </p>
         <input 
           onChange={props.onChangeF} 
@@ -49,17 +82,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIP" 
-          value={props.asesoriaHIP} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de inicio (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHIP" 
+          valueIn={props.asesoriaHIP} />
       </div>
 
       {
@@ -71,17 +99,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFP" 
-          value={props.asesoriaHFP} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de Fin (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHFP" 
+          valueIn={props.asesoriaHFP} />
       </div>
 
       {
@@ -93,7 +116,7 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
+      <div className="col-xs-12 col-md-4">
         <p>Fecha alterna 1: </p>
         <input 
           onChange={props.onChangeF} 
@@ -113,17 +136,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIA1" 
-          value={props.asesoriaHIA1}
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de inicio (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHIA1" 
+          valueIn={props.asesoriaHIA1} />
       </div>
 
       {
@@ -135,17 +153,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFA1" 
-          value={props.asesoriaHFA1} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de Fin (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHFA1" 
+          valueIn={props.asesoriaHFA1} />
       </div>
 
       {
@@ -157,7 +170,7 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
+      <div className="col-xs-12 col-md-4">
         <p>Fecha alterna 2: </p>
         <input 
           onChange={props.onChangeF} 
@@ -177,17 +190,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de inicio (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHIA2" 
-          value={props.asesoriaHIA2}
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de inicio (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHIA2" 
+          valueIn={props.asesoriaHIA2} />
       </div>
 
       {
@@ -199,17 +207,12 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
-        <p>Hora de Fin (De 9:00 AM a 9:00 PM): </p>
-        <input 
-          onChange={props.onChangeF} 
-          id="asesoriaHFA2" 
-          value={props.asesoriaHFA2} 
-          type="time" 
-          min="09:00" 
-          max="21:00" 
-          step="1800" >
-        </input>
+      <div className="col-xs-12 col-md-4">
+        <p>Hora de Fin (De 09:00 a 21:00): </p>
+        <TimeInput 
+          onChangeIn={props.onChangeF} 
+          idIn="asesoriaHFA2" 
+          valueIn={props.asesoriaHFA2} />
       </div>
 
       {
@@ -221,7 +224,7 @@ const FormSolicitarAsesoria = props => {
        *    Llega     👍 
        */
       }
-      <div className="col-xs-4">
+      <div className="col-xs-12 col-md-4">
         <p>Temas (ctrl + click): </p>
         <select 
           onChange={props.onChangeF} 
@@ -230,7 +233,7 @@ const FormSolicitarAsesoria = props => {
             { 
               props.temasComplete.map(tema => 
                 <option 
-                  key={tema.uid} 
+                  key={tema.nombre} 
                   value={tema.uid}>
                     {tema.nombre}
                 </option>
@@ -238,12 +241,21 @@ const FormSolicitarAsesoria = props => {
             }
         </select>
       </div>
+      <div className="col-xs-12 col-md-8">
+				<p>Mensaje: </p>
+				<textarea 
+					placeholder="Detalla los temas de la asesoría: "
+					id="mensajeAs"
+					value={props.mensajeAs}
+					onChange={props.onChangeF} />
+      </div>
       <div className="col-xs-12 center-xs">
         <button 
           className="button" 
           onClick={props.send}>
             Solicitar
         </button>
+				<p className="gray padding">Al dar click en "Solicitar" aceptas los términos y condiciones del sitio.</p>
       </div>
     </div>
   );

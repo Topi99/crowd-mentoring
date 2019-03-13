@@ -70,8 +70,8 @@ class ListMentores extends React.Component {
           className="center-xs bradius" 
           withButton btnTxt="Ver perfil" 
           btnTo={PROFILE+'/'+mentor.uid} 
-          // img={mentor.photoURL ? mentor.photoURL:PROFILE_IMG_DEF} 
-          img={mentor.photoURL ? mentor.photoURL:"https://scontent-dfw5-2.xx.fbcdn.net/v/t1.0-9/36912321_1964265953597941_8969276024957173760_n.jpg?_nc_cat=104&_nc_ht=scontent-dfw5-2.xx&oh=50cf6870db7cfc44a181acc3ff75db76&oe=5CF11722"}
+          img={mentor.photoURL ? mentor.photoURL:PROFILE_IMG_DEF} 
+          // img={mentor.photoURL ? mentor.photoURL:"https://scontent-dfw5-2.xx.fbcdn.net/v/t1.0-9/36912321_1964265953597941_8969276024957173760_n.jpg?_nc_cat=104&_nc_ht=scontent-dfw5-2.xx&oh=50cf6870db7cfc44a181acc3ff75db76&oe=5CF11722"}
           title={mentor.nombre+' '+mentor.apellido} 
           body={mentor.bio}
           aesp={mentor.aesp} />

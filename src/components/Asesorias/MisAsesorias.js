@@ -3,7 +3,6 @@ import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Auth';
 import DataTable from 'react-data-table-component';
 import { withRouter } from 'react-router-dom';
-import { ASESORIAS } from '../../constants/routes';
 
 class MisAsesorias extends React.Component {
   constructor(props) {
@@ -27,25 +26,28 @@ class MisAsesorias extends React.Component {
     let asesorias = [];
     let asesoria = [];
     let temas = [];
-
-    this.changing = {
-      name: 'Solicitada Por',
-      selector: 'solicitadaPorUID',
-      sortable: true
-    };
     
     this.columns = [
       {
         name: 'Asunto',
         selector: 'asunto',
-        sortable: false
+        sortable: true
       },
       {
         name: 'Temas',
         selector: 'temas',
         sortable: false
       },
-      this.changing,
+      {
+        name: 'Solicitada Por',
+        selector: 'authUserName',
+        sortable: true
+      },
+      {
+        name: 'Solicitada A',
+        selector: 'nombreMentor',
+        sortable: true
+      },
       {
         name: 'Fecha Preferida',
         selector: 'asesoriaFechaP',
@@ -73,7 +75,6 @@ class MisAsesorias extends React.Component {
 
       // Aplico la condición de que obtenga las asesorías si es mentor o emprendedor
       ref = ref.where(rolString === 'mentor' ? 'mentorUID' : 'solicitadaPorUID', '==', uid);
-      this.changing = rolString === 'mentor' ? this.changing : { name:'Solicitada A', selector:'mentorUID', sortable:true };
 
       // Aquí obtengo las asesorías del usuario.
       ref.onSnapshot(query => {
@@ -88,6 +89,7 @@ class MisAsesorias extends React.Component {
 
         // En esta linea asigno la lista de asesorías al estado. 
         this.setState({asesorias})
+        this.forceUpdate();
         console.log(this.state.asesorias);
       })
     });

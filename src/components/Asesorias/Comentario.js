@@ -10,7 +10,7 @@ const Comentario = props => {
       </div>
       <div className="content card active bradius">
         <p className="nombre semi-bold">
-          {props.nombre}
+          {props.nombre} <span className="fecha gray">- {props.fecha}</span>
         </p>
         <p className="mensaje gray">
           {props.comentario}
