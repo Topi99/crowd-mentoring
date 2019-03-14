@@ -3,19 +3,32 @@ import { Link } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import styles from './index.module.scss';
+import { ADMINISTRADOR, MENTOR } from '../../constants/roles';
+import { ImgIcon } from '../Common';
 
 class LinksList extends React.Component {
-
+  constructor(props) {
+    super(props);
+    this.state = { photoURL: '' }
+  }
+  
   logout = e => {
     this.props.firebase.doSignOut();
+  }
+
+  getPhotoURL = async (uid) => {
+    this.props.firebase.db.collection('users').doc(uid).get().then(doc => {
+      this.setState({photoURL: doc.data().photoURL})
+    });
   }
   
   getLinks = () => {
     if(this.props.authUser) {
+      this.getPhotoURL(this.props.authUser.uid);
       return(
         <>
           {
-            this.props.authUser.rol !== 'mentor'
+            (this.props.authUser.rol+'').toUpperCase() !== MENTOR
               ? <li className="col-md-3 link middle-xs row center-xs">
                   <Link className="col-xs-12" to={ ROUTES.MENTORES }>
                     Mentores
@@ -24,7 +37,7 @@ class LinksList extends React.Component {
               : <></>
           }
           {
-            this.props.authUser.rol === 'administrador'
+            (this.props.authUser.rol+'').toUpperCase() === ADMINISTRADOR
               ? <li className="col-md-3 link middle-xs row center-xs">
                   <Link className="col-xs-12" to={ ROUTES.MENTORES }>
                     Reportes
@@ -39,11 +52,7 @@ class LinksList extends React.Component {
           </li>
           <li className="col-xs-1 link center-xs">
             <div className={styles.imgWrap}>
-              {
-                this.props.authUser.photoURL 
-                ? <img className={styles.profileIcon} src={this.props.authUser.photoURL} alt="" />
-                : <img className={styles.profileIcon} src={ROUTES.PROFILE_IMG_DEF} alt="" />
-              }
+              <ImgIcon photoURL={this.state.photoURL} />
             </div>
             <div className={`${styles.profileLinksHover}  row middle-xs center-xs`}>
               <p className="col-xs-12">

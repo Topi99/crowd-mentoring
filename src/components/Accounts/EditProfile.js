@@ -51,6 +51,7 @@ class EditProfile extends React.Component {
   }
 
   submit = async e => {
+    e.preventDefault();
     if(this.rol === 'administrador')
       this.props.firebase.doPasswordReset(this.state.emailPrin);
 

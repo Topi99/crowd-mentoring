@@ -41,7 +41,7 @@ class MentorForm extends React.Component {
   
   render() {
     return(
-      <div className="formFull--inputs col-xs-12 row center-xs mentorForm">
+      <form onSubmit={this.props.submit} className="formFull--inputs col-xs-12 row center-xs mentorForm">
   
         {
           this.props.noChange 
@@ -51,9 +51,9 @@ class MentorForm extends React.Component {
             </div>
         }
   
-        <input value={ this.props.nombre } onChange={ this.props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
-        <input value={ this.props.apellido } onChange={ this.props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
-        <input value={ this.props.tituloProf } onChange={ this.props.handleInputChange } id="tituloProf" className="col-xs-12" type="text" placeholder="Titulo profesional" />
+        <input required value={ this.props.nombre } onChange={ this.props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
+        <input required value={ this.props.apellido } onChange={ this.props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
+        <input required value={ this.props.tituloProf } onChange={ this.props.handleInputChange } id="tituloProf" className="col-xs-12" type="text" placeholder="Titulo profesional" />
         <select value={this.props.areasEsp} multiple onChange={ this.props.handleInputChange } id="areasEsp" className="col-xs-12" placeholder="Areas de Especialidad" >
           
           {
@@ -82,14 +82,17 @@ class MentorForm extends React.Component {
           }
   
         </select>
+        <input type="text" required value={ this.props.universidad } onChange={ this.props.handleInputChange } id="universidad" className="col-xs-12" placeholder="Universidad" />
+      
         <input value={ this.props.ciudad } onChange={ this.props.handleInputChange } id="ciudad" className="col-xs-12" type="text" placeholder="Ciudad" />
-        <input value={ this.props.emailPrin } onChange={ this.props.handleInputChange } id="emailPrin" className="col-xs-12" type="text" placeholder="Email principal" />
-        <input value={ this.props.emailSec } onChange={ this.props.handleInputChange } id="emailSec" className="col-xs-12" type="text" placeholder="Email secundario" />
+        <input required value={ this.props.emailPrin } onChange={ this.props.handleInputChange } id="emailPrin" className="col-xs-12" type="email" placeholder="Email principal" />
+        <input value={ this.props.emailSec } onChange={ this.props.handleInputChange } id="emailSec" className="col-xs-12" type="email" placeholder="Email secundario" />
         <input value={ this.props.celular } onChange={ this.props.handleInputChange } id="celular" className="col-xs-12" type="text" placeholder="Celular" />
         <textarea value={ this.props.bio } onChange={ this.props.handleInputChange } id="bio" className="col-xs-12" placeholder="Biografía" />
   
-        <button onClick={ this.props.submit } className="col-xs-5 button">Enviar Solicitud</button>
-  
+        <div className="padding">
+          <button type="submit" className="button">{this.props.noChange ? 'Guardar' : 'Enviar Solicitud'}</button>
+        </div>
         {
           this.props.noBtnLogin
           ? <></>
@@ -105,7 +108,7 @@ class MentorForm extends React.Component {
               </div>
             </>
         }
-      </div>
+      </form>
     );
   }
 };

@@ -57,6 +57,7 @@ class Register extends React.Component {
   }
 
   submit = async e => {
+    e.preventDefault();
     try {
       const authUser = await this.props.firebase.doCreateUserWithEmailAndPassword(this.state.emailPrin, "_Pa3s#1_");
       const uid = authUser.user.uid;

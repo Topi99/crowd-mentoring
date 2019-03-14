@@ -2,15 +2,12 @@ import React from 'react';
 import './index.scss';
 import Link from 'react-router-dom/Link';
 import StarRatingComponent from 'react-star-rating-component';
+import { ImgIcon } from '../Common';
 
 const ImageCard = props => {
   return(
     <div className={`card smallImageCard ${props.className}`} >
-      <div className="image--container">
-        <div className="image--wrap">
-          <img src={props.img} alt="card" />
-        </div>
-      </div>
+      <ImgIcon large photoURL={props.img} />
       <h4 className="card--title">{props.title}</h4>
       <StarRatingComponent
         name="stars"

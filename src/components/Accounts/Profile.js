@@ -1,19 +1,19 @@
 import React from 'react';
-import { withAuthorization } from '../Auth';
+import { withAuthorization, AuthUserContext, EmprendedorForm, MentorForm } from '../Auth';
 import { withFirebase } from '../Firebase';
 import './profile.scss';
 import equal from 'fast-deep-equal'
-import { PROFILE } from '../../constants/routes';
-import { Link } from 'react-router-dom';
 import GestionUsuarios from './GestionUsuarios';
 import GestionAEsp from './GestionAEsp';
 import GestionIndustrias from './GestionIndustrias';
 import GestionTemas from './GestionTemas';
 import GestionEtapaEmp from './GestionEtapaEmp';
-import { Modal } from '../Common';
+import { Modal, ImgIcon } from '../Common';
 import { withToast } from 'react-awesome-toasts';
 import { withRouter } from 'react-router-dom';
 import FormSolicitarAsesoria from '../Asesorias/FormSolicitarAsesoria';
+import { EMPRENDEDOR, MENTOR, ADMINISTRADOR } from '../../constants/roles';
+import { confirmAlert } from 'react-confirm-alert';
 
 const Info = props => {
   return(
@@ -62,9 +62,10 @@ const INITIAL_STATE = {
   temas:[''],
   asesoriaTemaUID:[''],
   temasComplete: [''],
+  rolString: ''
 }
 
-class Profile extends React.Component {
+class ProfileBase extends React.Component {
   constructor(props) {
     super(props)
     
@@ -230,55 +231,118 @@ class Profile extends React.Component {
       }
       this.setState({ 'asesoriaTemaUID' : value });
       this.setState({ 'asesoriaTema' : valueRef });
-      // console.log(value);
     } else this.setState({ [e.target.id] : e.target.value });
-    // console.log('chande',e.target.id,this.state);
+  }
+
+  handleChange = e => {
+    if(e.target.id === "areasEsp" || e.target.id === "etapas" || e.target.id === "industrias" || e.target.id === "temas") {
+      var options = e.target.options;
+      var value = [];
+      for (var i = 0, l = options.length; i < l; i++) {
+        if (options[i].selected) {
+          value.push(options[i].value);
+        }
+      }
+      this.setState({ [e.target.id] : value });
+    }
+    else this.setState({ [e.target.id] : e.target.value });
+  }
+
+  submit = async e => {
+    e.preventDefault();
+    await this.props.firebase.user(this.props.match.params.uid).set({
+      ...this.state
+    })
+
+    this.props.toast.show({text:'Información de perfil actualizada'});
+  }
+
+  getForm = () => {
+    if((this.props.authUser.rol+'').toUpperCase() === EMPRENDEDOR || (this.props.authUser.rol+'').toUpperCase() === ADMINISTRADOR) {
+      return <EmprendedorForm photo noChange noBtnLogin handleInputChange={this.handleChange} submit={this.submit} {...this.state} />
+    } else if((this.props.authUser.rol+'').toUpperCase() === MENTOR) {
+      return <MentorForm photo noChange noBtnLogin handleInputChange={this.handleChange} submit={this.submit} {...this.state} />
+    }
+  }
+
+  uploadPhoto = (e, onClose) => {
+    let ref = this.props.firebase.storage.ref(this.props.authUser.uid+'/imagen');
+    ref.put(document.querySelector("#file").files[0]).then(snapshot => {
+      ref.getDownloadURL().then(url => {
+        this.props.firebase.db.collection('users').doc(this.props.authUser.uid).update({
+          photoURL:url
+        })
+      })
+    });
+  }
+
+  editPhoto = e => {
+    confirmAlert({
+      customUI: ({onClose}) => 
+      <div className="react-confirm-alert">
+        <div className="react-confirm-alert-body">
+          <h1>ACtualizar foto de perfil</h1>
+          Selecciona la foto a subir.
+          <input type="file" id="file" />
+          <div className="react-confirm-alert-button-group" style={{display:'flex',flexDirection:'column'}}>
+            <button style={{marginTop:'5px'}} onClick={({e, onClose}) => this.uploadPhoto(e, onClose)}>Calificar</button>
+            <button style={{marginTop:'5px'}} onClick={onClose}>Cancelar</button>
+          </div>
+        </div>
+      </div>
+    })
   }
   
   render() {
     return(
-      <div className="row col-xs-12 profile middle-xs">
-        <div className="col-xs-4">
-          <div className="imgContainer">
-            <img src={this.state.photoURL ? this.state.photoURL : "https://png.pngtree.com/svg/20170602/person_1058425.png"} alt="user profile" />
+      <div className="row al-items-start col-xs-12 profile">
+        <div className="col-xs-4 no-padding-l flex">
+          <div className="card  active bradius just-cont-center">
+            <div className="info separator x-padding">
+              <div className={`${this.props.authUser.uid === this.state.uid ? 'edit' : ''} imgContainer padding`}>
+                <ImgIcon large photoURL={this.state.photoURL} />
+                {this.props.authUser.uid === this.state.uid ? <div className="click-edit" onClick={this.editPhoto}><i className="material-icons">edit</i></div>:<></>}
+              </div>
+              <p className="name large semi-bold blue">{this.state.nombre+" "+this.state.apellido}</p>
+              <p className="gray email">{this.state.emailPrin}</p>
+              <p className="gray ciudad">{this.state.ciudad}</p>
+              <p className="gray celular">{this.state.celular}</p>
+            </div>
+            <div className=" x-padding">
+              <div className="important">
+                <p className="carrera medium ">
+                  <span className="black">Carrera: </span> 
+                  <span className="bluishGreen">
+                    {this.state.carrera}
+                  </span>
+                </p>
+                <p className="uni medium">
+                  <span className="black">Universidad: </span>
+                  <span className="bluishGreen">
+                    {this.state.universidad}
+                  </span>
+                </p>
+                <Info state={this.state} />
+              </div>
+              <p className="gray bio"><span className="black ">Biografía: </span>{this.state.bio.length > 280 ? this.state.bio.substr(0, 280)+'...' : this.state.bio}</p>
+              <p className="padding-top center-xs">
+                {
+                  (this.props.authUser.rol+'').toUpperCase() !== MENTOR && this.props.firebase.auth.currentUser.uid !== this.state.uid
+                  ? <button className="button box-sizing-border" onClick={this.openFormSolicitar}>Solicitar Asesoría</button>
+                  : <></>
+                }
+              </p>
+            </div>
           </div>
         </div>
-        <div className="col-xs-8">
-          <div className="generalInfo">
-            <p className="name semi-bold blue">{this.state.nombre+" "+this.state.apellido}</p>
-            { 
-              this.state.rolString === 'Emprendedor' || this.state.rolString === 'Mentor'
-              ? <div className="important">
-                  <p className="carrera medium ">
-                    <span className="black">Carrera: </span> 
-                    <span className="bluishGreen">
-                      {this.state.carrera}
-                    </span>
-                  </p>
-                  <p className="uni medium">
-                    <span className="black">Universidad: </span>
-                    <span className="bluishGreen">
-                      {this.state.universidad}
-                    </span>
-                  </p>
-                  <Info state={this.state} />
-                </div>
-              : <></>
-            }
-            <p className="gray ciudad"><span className="black ">De: </span>{this.state.ciudad}</p>
-            <p className="gray email"><span className="black ">Email: </span>{this.state.emailPrin}</p>
-            <p className="gray celular"><span className="black ">Celular: </span>{this.state.celular}</p>
-            <p className="gray bio"><span className="black ">Biografía: </span>{this.state.bio}</p>
+        <div className="col-xs-8 no-padding-r">
+          <div className="generalInfo card bradius active box-sizing-border">
             {
               this.state.uid === this.props.firebase.auth.currentUser.uid 
-              ? <Link to={'/edit'+PROFILE+'/'+this.state.uid}><button className="button ">Editar</button></Link>
+              ? this.getForm()
               : <></>
             }
-            {
-              this.state.rolString === 'Mentor' && this.props.firebase.auth.currentUser.uid !== this.state.uid
-              ? <button className="button" onClick={this.openFormSolicitar}>Solicitar Asesoría</button>
-              : <></>
-            }
+            
             <Modal visibility={this.state.formSolicitarStatus} open={this.openFormSolicitar} close={this.closeFormSolicitar} >
               <p className="semi-bold x-large">Solicitar asesoría a {this.state.nombre} {this.state.apellido}</p>
               <FormSolicitarAsesoria 
@@ -338,6 +402,14 @@ class Profile extends React.Component {
       </div>
     );
   }
+}
+
+const Profile = props => {
+  return(
+    <AuthUserContext.Consumer>
+      { (authUser, rol) => <ProfileBase {...props} authUser={authUser} /> }
+    </AuthUserContext.Consumer>
+  )
 }
 
 const condition = authUser => !!authUser;

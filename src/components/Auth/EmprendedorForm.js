@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const EmprendedorForm = props => {
   return(
-    <div className={`formFull--inputs col-xs-12 row center-xs emprendedorForm`}>
+    <form onSubmit={props.submit} className={`formFull--inputs col-xs-12 row center-xs emprendedorForm`}>
     
       {
         props.noChange 
@@ -14,10 +14,10 @@ const EmprendedorForm = props => {
           </div>
       }
 
-      <input value={ props.nombre } onChange={ props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
-      <input value={ props.apellido } onChange={ props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
-      <input value={ props.carrera } onChange={ props.handleInputChange } id="carrera" className="col-xs-12" type="text" placeholder="Carrera(s) separada(s) por comas" />
-      <select value={ props.semestre } onChange={ props.handleInputChange } id="semestre" className="col-xs-12" placeholder="Semestre" >
+      <input required value={ props.nombre } onChange={ props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
+      <input required value={ props.apellido } onChange={ props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
+      <input required value={ props.carrera } onChange={ props.handleInputChange } id="carrera" className="col-xs-12" type="text" placeholder="Carrera(s) separada(s) por comas" />
+      <select required value={ props.semestre } onChange={ props.handleInputChange } id="semestre" className="col-xs-12" placeholder="Semestre" >
         <option value="0">Semestre...</option>
         <option value="1">1</option>
         <option value="2">2</option>
@@ -31,18 +31,17 @@ const EmprendedorForm = props => {
         <option value="otro">otro</option>
         <option value="egresado">egresado</option>
       </select>
-      <select value={ props.universidad } onChange={ props.handleInputChange } id="universidad" className="col-xs-12" placeholder="Universidad" >
-        <option value="0">Universidad...</option>
-        <option value="ITESM">ITESM</option>
-        <option value="Otra">Otra</option>
-      </select>
+      <input type="text" required value={ props.universidad } onChange={ props.handleInputChange } id="universidad" className="col-xs-12" placeholder="Universidad" />
+      
       <input value={ props.ciudad } onChange={ props.handleInputChange } id="ciudad" className="col-xs-12" type="text" placeholder="Ciudad" />
-      <input value={ props.emailPrin } onChange={ props.handleInputChange } id="emailPrin" className="col-xs-12" type="text" placeholder="Email principal" />
-      <input value={ props.emailSec } onChange={ props.handleInputChange } id="emailSec" className="col-xs-12" type="text" placeholder="Email secundario" />
+      <input required value={ props.emailPrin } onChange={ props.handleInputChange } id="emailPrin" className="col-xs-12" type="email" placeholder="Email principal" />
+      <input value={ props.emailSec } onChange={ props.handleInputChange } id="emailSec" className="col-xs-12" type="email" placeholder="Email secundario" />
       <input value={ props.celular } onChange={ props.handleInputChange } id="celular" className="col-xs-12" type="text" placeholder="Celular" />
       <textarea value={ props.bio } onChange={ props.handleInputChange } id="bio" className="col-xs-12" placeholder="Biografía" />
 
-      <button onClick={ props.submit } className="col-xs-5 button">{props.noChange ? 'Guardar' : 'Enviar Solicitud'}</button>
+      <div className="padding">
+        <button type="submit" className="button">{props.noChange ? 'Guardar' : 'Enviar Solicitud'}</button>
+      </div>
 
       {
         props.noBtnLogin
@@ -59,7 +58,7 @@ const EmprendedorForm = props => {
             </div>
           </>
       }
-    </div>
+    </form>
   );
 }
 

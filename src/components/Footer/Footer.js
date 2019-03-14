@@ -8,7 +8,7 @@ const Footer = props => {
     <footer>
       <Section title="" className="" classNameDiv="start-xs">
         <div className="col-xs-12 col-md-3 cont">
-          <p className="subtitle"><img src="http://aazztech.com/demos/themes/html/tizara/dist/img/logo.png" /></p>
+          <p className="subtitle"><img src="http://aazztech.com/demos/themes/html/tizara/dist/img/logo.png" alt="footer" /></p>
           <p className="gray">
           Nunc placerat mi id nisi interdum they mtolis. Praesient is pharetra justo ught scel erisque the mattis lhreo quam nterdum mollisy.
           </p>

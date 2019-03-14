@@ -9,13 +9,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-height: 55vh;
-    max-width: 55vh;
-    overflow: hidden;
-    border-radius: 50%;
+    position: relative;
 
-    img {
+    &.edit:hover, &.edit:hover .click-edit {
+      cursor: pointer;
+      visibility: visible;
+      opacity: 1;
+    }
+
+
+    .click-edit {
+      position: absolute;
       width: 100%;
+      height: 100%;
+      visibility: hidden;
+      opacity: 0;
+      transition: .3s ease;
+
+      i {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
+    }
+  }
+  
+  .info {
+    padding-top: 25px;
+    
+    p {
+  
+      text-align: center;
     }
   }
 

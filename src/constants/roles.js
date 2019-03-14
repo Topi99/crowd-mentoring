@@ -1,0 +1,3 @@
+export const EMPRENDEDOR = 'EMPRENDEDOR';
+export const MENTOR = 'MENTOR';
+export const ADMINISTRADOR = 'ADMINISTRADOR';
