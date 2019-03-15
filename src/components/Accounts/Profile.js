@@ -14,6 +14,7 @@ import { withRouter } from 'react-router-dom';
 import FormSolicitarAsesoria from '../Asesorias/FormSolicitarAsesoria';
 import { EMPRENDEDOR, MENTOR, ADMINISTRADOR } from '../../constants/roles';
 import { confirmAlert } from 'react-confirm-alert';
+// import * as sgMail from '@sendgrid/mail';
 
 const Info = props => {
   return(
@@ -65,6 +66,11 @@ const INITIAL_STATE = {
   rolString: ''
 }
 
+// const SENDGRID_API_KEY = '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';
+
+// sgMail.setApiKey(SENDGRID_API_KEY);
+// console.log(SENDGRID_API_KEY);
+
 class ProfileBase extends React.Component {
   constructor(props) {
     super(props)
@@ -94,7 +100,6 @@ class ProfileBase extends React.Component {
               temas.push(doc.data());
             })
             this.setState({temasComplete:temas});
-            console.log(this.state)
           })
         }
       });
@@ -152,6 +157,8 @@ class ProfileBase extends React.Component {
    * TODO: Validar y guardar campos.
    */
   sendSolicitud = e => {
+    e.preventDefault();
+    
     const ref = this.props.firebase.db.collection('asesorias').doc();
     this.closeFormSolicitar();
     const asesoriaData = {
@@ -188,13 +195,14 @@ class ProfileBase extends React.Component {
         console.log(data,asesoriaData[data], 'fail');
         break;
       }
-      else 
-        console.log(data,asesoriaData[data], 'ok');
+      // else 
+      //   console.log(data,asesoriaData[data], 'ok');
     }
 
     if(flag) this.props.toast.show({ text:'Rellena todos los campos para continuar'});
     else {
       ref.set(asesoriaData).then(() => {
+        // sgMail.send(msg);
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
         this.props.history.push('/asesoria/'+ref.id);
       }).catch(err => this.props.toast.show({ text:err,  }));

@@ -42,10 +42,11 @@ const FormSolicitarAsesoria = props => {
      *    value     👍
      *    Llega     👍
      */
-    <div className="row start-xs">
+    <form className="row start-xs" onSubmit={props.send}>
       <div className="col-xs-12">
         <p>Asunto: </p>
         <input 
+          required
           onChange={props.onChangeF} 
           type="text" 
           id="asesoriaAsunto" 
@@ -65,6 +66,7 @@ const FormSolicitarAsesoria = props => {
       <div className="col-xs-12 col-md-4">
         <p>Fecha preferida: </p>
         <input 
+          required
           onChange={props.onChangeF} 
           type="date" 
           min={props.today} 
@@ -84,7 +86,8 @@ const FormSolicitarAsesoria = props => {
       }
       <div className="col-xs-12 col-md-4">
         <p>Hora de inicio (De 09:00 a 21:00): </p>
-        <TimeInput 
+        <TimeInput
+          required 
           onChangeIn={props.onChangeF} 
           idIn="asesoriaHIP" 
           valueIn={props.asesoriaHIP} />
@@ -101,7 +104,8 @@ const FormSolicitarAsesoria = props => {
       }
       <div className="col-xs-12 col-md-4">
         <p>Hora de Fin (De 09:00 a 21:00): </p>
-        <TimeInput 
+        <TimeInput
+          required 
           onChangeIn={props.onChangeF} 
           idIn="asesoriaHFP" 
           valueIn={props.asesoriaHFP} />
@@ -227,14 +231,15 @@ const FormSolicitarAsesoria = props => {
       <div className="col-xs-12 col-md-4">
         <p>Temas (ctrl + click): </p>
         <select 
+          required
           onChange={props.onChangeF} 
           multiple id="asesoriaTema" 
           value={props.temas} >
             { 
               props.temasComplete.map(tema => 
                 <option 
-                  key={tema.nombre} 
-                  value={tema.uid}>
+                  key={tema.uid} 
+                  value={tema.nombre}>
                     {tema.nombre}
                 </option>
               )
@@ -243,7 +248,8 @@ const FormSolicitarAsesoria = props => {
       </div>
       <div className="col-xs-12 col-md-8">
 				<p>Mensaje: </p>
-				<textarea 
+				<textarea
+          required 
 					placeholder="Detalla los temas de la asesoría: "
 					id="mensajeAs"
 					value={props.mensajeAs}
@@ -252,12 +258,12 @@ const FormSolicitarAsesoria = props => {
       <div className="col-xs-12 center-xs">
         <button 
           className="button" 
-          onClick={props.send}>
+          type="submit">
             Solicitar
         </button>
 				<p className="gray padding">Al dar click en "Solicitar" aceptas los términos y condiciones del sitio.</p>
       </div>
-    </div>
+    </form>
   );
 }
 

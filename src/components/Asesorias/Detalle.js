@@ -36,6 +36,8 @@ class Detalle extends React.Component {
       asesoriaFechaP:'',
       mensaje: '',
       comentarios: [],
+      comMinuta: [],
+      menMinuta: '',
       photoURL: '',
       nombre: '',
       mensajeSend: '',
@@ -90,14 +92,41 @@ class Detalle extends React.Component {
     this.setState({mensajeSend:""});
   }
 
+  handleComMinChange = e => {
+    this.setState({menMinuta:e.target.value});
+  }
+
+  sendComMin = e => {
+    e.preventDefault();
+    let now = new Date();
+    this.props.firebase.db.collection('asesorias').doc(this.state.id).update({
+      comMinuta: this.props.firebase.firestore.FieldValue.arrayUnion({
+        comentario: this.state.menMinuta,
+        nombre: this.state.nombre,
+        photoURL: this.state.photoURL ? this.state.photoURL : '',
+        fecha: `${now.getFullYear()}-${now.getMonth() < 10 ? '0': ''}${now.getMonth()+1}-${now.getDay() < 10 ? '0': ''}${now.getDay()} a las ${now.getHours() < 10 ? '0': ''}${now.getHours()}:${now.getMinutes() < 10 ? '0': ''}${now.getMinutes()}`
+      })
+    });
+    this.setState({menMinuta:""});
+  }
+
   clickAceptar = e => {
     confirmAlert({
       title: 'Aceptar Asesoría',
-      message: '¿Estás seguro que la quieres aceptar?',
+      message: '¿Estás seguro que la quieres aceptar? De ser así, por favor selecciona la fecha acordada con el emprendedor. ',
       buttons: [
         {
-          label: 'Sí, aceptar',
-          onClick: this.aceptarAsesoria
+          label: 'Aceptar fecha 1',
+          onClick: (e) => this.aceptarAsesoria(1)
+        },
+        {
+          label: 'Aceptar fecha 2',
+          onClick: (e) => this.aceptarAsesoria(2)
+        },
+        
+        {
+          label: 'Aceptar fecha 3',
+          onClick: (e) => this.aceptarAsesoria(3)
         },
         {
           label: 'No'
@@ -122,9 +151,10 @@ class Detalle extends React.Component {
     });
   }
 
-  aceptarAsesoria = () => {
+  aceptarAsesoria = (fd) => {
     this.props.firebase.db.collection('asesorias').doc(this.state.id).update({
-      status: 'aceptada'
+      status: 'aceptada',
+      fechaDefinida: fd
     });
   }
 
@@ -186,9 +216,9 @@ class Detalle extends React.Component {
             <p className="gray col-xs-12"><span className="black semi-bold">Temas: </span>{this.state.temas}</p>
             <p className="gray col-xs-12"><span className="black semi-bold">Solicitada Por: </span><Link className="bluishGreen" to={PROFILE+'/'+this.state.solicitadaPorUID}>{this.state.solicitadaPorString}</Link> </p>
             <p className="gray col-xs-12"><span className="black semi-bold">Mentor: </span><Link className="bluishGreen" to={PROFILE+'/'+this.state.mentorUID}>{this.state.mentorString}</Link> </p>
-            <p className="gray col-xs-12"><span className="black semi-bold">Fecha Preferida:  </span>{this.state.asesoriaFechaP} <span className="black semi-bold">De: </span>{this.state.hip} <span className="black semi-bold">A: </span>{this.state.hfp}</p>
-            <p className="gray col-xs-12"><span className="black semi-bold">Fecha Alterna 1:  </span>{this.state.fechaA1} <span className="black semi-bold">De: </span>{this.state.hia1} <span className="black semi-bold">A: </span>{this.state.hfa1}</p>
-            <p className="gray col-xs-12"><span className="black semi-bold">Fecha Alterna 2:  </span>{this.state.fechaA2} <span className="black semi-bold">De: </span>{this.state.hia2} <span className="black semi-bold">A: </span>{this.state.hfa2}</p>
+            <p className={`gray col-xs-12 ${this.state.fechaDefinida === 1 ? 'aceptada':''}`}><span className="black semi-bold">Fecha Preferida:  </span>{this.state.asesoriaFechaP} <span className="black semi-bold">De: </span>{this.state.hip} <span className="black semi-bold">A: </span>{this.state.hfp}</p>
+            <p className={`gray col-xs-12 ${this.state.fechaDefinida === 2 ? 'aceptada':''}`}><span className="black semi-bold">Fecha Alterna 1:  </span>{this.state.fechaA1} <span className="black semi-bold">De: </span>{this.state.hia1} <span className="black semi-bold">A: </span>{this.state.hfa1}</p>
+            <p className={`gray col-xs-12 ${this.state.fechaDefinida === 3 ? 'aceptada':''}`}><span className="black semi-bold">Fecha Alterna 2:  </span>{this.state.fechaA2} <span className="black semi-bold">De: </span>{this.state.hia2} <span className="black semi-bold">A: </span>{this.state.hfa2}</p>
             <p className="gray col-xs-12"><span className="black semi-bold">Status: </span><span className={this.state.status}>{this.state.status}</span></p>
             <p className="gray col-xs-12"><span className="black semi-bold">Mensaje: </span>{this.state.mensajeAs}</p>
           </article>
@@ -196,7 +226,7 @@ class Detalle extends React.Component {
         <div className="col-xs-12 col-md-3 flex">
           <article className="actions row card active bradius padding max-heigth">
             {
-              this.state.cm && this.state.ce
+              (this.state.cm && this.state.ce) || (this.state.mentorUID === this.props.firebase.auth.currentUser.uid && this.state.cm) || (this.state.solicitadaPorUID === this.props.firebase.auth.currentUser.uid && this.state.ce)
               ? <></>
               : <p className="x-large semi-bold col-xs-12">Acciones</p>
             }
@@ -230,18 +260,13 @@ class Detalle extends React.Component {
               : <></>
             }
             {
-              this.state.status === 'finalizada' && this.state.cm && this.state.ce
+              this.state.status === 'finalizada' && ((this.state.mentorUID === this.props.firebase.auth.currentUser.uid && this.state.cm)  || (this.state.solicitadaPorUID === this.props.firebase.auth.currentUser.uid && this.state.ce))
+              ? <p className="x-large semi-bold col-xs-12">Calificaciones</p>
+              : <></>
+            }
+            {
+              (this.state.status === 'finalizada' && this.state.cm && this.state.mentorUID === this.props.firebase.auth.currentUser.uid) || (this.state.status === 'finalizada' && this.state.cm && this.state.ce)
               ? <>
-                  <p className="x-large semi-bold col-xs-12">Calificaciones</p>
-                  <div className="col-xs-12">
-                    <p className="semi-bold col-xs-12">Calificación del Emprendedor</p>
-                    <StarRatingComponent
-                      name="stars"
-                      editing='false'
-                      starCount={5}
-                      value={this.state.empCalif}
-                      renderStarIcon={() => <i class="fas fa-star"></i>} />
-                  </div>
                   <div className="col-xs-12">
                     <p className="semi-bold col-xs-12">Calificación del Mentor</p>
                     <StarRatingComponent
@@ -249,9 +274,22 @@ class Detalle extends React.Component {
                       editing='false'
                       starCount={5}
                       value={this.state.mentorCalif}
-                      renderStarIcon={() => <i class="fas fa-star"></i>} />
-                  </div>
+                      renderStarIcon={() => <i className="fas fa-star"></i>} />
+                  </div> 
                 </>
+              : <></>
+            }
+            {
+              (this.state.status === 'finalizada' && this.state.ce && this.state.solicitadaPorUID === this.props.firebase.auth.currentUser.uid) || (this.state.status === 'finalizada' && this.state.cm && this.state.ce)
+              ? <div className="col-xs-12">
+                  <p className="semi-bold col-xs-12">Calificación del Emprendedor</p>
+                  <StarRatingComponent
+                    name="stars"
+                    editing='false'
+                    starCount={5}
+                    value={this.state.empCalif}
+                    renderStarIcon={() => <i className="fas fa-star"></i>} />
+                </div> 
               : <></>
             }
           </article>
@@ -269,13 +307,33 @@ class Detalle extends React.Component {
           {
             this.state.status === 'pendiente' || this.state.status === 'aceptada'
             ? <form className="col-xs-12" onSubmit={this.sendComment}>
-                <textarea onChange={this.handleCommentChange} value={this.state.mensajeSend} className="card active bradius" placeholder="Escribe tu comentario aquí: " />
+                <textarea required onChange={this.handleCommentChange} value={this.state.mensajeSend} className="card active bradius" placeholder="Escribe tu comentario aquí: " />
+                <button className="button" type="submit">Enviar</button>
+              </form>
+            : <></>
+          }
+        </article>
+        <p className="x-large semi-bold x-padding col-xs-12">Minuta</p>
+        <article className="col-xs-12 col-md-8">
+          {
+            this.state.comMinuta.map(comentario => 
+              <Comentario 
+                photoURL={comentario.photoURL} 
+                nombre={comentario.nombre} 
+                comentario={comentario.comentario}
+                fecha={comentario.fecha} />)
+          }
+          {
+            this.state.status === 'pendiente' || this.state.status === 'aceptada'
+            ? <form className="col-xs-12" onSubmit={this.sendComMin}>
+                <textarea required onChange={this.handleComMinChange} value={this.state.menMinuta} className="card active bradius" placeholder="Escribe tu comentario para la minuta aquí: " />
                 <button className="button" type="submit">Enviar</button>
               </form>
             : <></>
           }
         </article>
       </section>
+      
     );
   }
 }
