@@ -9,11 +9,11 @@ const App = () => {
     <Router>
       <>
         <NavBar/>
-          <main>
+          <section className="main">
             <Switch>
                 <Routes />
             </Switch>
-          </main>
+          </section>
       </>
     </Router>
   );

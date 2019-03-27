@@ -39,7 +39,7 @@ class LinksList extends React.Component {
           {
             (this.props.authUser.rol+'').toUpperCase() === ADMINISTRADOR
               ? <li className="col-md-3 link middle-xs row center-xs">
-                  <Link className="col-xs-12" to={ ROUTES.MENTORES }>
+                  <Link className="col-xs-12" to={ '/reportes' }>
                     Reportes
                   </Link>
                 </li>

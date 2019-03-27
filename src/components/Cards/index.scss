@@ -141,3 +141,12 @@
     border: 1px solid #e4e8ed;
   }
 }
+
+.card-dash {
+  padding: 20px;
+  box-sizing: border-box;
+
+  .card-dash--value {
+    padding: 15px 0;
+  }
+}
