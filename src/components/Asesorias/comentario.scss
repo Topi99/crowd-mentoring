@@ -15,6 +15,11 @@
     justify-self: center;
     box-shadow: 0px 5px 20px 0px rgba(228, 232, 237, 0.85);
     
+    &.large {
+      width: 60px;
+      height: 60px;
+    }
+
     img {
       width: 100%;
     }

@@ -1,13 +1,11 @@
 import React from 'react';
-import { PROFILE_IMG_DEF } from '../../constants/routes';
 import './comentario.scss';
+import { ImgIcon } from '../Common';
 
 const Comentario = props => {
   return(
     <div className="comentario">
-      <div className="img-wrap">
-        <img src={props.photoURL ? props.photoURL : PROFILE_IMG_DEF } alt="comentario" />
-      </div>
+      <ImgIcon photoURL={props.photoURL} />
       <div className="content card active bradius">
         <p className="nombre semi-bold">
           {props.nombre} <span className="fecha gray">- {props.fecha}</span>
