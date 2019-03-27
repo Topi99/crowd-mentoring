@@ -164,6 +164,7 @@ class ProfileBase extends React.Component {
     const asesoriaData = {
       asunto:this.state.asesoriaAsunto,
       temas: this.state.asesoriaTemaUID.join(', '),
+      fechaDeSolicitud: new Date(), 
       solicitadaPorRef: this.props.firebase.db.collection('users').doc(this.props.firebase.auth.currentUser.uid),
       solicitadaPorUID: this.props.firebase.auth.currentUser.uid,
       
