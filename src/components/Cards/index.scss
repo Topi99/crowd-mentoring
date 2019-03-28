@@ -145,8 +145,15 @@
 .card-dash {
   padding: 20px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 
   .card-dash--value {
     padding: 15px 0;
+  }
+
+  .card-dash--select {
+    width: 50%;
+    margin: auto;
   }
 }

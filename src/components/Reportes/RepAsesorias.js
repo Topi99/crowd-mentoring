@@ -47,15 +47,15 @@ class RepAsesorias extends React.Component {
       totalMes: 0,
       concretadas: 0,
       canceladas: 0,
-      asesoriasPorMes: { enero: {...dataDefault}, febreo:{}, marzo: {}, abril: {} },
+      asesoriasPorMes: { enero: {} },
       mesSolicitado: 'enero',
       solicitadasPorMes: [0,0,0,0,0,0,0,0,0,0,0,0]
     };
-
-    this.state = { ...this.INITIAL_STATE, mesSolicitado:this.MONTHS[new Date().getMonth()] };
-
     
+    this.state = { ...this.INITIAL_STATE };
+
     props.firebase.db.collection('asesorias').onSnapshot(doc => {
+      this.state = { mesSolicitado:this.MONTHS[new Date().getMonth()] };
       this.setState({ total: doc.size, canceladas: 0, totalMes: 0, concretadas: 0 })
       // console.log(doc);
       let date;
@@ -65,7 +65,9 @@ class RepAsesorias extends React.Component {
         dataMonth = this.state.asesoriasPorMes;
         dataMonth[this.MONTHS[date.getMonth()]] = {...dataDefault};
         dataMonth[this.MONTHS[date.getMonth()]].datasets[0].data[date.getDate()-1] += 1;
-        dataMonth[this.MONTHS[date.getMonth()]].solicitadas += 1;
+        let solicitadas = this.state.solicitadasPorMes;
+        solicitadas[date.getMonth()] += 1;
+        this.setState({solicitadasPorMes: solicitadas});
         console.log('se modifica');
         
         if(asesoria.data().status === 'finalizada') {
@@ -78,11 +80,17 @@ class RepAsesorias extends React.Component {
         }
         
         this.setState({asesoriasPorMes:dataMonth});
-        console.log(this.state.mesSolicitado, this.state.asesoriasPorMes[this.state.mesSolicitado]);
+        // console.log(this.state.mesSolicitado, this.state.asesoriasPorMes[this.state.mesSolicitado]);
+        console.log(dataMonth);
         dataMonth = undefined;
         // this.setState({asesoriasPorMes: update(this.state.asesoriasPorMes, {[date.getMonth()]:})})
       });
     });
+  }
+
+  handleMonthChange = e => {
+    e.preventDefault();
+    this.setState({ mesSolicitado: e.target.value });
   }
 
   render() {
@@ -93,13 +101,6 @@ class RepAsesorias extends React.Component {
           <div className="card active bradius card-dash" >
             <p className="gray card-dash--title">Total de asesorías solicitadas</p>
             <p className="card-dash--value bold xx-large">{this.state.total}</p>
-          </div>
-        </article>
-
-        <article className="col-xs-6 col-md-3">
-          <div className="card active bradius card-dash" >
-            <p className="gray card-dash--title">Asesorías solicitadas en {this.state.mesSolicitado}</p>
-            <p className="card-dash--value bold xx-large">{this.state.asesoriasPorMes[this.state.mesSolicitado].solicitadas | 0}</p>
           </div>
         </article>
 
@@ -117,9 +118,23 @@ class RepAsesorias extends React.Component {
           </div>
         </article>
 
+        <article className="col-xs-6 col-md-3">
+          <div className="card active bradius card-dash" >
+            <p className="gray card-dash--title">Asesorías solicitadas en {this.state.mesSolicitado}</p>
+            <p className="card-dash--value bold xx-large">{this.state.solicitadasPorMes[this.MONTHS.indexOf(this.state.mesSolicitado)]}</p>
+          </div>
+        </article>
+
         <article className="col-xs-12 col-md-12">
           <div className="card active bradius card-dash" >
             <p className="gray card-dash--title">Asesorías por día del mes de {this.state.mesSolicitado}</p>
+            <select className="card-dash--select" value={this.state.mesSolicitado} onChange={this.handleMonthChange} >
+              { 
+                Object.keys(this.state.asesoriasPorMes).map((key, _$) =>
+                  <option value={key}>{key}</option>
+                )
+              }
+            </select>
             <Bar 
               data={this.state.asesoriasPorMes[this.state.mesSolicitado]} />
           </div>
