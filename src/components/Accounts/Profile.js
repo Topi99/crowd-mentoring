@@ -102,6 +102,21 @@ class ProfileBase extends React.Component {
             this.setState({temasComplete:temas});
           })
         }
+
+        const refVisita = props.firebase.db.collection('mentoresBuscados').doc(this.state.uid);
+        refVisita.get().then(doc => {
+          if(doc.exists) {
+            refVisita.update({
+              visitas: doc.data().visitas + 1
+            });
+            console.log(doc.data());
+          } else {
+            refVisita.set({
+              visitas: 1,
+              solicitudes: 0
+            });
+          }
+        });
       });
     }
 
@@ -153,11 +168,9 @@ class ProfileBase extends React.Component {
   openFormSolicitar = e => this.setState({formSolicitarStatus: true});
   closeFormSolicitar = e => this.setState({formSolicitarStatus: false});
 
-  /**
-   * TODO: Validar y guardar campos.
-   */
   sendSolicitud = e => {
     e.preventDefault();
+    // this.props.toast.show({text:'Validando solicituds.'})
     
     const ref = this.props.firebase.db.collection('asesorias').doc();
     this.closeFormSolicitar();
@@ -204,6 +217,20 @@ class ProfileBase extends React.Component {
     else {
       ref.set(asesoriaData).then(() => {
         // sgMail.send(msg);
+        const refVisita = this.props.firebase.db.collection('mentoresBuscados').doc(this.state.uid);
+        refVisita.get().then(doc => {
+          if(doc.exists) {
+            refVisita.update({
+              solicitudes: doc.data().solicitudes + 1
+            });
+            console.log(doc.data());
+          } else {
+            refVisita.set({
+              visitas: 1,
+              solicitudes: 1
+            });
+          }
+        });
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
         this.props.history.push('/asesoria/'+ref.id);
       }).catch(err => this.props.toast.show({ text:err,  }));
@@ -261,7 +288,7 @@ class ProfileBase extends React.Component {
     e.preventDefault();
     await this.props.firebase.user(this.props.match.params.uid).set({
       ...this.state
-    })
+    });
 
     this.props.toast.show({text:'Información de perfil actualizada'});
   }
