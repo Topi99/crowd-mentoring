@@ -1,6 +1,6 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
-import { Bar } from 'react-chartjs-2';
+import { Line, Bar } from 'react-chartjs-2';
 
 class RepAsesorias extends React.Component {
   constructor(props) {
@@ -137,8 +137,12 @@ class RepAsesorias extends React.Component {
             </select>
             <Bar 
               data={this.state.asesoriasPorMes[this.state.mesSolicitado]} />
+            {/* <Line 
+              data={this.state.asesoriasPorMes[this.state.mesSolicitado]} /> */}
           </div>
         </article>
+
+        <p className="title col-xs-12">Insights</p>
       </section>
     );
   }
