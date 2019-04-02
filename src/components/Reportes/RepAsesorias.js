@@ -6,7 +6,7 @@ class RepAsesorias extends React.Component {
   constructor(props) {
     super(props);
 
-    const dataDefault = {
+    this.dataDefault = {
       labels: [1, 2, 3, 4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
       solicitadas: 0,
       datasets: [
@@ -55,20 +55,23 @@ class RepAsesorias extends React.Component {
     this.state = { ...this.INITIAL_STATE };
 
     props.firebase.db.collection('asesorias').onSnapshot(doc => {
-      this.state = { mesSolicitado:this.MONTHS[new Date().getMonth()] };
       this.setState({ total: doc.size, canceladas: 0, totalMes: 0, concretadas: 0 })
       // console.log(doc);
       let date;
-      let dataMonth = [];
       doc.forEach(asesoria => {
+        let dataMonth = [];
         date = new Date(asesoria.data().fechaDeSolicitud.seconds*1000);
-        dataMonth = this.state.asesoriasPorMes;
-        dataMonth[this.MONTHS[date.getMonth()]] = {...dataDefault};
+        dataMonth = Object.assign({}, this.state.asesoriasPorMes);
+
+        dataMonth[this.MONTHS[date.getMonth()]] = Object.assign({}, this.dataDefault);
+
+        // console.log(dataMonth[this.MONTHS[date.getMonth()]]);
+
         dataMonth[this.MONTHS[date.getMonth()]].datasets[0].data[date.getDate()-1] += 1;
+        dataMonth[this.MONTHS[date.getMonth()]].mes = this.MONTHS[date.getMonth()];
         let solicitadas = this.state.solicitadasPorMes;
         solicitadas[date.getMonth()] += 1;
         this.setState({solicitadasPorMes: solicitadas});
-        console.log('se modifica');
         
         if(asesoria.data().status === 'finalizada') {
           this.setState({concretadas: this.state.concretadas + 1})
@@ -81,8 +84,8 @@ class RepAsesorias extends React.Component {
         
         this.setState({asesoriasPorMes:dataMonth});
         // console.log(this.state.mesSolicitado, this.state.asesoriasPorMes[this.state.mesSolicitado]);
-        console.log(dataMonth);
-        dataMonth = undefined;
+        // console.log(dataMonth);
+        dataMonth = [];
         // this.setState({asesoriasPorMes: update(this.state.asesoriasPorMes, {[date.getMonth()]:})})
       });
     });
@@ -91,6 +94,7 @@ class RepAsesorias extends React.Component {
   handleMonthChange = e => {
     e.preventDefault();
     this.setState({ mesSolicitado: e.target.value });
+    console.log(this.state.asesoriasPorMes);
   }
 
   render() {
