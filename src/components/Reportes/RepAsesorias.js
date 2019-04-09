@@ -1,6 +1,7 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
 import { Line, Bar } from 'react-chartjs-2';
+import { withAuthorization } from '../Auth';
 
 class RepAsesorias extends React.Component {
   constructor(props) {
@@ -83,9 +84,11 @@ class RepAsesorias extends React.Component {
         asesoriasPorMes.datasets[0].data[fecha.getDate()-1] += 1;
         if(asesoria.status === "cancelada" || asesoria.status === "pendiente") {
           this.setState({canceladas: this.state.canceladas + 1});
+          asesoriasPorMes.datasets[2].data[fecha.getDate()-1] += 1;
         }
         if(asesoria.status === "finalizada") {
           this.setState({concretadas: this.state.concretadas + 1});
+          asesoriasPorMes.datasets[1].data[fecha.getDate()-1] += 1;
         }
       });
       
@@ -122,7 +125,7 @@ class RepAsesorias extends React.Component {
         
         <article className="col-xs-6 col-md-3">
           <div className="card active bradius card-dash" >
-            <p className="gray card-dash--title">Concretadas en el mes de {this.state.mesSolicitado}</p>
+            <p className="gray card-dash--title">No concretadas en el mes de {this.state.mesSolicitado}</p>
             <p className="card-dash--value bold xx-large">{Math.round(100*(this.state.canceladas/this.state.totalMes)*100)/100 | 0}%</p>
           </div>
         </article>
@@ -157,4 +160,6 @@ class RepAsesorias extends React.Component {
   }
 }
 
-export default withFirebase(RepAsesorias);
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(withFirebase(RepAsesorias));
