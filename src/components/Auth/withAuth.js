@@ -1,6 +1,7 @@
 import React from 'react';
 import { withFirebase } from '../Firebase';
 import { AuthUserContext } from '../Auth';
+import { withToast } from 'react-awesome-toasts';
 
 const withAuth = Component => {
   class WithAuth extends React.Component {
@@ -18,8 +19,13 @@ const withAuth = Component => {
         if(authUser) {
           this.setState({authUser});
           this.props.firebase.db.collection('users').doc(authUser.uid).get().then(doc => {
-            authUser.rol = doc.data().rolString
-            this.setState({authUser});
+            if(doc.exists) {
+              authUser.rol = doc.data().rolString
+              this.setState({authUser});
+            } else {
+              this.props.toast.show({ text: "Por favor, inicia sesión de nuevo" });
+              this.props.firebase.doSignOut();
+            }
           });
         } else {
           this.setState({ authUser: null, rol:null })
@@ -41,7 +47,7 @@ const withAuth = Component => {
     }
   }
 
-  return withFirebase(WithAuth);
+  return withToast(withFirebase(WithAuth));
 };
 
 export default withAuth;

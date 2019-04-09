@@ -4,6 +4,7 @@ import './index.scss';
 import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
+import withAuthorization from './withAuthorization';
 
 const INITIAL_STATE = {
   correo: "",
@@ -25,10 +26,29 @@ class LoginBase extends React.Component {
       await this.props.firebase.doSignInWithEmailAndPassword(this.state.correo, this.state.contraseña)
 
       this.setState = { ...INITIAL_STATE };
-      this.props.history.push('/');
+      this.afterLogin();
     } catch(error) {
       console.log("Ocurrió un error al iniciar sesión: ", error);
     }
+  }
+
+  googleLogin = async () => {
+    try {
+      let provider = new this.props.firebase.getGoogleAuthProvider();
+      let result = await this.props.firebase.doSignInWithPopup(provider);
+      let user = await this.props.firebase.user(result.user.uid).get();
+      console.log(user);
+      if(user.exists && user.data().status === 'active') {
+        console.log(user.data());
+        this.afterLogin();
+      } else {
+        this.props.firebase.doSignOut();
+      }
+    } catch(e) { console.log(e) }
+  }
+
+  afterLogin = () => {
+    this.props.history.push('/');
   }
 
   render = () => {
@@ -53,7 +73,7 @@ class LoginBase extends React.Component {
             </div>
             
             <div className="col-xs-12 col-md-6">
-              <button className="button button-border red">Entrar con Google</button>
+              <button className="button button-border red" onClick={this.googleLogin}>Entrar con Google</button>
             </div>
           </div>
         </div>
@@ -62,6 +82,8 @@ class LoginBase extends React.Component {
   }
 };
 
-const Login = withRouter(withFirebase(LoginBase));
+let condition = authUser => !authUser;
+
+const Login = withAuthorization(condition)(withRouter(withFirebase(LoginBase)));
 
 export default Login;

@@ -5,6 +5,7 @@ import * as ROUTES from '../../constants/routes';
 import styles from './index.module.scss';
 import { ADMINISTRADOR, MENTOR } from '../../constants/roles';
 import { ImgIcon } from '../Common';
+import { withToast } from 'react-awesome-toasts';
 
 class LinksList extends React.Component {
   constructor(props) {
@@ -18,7 +19,12 @@ class LinksList extends React.Component {
 
   getPhotoURL = async (uid) => {
     this.props.firebase.db.collection('users').doc(uid).get().then(doc => {
-      this.setState({photoURL: doc.data().photoURL})
+      if(doc.exists) {
+        this.setState({photoURL: doc.data().photoURL})
+      } else {
+        this.props.toast.show({ text: "Por favor, inicia sesión de nuevo" });
+        this.props.firebase.doSignOut();
+      }
     });
   }
   
@@ -89,4 +95,4 @@ class LinksList extends React.Component {
   }
 };
 
-export default withFirebase(LinksList);
+export default withToast(withFirebase(LinksList));

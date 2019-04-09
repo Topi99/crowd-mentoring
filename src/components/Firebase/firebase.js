@@ -21,6 +21,7 @@ class Firebase {
     this.db = app.firestore();
     this.firestore = app.firestore;
     this.storage = app.storage();
+    this.googleProvider = undefined;
   }
 
   doCreateUserWithEmailAndPassword = (email, password) => {
@@ -45,6 +46,16 @@ class Firebase {
 
   user = uid => this.db.collection("users").doc(uid);
   users = () => this.db.collection('users');
+
+  getGoogleAuthProvider = () => {
+    if(!this.googleProvider) {
+      this.googleProvider = new app.auth.GoogleAuthProvider();
+    }
+
+    return this.googleProvider;
+  }
+
+  doSignInWithPopup = provider => this.auth.signInWithPopup(provider);
 }
 
 export default Firebase;
