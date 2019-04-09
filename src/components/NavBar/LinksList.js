@@ -22,7 +22,7 @@ class LinksList extends React.Component {
       if(doc.exists) {
         this.setState({photoURL: doc.data().photoURL})
       } else {
-        this.props.toast.show({ text: "Por favor, inicia sesión de nuevo" });
+        this.props.toast.show({ text: "Por favor, inicia sesión de nuevo con una cuenta válida" });
         this.props.firebase.doSignOut();
       }
     });

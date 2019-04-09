@@ -5,6 +5,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import withAuthorization from './withAuthorization';
+import { withToast } from 'react-awesome-toasts';
 
 const INITIAL_STATE = {
   correo: "",
@@ -43,6 +44,7 @@ class LoginBase extends React.Component {
         this.afterLogin();
       } else {
         this.props.firebase.doSignOut();
+        this.props.toast.swhot({ text: 'Por favor, inicia sesión de nuevo con una cuenta válida' })
       }
     } catch(e) { console.log(e) }
   }
@@ -84,6 +86,6 @@ class LoginBase extends React.Component {
 
 let condition = authUser => !authUser;
 
-const Login = withAuthorization(condition)(withRouter(withFirebase(LoginBase)));
+const Login = withToast(withAuthorization(condition)(withRouter(withFirebase(LoginBase))));
 
 export default Login;
