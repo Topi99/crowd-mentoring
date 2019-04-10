@@ -17,6 +17,6 @@ const App = () => {
       </>
     </Router>
   );
-}
+};
 
 export default withAuth(App);

@@ -35,7 +35,7 @@ class LoginBase extends React.Component {
 
   googleLogin = async () => {
     try {
-      let provider = new this.props.firebase.getGoogleAuthProvider();
+      let provider = this.props.firebase.getGoogleAuthProvider();
       let result = await this.props.firebase.doSignInWithPopup(provider);
       let user = await this.props.firebase.user(result.user.uid).get();
       console.log(user);

@@ -83,7 +83,8 @@ class ProfileBase extends React.Component {
 
     this.update = () => {
       let temas = [];
-      props.firebase.user(props.match.params.uid).onSnapshot(doc => {
+      this.ref = props.firebase.user(props.match.params.uid);
+      this.ref.onSnapshot(doc => {
         this.setState(doc.data());
         let rolString = '';
         if(this.state.rol.path==='roles/0') {
@@ -103,19 +104,11 @@ class ProfileBase extends React.Component {
           })
         }
 
-        const refVisita = props.firebase.db.collection('mentoresBuscados').doc(this.state.uid);
-        refVisita.get().then(doc => {
-          if(doc.exists) {
-            refVisita.update({
-              visitas: doc.data().visitas + 1
-            });
-            console.log(doc.data());
-          } else {
-            refVisita.set({
-              visitas: 1,
-              solicitudes: 0
-            });
-          }
+        const refVisita = props.firebase.db.collection('mentoresBuscados');
+        refVisita.add({
+          fecha: new Date(),
+          mentorREF: this.ref,
+          mentorUID: props.match.params.uid
         });
       });
     }
@@ -217,19 +210,11 @@ class ProfileBase extends React.Component {
     else {
       ref.set(asesoriaData).then(() => {
         // sgMail.send(msg);
-        const refVisita = this.props.firebase.db.collection('mentoresBuscados').doc(this.state.uid);
-        refVisita.get().then(doc => {
-          if(doc.exists) {
-            refVisita.update({
-              solicitudes: doc.data().solicitudes + 1
-            });
-            console.log(doc.data());
-          } else {
-            refVisita.set({
-              visitas: 1,
-              solicitudes: 1
-            });
-          }
+        const refVisita = this.props.firebase.db.collection('mentoresSolicitados');
+        refVisita.add({
+          fecha: new Date(),
+          mentorREF: this.ref,
+          mentorUID: this.props.match.params.uid
         });
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
         this.props.history.push('/asesoria/'+ref.id);

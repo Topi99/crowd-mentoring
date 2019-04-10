@@ -2,6 +2,7 @@ import React from 'react';
 import { withFirebase } from '../Firebase';
 import { Line, Bar } from 'react-chartjs-2';
 import { withAuthorization } from '../Auth';
+import DataTable from 'react-data-table-component';
 
 class RepAsesorias extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ class RepAsesorias extends React.Component {
       canceladas: 0,
       asesoriasPorMes: { },
       mesSolicitado: 'Enero',
-      solicitadasPorMes: [0,0,0,0,0,0,0,0,0,0,0,0]
+      solicitadasPorMes: [0,0,0,0,0,0,0,0,0,0,0,0],
+      mentoresSolicitados: [],
+      mentoresBuscados: [],
     };
     
     this.state = { ...this.INITIAL_STATE };
@@ -26,9 +29,18 @@ class RepAsesorias extends React.Component {
     props.firebase.db.collection('asesorias').get().then(doc => {
       this.setState({ total: doc.size, canceladas: 0, totalMes: 0, concretadas: 0 })
     });
+
+    this.getBySolicitudes();
+    this.getByVisitas();
   }
 
-  getRange = (month) => {
+  /**
+   * @param {Object} ref - referencia a la que se le quiere aplicar el query
+   * @param {Date} month - mes límite
+   * @param {string} field - campo que se le quiere aplicar el where | 'fechaDeSolicitud'
+   * @returns {Object} query
+   */
+  getQuery = (ref, month, field = 'fechaDeSolicitud') => {
     month = this.MONTHS.indexOf(month);
     month += 1;
     const now = new Date();
@@ -37,9 +49,14 @@ class RepAsesorias extends React.Component {
     const to = new Date(`${now.getFullYear()}-${month > 10 ? month : '0'+month}`)
     console.log("From:", from,"\nTo:", to);
     
-    let ref = this.props.firebase.db.collection('asesorias')
-    ref = ref.where('fechaDeSolicitud', '>', from);
-    ref = ref.where('fechaDeSolicitud', '<', to);
+    ref = ref.where(field, '>', from);
+    ref = ref.where(field, '<', to);
+
+    return ref;
+  }
+
+  getRange = (month) => {
+    let ref = this.getQuery(this.props.firebase.db.collection('asesorias'), month);
     
     ref.onSnapshot(doc => {
       this.setState({ totalMes: doc.size, canceladas: 0, concretadas: 0 });
@@ -102,7 +119,61 @@ class RepAsesorias extends React.Component {
     e.preventDefault();
     await this.setState({ mesSolicitado: e.target.value });
     this.getRange(this.state.mesSolicitado);
+		this.getByVisitas();
+		this.getBySolicitudes();
     // console.log(this.state.mesSolicitado);
+  }
+
+  getByVisitas = async () => {
+    let mentoresBuscados = [];
+    let ref = this.getQuery(this.props.firebase.db.collection('mentoresBuscados'), this.state.mesSolicitado, 'fecha');
+    let mentores = await ref.get();
+    mentores.forEach(mentor => mentoresBuscados.push(mentor.data()));
+    mentoresBuscados = await this.toComparable(mentoresBuscados);
+    mentoresBuscados = mentoresBuscados.sort(this.compare).slice(0, 11);
+		this.setState({mentoresBuscados});
+		console.log(this.state.mentoresBuscados);
+  }
+
+  getBySolicitudes = async () => {
+    let mentoresSolicitados = [];
+    let ref = this.getQuery(this.props.firebase.db.collection('mentoresSolicitados'), this.state.mesSolicitado, 'fecha');
+    let mentores = await ref.get();
+    mentores.forEach(mentor => mentoresSolicitados.push(mentor.data()));
+    mentoresSolicitados = await this.toComparable(mentoresSolicitados);
+    mentoresSolicitados = mentoresSolicitados.sort(this.compare).slice(0, 11);
+		this.setState({mentoresSolicitados});
+		console.log(this.state.mentoresSolicitados);
+  }
+
+  compare = (a, b) => {
+    return a.cantidad - b.cantidad;
+  }
+
+  toComparable = async arr => {
+    let comparable = {};
+    for(let el of arr) {
+      if(comparable[el.mentorUID]) 
+        comparable[el.mentorUID].push(el.fecha);
+      else {
+        comparable[el.mentorUID] = [];
+        comparable[el.mentorUID].push(el.fecha);
+      }
+    }
+
+    await Promise.all(Object.keys(comparable).map(async (key, index) => {
+      let cantidad = comparable[key].length;
+      let mentor = await this.props.firebase.user(key).get();
+			mentor = mentor.data();
+
+			comparable[key] = {};
+			comparable[key].cantidad = cantidad;
+      comparable[key].nombre = mentor.nombre + ' ' + mentor.apellido;
+    }));
+
+    console.log(comparable);
+    // console.log(comparable);
+    return Object.values(comparable);
   }
 
   render() {
@@ -155,9 +226,42 @@ class RepAsesorias extends React.Component {
         </article>
 
         <p className="title col-xs-12">Insights</p>
+
+        <article className="col-xs-12 col-md-6">
+          <div className="card active bradius card-dash" >
+					<p className="gray card-dash--title">Mentores más buscados del mes de {this.state.mesSolicitado}</p>
+					<DataTable 
+						columns={this.columns}
+						data={this.state.mentoresBuscados}
+						striped />
+          </div>
+        </article>
+
+				<article className="col-xs-12 col-md-6">
+          <div className="card active bradius card-dash" >
+					<p className="gray card-dash--title">Mentores más solicitados del mes de {this.state.mesSolicitado}</p>
+					<DataTable 
+						columns={this.columns}
+						data={this.state.mentoresSolicitados}
+						striped />
+          </div>
+        </article>
       </section>
-    );
+		);
   }
+		
+	columns = [
+		{
+			name: 'Nombre',
+			selector: 'nombre',
+			sortable: false
+		},
+		{
+			name: 'Cantidad',
+			selector: 'cantidad',
+			sortable: true
+		},
+	]
 }
 
 const condition = authUser => !!authUser;
