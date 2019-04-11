@@ -80,11 +80,13 @@ class MisAsesorias extends React.Component {
       ref.onSnapshot(query => {
         query.forEach(doc => {
           asesoria = doc.data();
-          temas = asesoria.temas;
-          asesoria.temas = "";
+          // temas = asesoria.temas;
+          // asesoria.temas = "";
+          asesoria.temas = asesoria.temas.split('|')[0];
 
           // En esta linea agrego la asesoría a la lista de asesorías.
           asesorias.push(asesoria);
+          // asesorias.push(doc.data());
         });
 
         // En esta linea asigno la lista de asesorías al estado. 

@@ -121,12 +121,12 @@ class RepAsesorias extends React.Component {
       });
 
       Object.keys(mentoresSolicitados).map((key, _) => {
-        mentoresSolicitados[key].porcentMes = (mentoresSolicitados[key].length / this.state.totalMes)*100
+        mentoresSolicitados[key].porcentMes = Math.round((mentoresSolicitados[key].length / this.state.totalMes)*100) | 0
         mentoresSolicitados[key].porcentTotal = (mentoresSolicitados[key].length / this.state.total)*100
       });
 
       mentoresSolicitados = Object.values(mentoresSolicitados);
-      console.log("Mentores Solicitados", mentoresSolicitados);
+      console.log("Mentores Solicitados", mentoresSolicitados.sort(this.compare));
       
       this.setState({asesoriasPorMes, mentoresSolicitados});
       console.log(asesoriasPorMes);
@@ -276,7 +276,7 @@ class RepAsesorias extends React.Component {
 		{
 			name: 'Cantidad',
 			selector: 'length',
-			sortable: false
+			sortable: true
 		},
   ];
   
@@ -289,7 +289,7 @@ class RepAsesorias extends React.Component {
 		{
 			name: 'Total',
 			selector: 'length',
-			sortable: false
+			sortable: true
 		},
 		{
 			name: '% en el mes',

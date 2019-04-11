@@ -239,7 +239,7 @@ const FormSolicitarAsesoria = props => {
               props.temasComplete.map(tema => 
                 <option 
                   key={tema.uid} 
-                  value={tema.nombre}>
+                  value={tema.nombre + '|' + tema.uid}>
                     {tema.nombre}
                 </option>
               )
