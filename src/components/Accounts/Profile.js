@@ -102,14 +102,13 @@ class ProfileBase extends React.Component {
             })
             this.setState({temasComplete:temas});
           })
+          const refVisita = props.firebase.db.collection('mentoresBuscados');
+          refVisita.add({
+            fecha: new Date(),
+            mentorREF: this.ref,
+            mentorUID: props.match.params.uid
+          });
         }
-
-        const refVisita = props.firebase.db.collection('mentoresBuscados');
-        refVisita.add({
-          fecha: new Date(),
-          mentorREF: this.ref,
-          mentorUID: props.match.params.uid
-        });
       });
     }
 

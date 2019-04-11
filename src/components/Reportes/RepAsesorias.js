@@ -30,7 +30,7 @@ class RepAsesorias extends React.Component {
       this.setState({ total: doc.size, canceladas: 0, totalMes: 0, concretadas: 0 })
     });
 
-    this.getBySolicitudes();
+    // this.getBySolicitudes();
     this.getByVisitas();
   }
 
@@ -57,6 +57,8 @@ class RepAsesorias extends React.Component {
 
   getRange = (month) => {
     let ref = this.getQuery(this.props.firebase.db.collection('asesorias'), month);
+    let mentoresSolicitados = {};
+    let aux = {};
     
     ref.onSnapshot(doc => {
       this.setState({ totalMes: doc.size, canceladas: 0, concretadas: 0 });
@@ -96,6 +98,8 @@ class RepAsesorias extends React.Component {
       };
       doc.forEach(asesoria => {
         asesoria = asesoria.data();
+        console.log("---asesoria---",asesoria);
+
         let fecha = new Date(asesoria.fechaDeSolicitud.seconds * 1000);
         
         asesoriasPorMes.datasets[0].data[fecha.getDate()-1] += 1;
@@ -107,9 +111,24 @@ class RepAsesorias extends React.Component {
           this.setState({concretadas: this.state.concretadas + 1});
           asesoriasPorMes.datasets[1].data[fecha.getDate()-1] += 1;
         }
+        if(mentoresSolicitados[asesoria.mentorUID]) 
+          mentoresSolicitados[asesoria.mentorUID].push([1]);
+        else {
+          mentoresSolicitados[asesoria.mentorUID] = [];
+          mentoresSolicitados[asesoria.mentorUID].push([1]);
+        }
+        mentoresSolicitados[asesoria.mentorUID].nombre = asesoria.nombreMentor;
       });
+
+      Object.keys(mentoresSolicitados).map((key, _) => {
+        mentoresSolicitados[key].porcentMes = (mentoresSolicitados[key].length / this.state.totalMes)*100
+        mentoresSolicitados[key].porcentTotal = (mentoresSolicitados[key].length / this.state.total)*100
+      });
+
+      mentoresSolicitados = Object.values(mentoresSolicitados);
+      console.log("Mentores Solicitados", mentoresSolicitados);
       
-      this.setState({asesoriasPorMes});
+      this.setState({asesoriasPorMes, mentoresSolicitados});
       console.log(asesoriasPorMes);
       asesoriasPorMes = {};
     });
@@ -120,7 +139,7 @@ class RepAsesorias extends React.Component {
     await this.setState({ mesSolicitado: e.target.value });
     this.getRange(this.state.mesSolicitado);
 		this.getByVisitas();
-		this.getBySolicitudes();
+		// this.getBySolicitudes();
     // console.log(this.state.mesSolicitado);
   }
 
@@ -167,7 +186,7 @@ class RepAsesorias extends React.Component {
 			mentor = mentor.data();
 
 			comparable[key] = {};
-			comparable[key].cantidad = cantidad;
+			comparable[key].length = cantidad;
       comparable[key].nombre = mentor.nombre + ' ' + mentor.apellido;
     }));
 
@@ -258,8 +277,8 @@ class RepAsesorias extends React.Component {
 		},
 		{
 			name: 'Cantidad',
-			selector: 'cantidad',
-			sortable: true
+			selector: 'length',
+			sortable: false
 		},
 	]
 }
