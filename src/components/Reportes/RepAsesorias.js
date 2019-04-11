@@ -139,8 +139,6 @@ class RepAsesorias extends React.Component {
     await this.setState({ mesSolicitado: e.target.value });
     this.getRange(this.state.mesSolicitado);
 		this.getByVisitas();
-		// this.getBySolicitudes();
-    // console.log(this.state.mesSolicitado);
   }
 
   getByVisitas = async () => {
@@ -154,16 +152,16 @@ class RepAsesorias extends React.Component {
 		console.log(this.state.mentoresBuscados);
   }
 
-  getBySolicitudes = async () => {
-    let mentoresSolicitados = [];
-    let ref = this.getQuery(this.props.firebase.db.collection('mentoresSolicitados'), this.state.mesSolicitado, 'fecha');
-    let mentores = await ref.get();
-    mentores.forEach(mentor => mentoresSolicitados.push(mentor.data()));
-    mentoresSolicitados = await this.toComparable(mentoresSolicitados);
-    mentoresSolicitados = mentoresSolicitados.sort(this.compare).slice(0, 11);
-		this.setState({mentoresSolicitados});
-		console.log(this.state.mentoresSolicitados);
-  }
+  // getBySolicitudes = async () => {
+  //   let mentoresSolicitados = [];
+  //   let ref = this.getQuery(this.props.firebase.db.collection('mentoresSolicitados'), this.state.mesSolicitado, 'fecha');
+  //   let mentores = await ref.get();
+  //   mentores.forEach(mentor => mentoresSolicitados.push(mentor.data()));
+  //   mentoresSolicitados = await this.toComparable(mentoresSolicitados);
+  //   mentoresSolicitados = mentoresSolicitados.sort(this.compare).slice(0, 11);
+	// 	this.setState({mentoresSolicitados});
+	// 	console.log(this.state.mentoresSolicitados);
+  // }
 
   compare = (a, b) => {
     return a.cantidad - b.cantidad;
@@ -260,7 +258,7 @@ class RepAsesorias extends React.Component {
           <div className="card active bradius card-dash" >
 					<p className="gray card-dash--title">Mentores más solicitados del mes de {this.state.mesSolicitado}</p>
 					<DataTable 
-						columns={this.columns}
+						columns={this.columnsSol}
 						data={this.state.mentoresSolicitados}
 						striped />
           </div>
@@ -280,7 +278,30 @@ class RepAsesorias extends React.Component {
 			selector: 'length',
 			sortable: false
 		},
-	]
+  ];
+  
+  columnsSol = [
+		{
+			name: 'Nombre',
+			selector: 'nombre',
+			sortable: false
+		},
+		{
+			name: 'Total',
+			selector: 'length',
+			sortable: false
+		},
+		{
+			name: '% en el mes',
+			selector: 'porcentMes',
+			sortable: false
+		},
+		{
+			name: '% total',
+			selector: 'porcentTotal',
+			sortable: false
+		},
+	];
 }
 
 const condition = authUser => !!authUser;
