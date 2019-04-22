@@ -25,7 +25,7 @@ class MisAsesorias extends React.Component {
     // console.log(uid);
     let asesorias = [];
     let asesoria = [];
-    let temas = [];
+    // let temas = [];
     
     this.columns = [
       {

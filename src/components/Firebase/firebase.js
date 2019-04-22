@@ -24,6 +24,8 @@ class Firebase {
     this.googleProvider = undefined;
   }
 
+  incrementBy = increment => this.firestore.FieldValue.increment(increment);
+
   doCreateUserWithEmailAndPassword = (email, password) => {
     return this.auth.createUserWithEmailAndPassword(email, password);
   }

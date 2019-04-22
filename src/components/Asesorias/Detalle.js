@@ -66,7 +66,8 @@ class Detalle extends React.Component {
               this.setState({...asesoria});
             });
           });
-        })
+        });
+        console.log(asesoria.temas);
       } else {
         props.toast.show({text:'La asesoría no está disponible.'})
         props.history.push(ASESORIAS);

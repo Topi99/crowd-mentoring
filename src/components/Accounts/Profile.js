@@ -215,9 +215,46 @@ class ProfileBase extends React.Component {
           mentorREF: this.ref,
           mentorUID: this.props.match.params.uid
         });
+        const refTemaSol = this.props.firebase.db.collection('temasSolicitados');
+        const date = new Date();
+        const months = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre' ];
+        console.log(months[date.getMonth()]);
+        const fullRef = refTemaSol.doc(""+date.getFullYear()).collection(months[date.getMonth()]);
+        // fullRef.doc('total').update({ total: this.props.firebase.incrementBy(this.state.asesoriaTemaUID.length) });
+        fullRef.doc('total').get().then(async doc => {
+          if(doc.exists) {
+            fullRef.doc('total').update({ total: this.props.firebase.incrementBy(this.state.asesoriaTemaUID.length) });
+            for(let tema of this.state.asesoriaTemaUID) {
+              // tema = tema.split('|')[1];
+              console.log(tema);
+              fullRef.doc(tema).get().then(doc => {
+                if(doc.exists) {
+                  fullRef.doc(tema).update({
+                    total: this.props.firebase.incrementBy(1)
+                  });
+                } else {
+                  fullRef.doc(tema).set({
+                    total: 1
+                  });
+                }
+              })
+            }
+          } else {
+            await fullRef.doc('total').set({ total: this.state.asesoriaTemaUID.length });
+            for(let tema of this.state.asesoriaTemaUID) {
+              // tema = tema.split('|')[1];
+              console.log(tema);
+              fullRef.doc(tema).set({
+                total: 1
+              });
+            }
+          }
+        });
+
+        refTemaSol.doc('total').update({ total: this.props.firebase.incrementBy(this.state.asesoriaTemaUID.length) });
         this.props.toast.show({text:'Solicitud de asesoría enviada.'})
         this.props.history.push('/asesoria/'+ref.id);
-      }).catch(err => this.props.toast.show({ text:err,  }));
+      }).catch(err => this.props.toast.show({ text:'Ocurrió un error',  }));
       // console.log(asesoriaData)
     }
   }
