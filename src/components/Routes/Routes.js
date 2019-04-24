@@ -31,7 +31,7 @@ const Routes = props => {
       <Route path={ '/new'+ROUTES.AEsp } component={ NewAEsp } />
       <Route path={ '/edit'+ROUTES.AEsp+'/:uid' } component={ EditAEsp } />
       <Route path={ '/new'+ROUTES.INDUSTRIAS } component={ NewIndustria } />
-      <Route path={ '/edit'+ROUTES.AEsp+'/:uid' } component={ EditIndustria } />
+      <Route path={ '/edit'+ROUTES.INDUSTRIAS+'/:uid' } component={ EditIndustria } />
       <Route path={ '/new'+ROUTES.TEMAS } component={ NewTema } />
       <Route path={ '/edit'+ROUTES.TEMAS+'/:uid' } component={ EditTema } />
       <Route path={ '/new'+ROUTES.ETAPAEMP } component={ NewEtapaEmp } />

@@ -38,7 +38,7 @@ class ListMentores extends React.Component {
 
     this.ref = props.firebase.db.collection('users');
     this.ref = this.ref.where('status', '==', 'active');
-    this.ref = this.ref.where('rolString','==','mentor');
+    this.ref = this.ref.where('rolString','==','Mentor');
 
     this.query(mentores);
 

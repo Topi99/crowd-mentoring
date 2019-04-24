@@ -32,6 +32,7 @@ class RepAsesorias extends React.Component {
 
     // this.getBySolicitudes();
     this.getByVisitas();
+    this.getTemas();
   }
 
   /**
@@ -138,7 +139,8 @@ class RepAsesorias extends React.Component {
     e.preventDefault();
     await this.setState({ mesSolicitado: e.target.value });
     this.getRange(this.state.mesSolicitado);
-		this.getByVisitas();
+    this.getByVisitas();
+    this.getTemas();
   }
 
   getByVisitas = async () => {
@@ -150,6 +152,15 @@ class RepAsesorias extends React.Component {
     mentoresBuscados = mentoresBuscados.sort(this.compare).slice(0, 11);
 		this.setState({mentoresBuscados});
 		console.log(this.state.mentoresBuscados);
+  }
+
+  getTemas = async () => {
+    let temas = [];
+    let year = (new Date()).getFullYear();
+    let ref = this.props.firebase.db.collection('temasSolicitados');
+    ref.get().then(doc => {
+      doc.forEach(hi => console.log(hi))
+    });
   }
 
   // getBySolicitudes = async () => {

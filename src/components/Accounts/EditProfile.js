@@ -4,6 +4,7 @@ import styles from './EditProfile.module.scss';
 import { withRouter } from 'react-router-dom';
 import { MentorForm, EmprendedorForm,  withAuthorization } from '../Auth';
 import { PROFILE } from '../../constants/routes';
+import { EMPRENDEDOR, ADMINISTRADOR, MENTOR } from '../../constants/roles';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class EditProfile extends React.Component {
     props.firebase.user(props.firebase.auth.currentUser.uid).onSnapshot(doc => {
       doc.data().rol.onSnapshot(doc => {
         this.rol = doc.data().nombre;
-        if(props.firebase.auth.currentUser.uid === props.match.params.uid || this.rol === 'administrador') {
+        if(props.firebase.auth.currentUser.uid === props.match.params.uid || this.rol === ADMINISTRADOR) {
           props.firebase.user(props.match.params.uid).onSnapshot(doc => {
             user = doc.data();
             doc.data().rol.onSnapshot(doc => {
@@ -52,7 +53,7 @@ class EditProfile extends React.Component {
 
   submit = async e => {
     e.preventDefault();
-    if(this.rol === 'administrador')
+    if(this.rol === ADMINISTRADOR)
       this.props.firebase.doPasswordReset(this.state.emailPrin);
 
     await this.props.firebase.user(this.props.match.params.uid).set({
@@ -62,9 +63,9 @@ class EditProfile extends React.Component {
   }
 
   getForm = () => {
-    if(this.state.rolString === 'emprendedor' || this.state.rolString === 'administrador') {
+    if(this.state.rolString === EMPRENDEDOR || this.state.rolString === ADMINISTRADOR) {
       return <EmprendedorForm noChange noBtnLogin handleInputChange={this.handleChange} submit={this.submit} {...this.state} />
-    } else if(this.state.rolString === 'mentor') {
+    } else if(this.state.rolString === MENTOR) {
       return <MentorForm noChange noBtnLogin handleInputChange={this.handleChange} submit={this.submit} {...this.state} />
     }
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { QUser } from '../Common';
 import { withToast } from 'react-awesome-toasts';
+import { MENTOR, EMPRENDEDOR } from '../../constants/roles';
 
 class GestionUsuarios extends React.Component {
   constructor(props) {
@@ -17,14 +18,14 @@ class GestionUsuarios extends React.Component {
       this.setState({users});
     });
 
-    this.unsuscribeListen2 = this.props.firebase.users().where('status','==','active').where('rolString', '==','emprendedor').onSnapshot(query => {
+    this.unsuscribeListen2 = this.props.firebase.users().where('status','==','active').where('rolString', '==',EMPRENDEDOR).onSnapshot(query => {
       query.forEach(user => {
         emp.push(user.data());
       })
       this.setState({emp});
     });
 
-    this.unsuscribeListen3 = this.props.firebase.users().where('status','==','active').where('rolString', '==','mentor').onSnapshot(query => {
+    this.unsuscribeListen3 = this.props.firebase.users().where('status','==','active').where('rolString', '==',MENTOR).onSnapshot(query => {
       query.forEach(user => {
         ment.push(user.data());
       })
