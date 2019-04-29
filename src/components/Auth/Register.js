@@ -4,6 +4,8 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import EmprendedorForm from './EmprendedorForm';
 import MentorForm from './MentorForm';
+import { withToast } from 'react-awesome-toasts';
+import { EMAIL_ALREADY_IN_USE } from '../../constants/firebase';
 
 class Register extends React.Component {
   constructor(props) {
@@ -69,8 +71,16 @@ class Register extends React.Component {
       this.props.firebase.doSignOut();
       this.setState({ ...this.INITIAL_STATE });
       this.props.history.push(ROUTES.HOME);
+      this.props.toast.show({ text: "Sesión iniciada." });
     } catch(error) {
-      console.log( error );
+      // console.log( error );
+      let text;
+      if(error.code === EMAIL_ALREADY_IN_USE){
+        text = 'El correo ingresado ya está en uso.';
+      } else {
+        text = 'Ocurrió un error inesperado. Por favor, intenta de nuevo';
+      }
+      this.props.toast.show({ text });
     }
   }
 
@@ -93,4 +103,4 @@ class Register extends React.Component {
   }
 };
 
-export default withFirebase(Register);
+export default withToast(withFirebase(Register));
