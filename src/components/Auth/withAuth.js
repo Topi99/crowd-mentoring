@@ -17,6 +17,7 @@ const withAuth = Component => {
     componentDidMount() {
       this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
         if(authUser) {
+          this.props.toast.show({ text: "Sesión iniciada." });
           this.setState({authUser});
           this.props.firebase.db.collection('users').doc(authUser.uid).get().then(doc => {
             if(doc.exists) {
@@ -28,7 +29,8 @@ const withAuth = Component => {
             }
           });
         } else {
-          this.setState({ authUser: null, rol:null })
+          this.setState({ authUser: null, rol:null });
+          this.props.toast.show({ text: "Sesión terminada." });
         }
         // console.log(this.state.authUser);
       });
