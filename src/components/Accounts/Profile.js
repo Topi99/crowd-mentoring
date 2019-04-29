@@ -352,8 +352,8 @@ class ProfileBase extends React.Component {
   
   render() {
     return(
-      <div className="row al-items-start col-xs-12 profile">
-        <div className="col-xs-4 no-padding-l flex">
+      <div className={`row al-items-start col-xs-12 profile ${this.state.uid === this.props.firebase.auth.currentUser.uid ? '' : 'center-xs'}`}>
+        <div className={` no-padding-l flex ${this.state.uid === this.props.firebase.auth.currentUser.uid ? 'col-xs-4' : 'col-xs-4'}`}>
           <div className="card  active bradius just-cont-center">
             <div className="info separator x-padding">
               <div className={`${this.props.authUser.uid === this.state.uid ? 'edit' : ''} imgContainer padding`}>
@@ -392,41 +392,43 @@ class ProfileBase extends React.Component {
             </div>
           </div>
         </div>
-        <div className="col-xs-8 no-padding-r">
-          <div className="generalInfo card bradius active box-sizing-border">
-            {
-              this.state.uid === this.props.firebase.auth.currentUser.uid 
-              ? this.getForm()
-              : <></>
-            }
-            
-            <Modal visibility={this.state.formSolicitarStatus} open={this.openFormSolicitar} close={this.closeFormSolicitar} >
-              <p className="semi-bold x-large">Solicitar asesoría a {this.state.nombre} {this.state.apellido}</p>
-              <FormSolicitarAsesoria 
-                asunto={this.state.asesoriaAsunto} 
-                
-                fechaPreferida={this.state.asesoriaFechaP} 
-                asesoriaHIP={this.state.asesoriaHIP}
-                asesoriaHFP={this.state.asesoriaHFP}
+        {
+          this.state.uid === this.props.firebase.auth.currentUser.uid 
+          ? 
+            <div className="col-xs-8 no-padding-r">
+              <div className="generalInfo card bradius active box-sizing-border">
+                {
+                  this.getForm()
+                }
+                <Modal visibility={this.state.formSolicitarStatus} open={this.openFormSolicitar} close={this.closeFormSolicitar} >
+                  <p className="semi-bold x-large">Solicitar asesoría a {this.state.nombre} {this.state.apellido}</p>
+                  <FormSolicitarAsesoria 
+                    asunto={this.state.asesoriaAsunto} 
+                    
+                    fechaPreferida={this.state.asesoriaFechaP} 
+                    asesoriaHIP={this.state.asesoriaHIP}
+                    asesoriaHFP={this.state.asesoriaHFP}
 
-                fechaA1={this.state.asesoriaFechaA1} 
-                asesoriaHIA1={this.state.asesoriaHIA1}
-                asesoriaHFA1={this.state.asesoriaHFA1}
+                    fechaA1={this.state.asesoriaFechaA1} 
+                    asesoriaHIA1={this.state.asesoriaHIA1}
+                    asesoriaHFA1={this.state.asesoriaHFA1}
 
-                fechaA2={this.state.asesoriaFechaA2} 
-                asesoriaHIA2={this.state.asesoriaHIA2}
-                asesoriaHFA2={this.state.asesoriaHFA2}
-                
-                temasComplete={this.state.temasComplete}
-                temas={this.state.asesoriaTemaUID} 
-                mensajeAs={this.state.mensajeAs}
-                
-                onChangeF={this.handleFormAsChange}
-                send={this.sendSolicitud}
-                today={this.getToday()} />
-            </Modal>
-          </div>
-        </div>
+                    fechaA2={this.state.asesoriaFechaA2} 
+                    asesoriaHIA2={this.state.asesoriaHIA2}
+                    asesoriaHFA2={this.state.asesoriaHFA2}
+                    
+                    temasComplete={this.state.temasComplete}
+                    temas={this.state.asesoriaTemaUID} 
+                    mensajeAs={this.state.mensajeAs}
+                    
+                    onChangeF={this.handleFormAsChange}
+                    send={this.sendSolicitud}
+                    today={this.getToday()} />
+                </Modal>
+              </div>
+            </div>
+          : <></>
+        }
 
         {
           this.state.rolString === ADMINISTRADOR
