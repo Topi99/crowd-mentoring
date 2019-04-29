@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { MentorForm, EmprendedorForm,  withAuthorization } from '../Auth';
 import { PROFILE } from '../../constants/routes';
 import { EMPRENDEDOR, ADMINISTRADOR, MENTOR } from '../../constants/roles';
+import { withToast } from 'react-awesome-toasts';
 
 class EditProfile extends React.Component {
   constructor(props) {
@@ -59,6 +60,8 @@ class EditProfile extends React.Component {
     await this.props.firebase.user(this.props.match.params.uid).set({
       ...this.state
     })
+
+    this.props.toast.show({text:'Guardado'});
     this.props.history.push(PROFILE+'/'+this.props.firebase.auth.currentUser.uid);
   }
 
@@ -85,4 +88,4 @@ class EditProfile extends React.Component {
 
 const condition = authUser => !!authUser;
 
-export default withRouter(withFirebase(withAuthorization(condition)(EditProfile)));
+export default withToast(withRouter(withFirebase(withAuthorization(condition)(EditProfile))));

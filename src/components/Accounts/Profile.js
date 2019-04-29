@@ -20,7 +20,7 @@ const Info = props => {
   return(
     <>
       {
-        props.state.rolString==='Emprendedor'
+        props.state.rolString===EMPRENDEDOR
         ? <>
             
             <p className="semestre medium">
@@ -88,14 +88,14 @@ class ProfileBase extends React.Component {
         this.setState(doc.data());
         let rolString = '';
         if(this.state.rol.path==='roles/0') {
-          rolString = 'Emprendedor'
+          rolString = EMPRENDEDOR
         } else if(this.state.rol.path==='roles/1') {
-          rolString = 'Mentor'
+          rolString = MENTOR
         } else if(this.state.rol.path==='roles/2') {
-          rolString = 'Administrador'
+          rolString = ADMINISTRADOR
         }
         this.setState({rolString});
-        if(rolString === 'Mentor') {
+        if(rolString === MENTOR) {
           this.state.temas.forEach(tema => {
             props.firebase.db.collection('temas').doc(tema).get().then(doc => {
               temas.push(doc.data());
@@ -129,11 +129,11 @@ class ProfileBase extends React.Component {
         this.setState(doc.data());
         let rolString = '';
         if(this.state.rol.path==='roles/0') {
-          rolString = 'Emprendedor'
+          rolString = EMPRENDEDOR
         } else if(this.state.rol.path==='roles/1') {
-          rolString = 'Mentor'
+          rolString = MENTOR
         } else if(this.state.rol.path==='roles/2') {
-          rolString = 'Administrador'
+          rolString = ADMINISTRADOR
         }
         this.setState({rolString});
       });
@@ -429,7 +429,7 @@ class ProfileBase extends React.Component {
         </div>
 
         {
-          this.state.rolString === 'Administrador'
+          this.state.rolString === ADMINISTRADOR
           ? <div className="col-xs-12 gray row card active bradius gestion">
               <div className="side black medium row col-xs-12 col-md-3">
                 <div className="option col-xs-12" id="option1" onClick={this.onClickOption}>

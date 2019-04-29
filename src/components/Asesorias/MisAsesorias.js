@@ -3,6 +3,7 @@ import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Auth';
 import DataTable from 'react-data-table-component';
 import { withRouter } from 'react-router-dom';
+import { MENTOR } from '../../constants/roles';
 
 class MisAsesorias extends React.Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class MisAsesorias extends React.Component {
       rolString = doc.data().rolString;
 
       // Aplico la condición de que obtenga las asesorías si es mentor o emprendedor
-      ref = ref.where(rolString === 'mentor' ? 'mentorUID' : 'solicitadaPorUID', '==', uid);
+      ref = ref.where(rolString === MENTOR ? 'mentorUID' : 'solicitadaPorUID', '==', uid);
 
       // Aquí obtengo las asesorías del usuario.
       ref.onSnapshot(query => {

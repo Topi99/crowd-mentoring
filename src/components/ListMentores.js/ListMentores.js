@@ -5,6 +5,7 @@ import { PROFILE_IMG_DEF, PROFILE } from '../../constants/routes';
 import { SmallImageCard } from '../Cards';
 import { Modal } from '../Common';
 import { withAuthorization } from '../Auth';
+import { MENTOR } from '../../constants/roles';
 
 class ListMentores extends React.Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class ListMentores extends React.Component {
 
     this.ref = props.firebase.db.collection('users');
     this.ref = this.ref.where('status', '==', 'active');
-    this.ref = this.ref.where('rolString','==','Mentor');
+    this.ref = this.ref.where('rolString','==',MENTOR);
 
     this.query(mentores);
 

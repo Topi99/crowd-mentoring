@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { withAuthorization } from '../Auth';
 import { PROFILE } from '../../constants/routes';
 import './GestionAEsp.scss';
+import { withToast } from 'react-awesome-toasts';
 
 class EditAEsp extends React.Component {
   constructor(props) {
@@ -40,6 +41,7 @@ class EditAEsp extends React.Component {
       })
     }
 
+    this.props.toast.show({ text: "Guardado." });
     this.props.history.push(PROFILE+'/'+this.props.firebase.auth.currentUser.uid);
   }
 
@@ -59,4 +61,4 @@ class EditAEsp extends React.Component {
 
 const condition = authUser => !!authUser;
 
-export default withRouter(withFirebase(withAuthorization(condition)(EditAEsp)));
+export default withToast(withRouter(withFirebase(withAuthorization(condition)(EditAEsp))));

@@ -12,6 +12,7 @@ class GestionUsuarios extends React.Component {
     let ment = [];
 
     this.unsuscribeListen = this.props.firebase.users().where('status', '==','inactive').onSnapshot(query => {
+      this.setState({users: []})
       query.forEach(user => {
         users.push(user.data());
       })
@@ -19,6 +20,7 @@ class GestionUsuarios extends React.Component {
     });
 
     this.unsuscribeListen2 = this.props.firebase.users().where('status','==','active').where('rolString', '==',EMPRENDEDOR).onSnapshot(query => {
+      this.setState({emp:[]})
       query.forEach(user => {
         emp.push(user.data());
       })
@@ -26,6 +28,7 @@ class GestionUsuarios extends React.Component {
     });
 
     this.unsuscribeListen3 = this.props.firebase.users().where('status','==','active').where('rolString', '==',MENTOR).onSnapshot(query => {
+      this.setState({ment:[]})
       query.forEach(user => {
         ment.push(user.data());
       })
