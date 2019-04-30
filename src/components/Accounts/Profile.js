@@ -63,6 +63,9 @@ const INITIAL_STATE = {
   temas:[''],
   asesoriaTemaUID:[''],
   temasComplete: [''],
+  areasComplete: [''],
+  etapasComplete: [''],
+  industriasComplete: [''],
   rolString: ''
 }
 
@@ -83,6 +86,9 @@ class ProfileBase extends React.Component {
 
     this.update = () => {
       let temas = [];
+      let areasEsp = [];
+      let etapas = [];
+      let industrias = [];
       this.ref = props.firebase.user(props.match.params.uid);
       this.ref.onSnapshot(doc => {
         this.setState(doc.data());
@@ -101,7 +107,29 @@ class ProfileBase extends React.Component {
               temas.push(doc.data());
             })
             this.setState({temasComplete:temas});
-          })
+          });
+
+          this.state.areasEsp.forEach(area => {
+            props.firebase.db.collection('aEsp').doc(area).get().then(doc => {
+              areasEsp.push(doc.data());
+            })
+            this.setState({areasComplete:areasEsp});
+          });
+
+          this.state.etapas.forEach(etapa => {
+            props.firebase.db.collection('etapas').doc(etapa).get().then(doc => {
+              etapas.push(doc.data());
+            })
+            this.setState({etapasComplete: etapas});
+          });
+
+          this.state.industrias.forEach(industria => {
+            props.firebase.db.collection('industrias').doc(industria).get().then(doc => {
+              industrias.push(doc.data());
+            })
+            this.setState({industriasComplete: industrias});
+          });
+
           const refVisita = props.firebase.db.collection('mentoresBuscados');
           refVisita.add({
             fecha: new Date(),
@@ -361,18 +389,27 @@ class ProfileBase extends React.Component {
                 {this.props.authUser.uid === this.state.uid ? <div className="click-edit" onClick={this.editPhoto}><i className="material-icons">edit</i></div>:<></>}
               </div>
               <p className="name large semi-bold blue">{this.state.nombre+" "+this.state.apellido}</p>
-              <p className="gray email">{this.state.emailPrin}</p>
-              <p className="gray ciudad">{this.state.ciudad}</p>
-              <p className="gray celular">{this.state.celular}</p>
+              <p className="gray email">{this.state.emailPrin ? this.state.emailPrin : 'Sin Email'}</p>
+              <p className="gray ciudad">{this.state.ciudad ? this.state.ciudad : 'Sin ciudad'}</p>
+              <p className="gray celular">{this.state.celular ? this.state.celular : 'Sin celular'}</p>
             </div>
             <div className=" x-padding">
               <div className="important">
-                <p className="carrera medium ">
-                  <span className="black">Carrera: </span> 
-                  <span className="bluishGreen">
-                    {this.state.carrera}
-                  </span>
-                </p>
+                { 
+                  this.state.rolString===MENTOR 
+                  ? <p className="carrera medium ">
+                      <span className="black">Título Profesional: </span> 
+                      <span className="bluishGreen">
+                        {this.state.tituloProf}
+                      </span>
+                    </p>
+                  : <p className="carrera medium ">
+                      <span className="black">Carrera: </span> 
+                      <span className="bluishGreen">
+                        {this.state.carrera}
+                      </span>
+                    </p>
+                }
                 <p className="uni medium">
                   <span className="black">Universidad: </span>
                   <span className="bluishGreen">
@@ -381,7 +418,31 @@ class ProfileBase extends React.Component {
                 </p>
                 <Info state={this.state} />
               </div>
-              <p className="gray bio"><span className="black ">Biografía: </span>{this.state.bio.length > 280 ? this.state.bio.substr(0, 280)+'...' : this.state.bio}</p>
+              <p className="gray medium bio"><span className="black ">Biografía: </span>{this.state.bio.length > 280 ? this.state.bio.substr(0, 280)+'...' : this.state.bio}</p>
+
+              { 
+                this.state.rolString === MENTOR 
+                ? <>
+                    <p className="temas medium">
+                      <span className="black">Temas: </span>
+                      <span className="gray">{ this.state.temasComplete.map(tema => <span>{tema.nombre + ', '}</span>) }</span>
+                    </p>
+                    <p className="temas medium">
+                      <span className="black">Áreas De Especialidad: </span>
+                      <span className="gray">{ this.state.areasComplete.map(tema => <span>{tema.nombre + ', '}</span>) }</span>
+                    </p>
+                    <p className="temas medium">
+                      <span className="black">Etapas: </span>
+                      <span className="gray">{ this.state.etapasComplete.map(tema => <span>{tema.nombre + ', '}</span>) }</span>
+                    </p>
+                    <p className="temas medium">
+                      <span className="black">Industrias: </span>
+                      <span className="gray">{ this.state.industriasComplete.map(tema => <span>{tema.nombre + ', '}</span>) }</span>
+                    </p>
+                  </>
+                : <></>
+              }
+
               <p className="padding-top center-xs">
                 {
                   (this.props.authUser.rol+'').toUpperCase() !== MENTOR && this.props.firebase.auth.currentUser.uid !== this.state.uid
