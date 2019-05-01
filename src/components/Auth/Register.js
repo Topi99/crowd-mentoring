@@ -6,6 +6,7 @@ import EmprendedorForm from './EmprendedorForm';
 import MentorForm from './MentorForm';
 import { withToast } from 'react-awesome-toasts';
 import { EMAIL_ALREADY_IN_USE } from '../../constants/firebase';
+import * as ROLES from '../../constants/roles';
 
 class Register extends React.Component {
   constructor(props) {
@@ -26,15 +27,17 @@ class Register extends React.Component {
       ...INITIAL_STATE_BASE,
       carrera: "",
       semestre: "1",
-      universidad: "0",
-      rol: this.props.firebase.db.doc("roles/0")
+      universidad: "",
+      rol: this.props.firebase.db.doc("roles/0"),
+      rolString: ROLES.EMPRENDEDOR 
     }
     
     const INITIAL_STATE_MENT = {
       ...INITIAL_STATE_BASE,
       tituloProf: "",
       areasEsp: [""],
-      rol: this.props.firebase.db.doc("roles/1")
+      rol: this.props.firebase.db.doc("roles/1"),
+      rolString: ROLES.MENTOR 
     }
 
     this.INITIAL_STATE = this.props.match.params.rol === "emprendedor" ? INITIAL_STATE_EMP : INITIAL_STATE_MENT;
@@ -63,6 +66,12 @@ class Register extends React.Component {
     try {
       const authUser = await this.props.firebase.doCreateUserWithEmailAndPassword(this.state.emailPrin, "_Pa3s#1_");
       const uid = authUser.user.uid;
+
+      if(this.state.emailPrin.includes('itesm.mx') || this.state.emailSec.includes('itesm.mx')) {
+        this.state.status = 'active';
+        this.props.firebase.doPasswordReset();
+      }
+
       await this.props.firebase.user(uid).set({
         ...this.state,
         uid
