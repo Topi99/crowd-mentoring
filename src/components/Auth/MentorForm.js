@@ -54,31 +54,35 @@ class MentorForm extends React.Component {
         <input required value={ this.props.nombre } onChange={ this.props.handleInputChange } id="nombre" className="col-xs-12" type="text" placeholder="Nombre" />
         <input required value={ this.props.apellido } onChange={ this.props.handleInputChange } id="apellido" className="col-xs-12" type="text" placeholder="Apellido" />
         <input required value={ this.props.tituloProf } onChange={ this.props.handleInputChange } id="tituloProf" className="col-xs-12" type="text" placeholder="Titulo profesional" />
-        <select value={this.props.areasEsp} multiple onChange={ this.props.handleInputChange } id="areasEsp" className="col-xs-12" placeholder="Areas de Especialidad" >
+        <label className="medium">Áreas de especialidad: </label>
+        <select title="CTRL + Click para seleccionar" value={this.props.areasEsp} multiple onChange={ this.props.handleInputChange } id="areasEsp" className="col-xs-12" placeholder="Areas de Especialidad" >
           
           {
-            this.state.aesps.map(aesp => <option key={aesp.uid} value={aesp.uid}>{aesp.nombre}</option>)
+            this.state.aesps.map(aesp => <option className="gray" key={aesp.uid} value={aesp.uid}>{aesp.nombre}</option>)
           }
   
         </select>
-        <select value={this.props.etapas} multiple onChange={ this.props.handleInputChange } id="etapas" className="col-xs-12" placeholder="Areas de Especialidad" >
+        <label className="medium">Etapas de emprendimiento: </label>
+        <select title="CTRL + Click para seleccionar" value={this.props.etapas} multiple onChange={ this.props.handleInputChange } id="etapas" className="col-xs-12" placeholder="Etapas" >
           
           {
-            this.state.etapas.map(etapa => <option key={etapa.uid} value={etapa.uid}>{etapa.nombre}</option>)
+            this.state.etapas.map(etapa => <option className="gray" key={etapa.uid} value={etapa.uid}>{etapa.nombre}</option>)
           }
   
         </select>
-        <select value={this.props.industrias} multiple onChange={ this.props.handleInputChange } id="industrias" className="col-xs-12" placeholder="Areas de Especialidad" >
+        <label className="medium">Industrias: </label>
+        <select title="CTRL + Click para seleccionar" value={this.props.industrias} multiple onChange={ this.props.handleInputChange } id="industrias" className="col-xs-12" placeholder="Industrias" >
           
           {
-            this.state.industrias.map(industria => <option key={industria.uid} value={industria.uid}>{industria.nombre}</option>)
+            this.state.industrias.map(industria => <option className="gray" key={industria.uid} value={industria.uid}>{industria.nombre}</option>)
           }
   
         </select>
-        <select value={this.props.temas} multiple onChange={ this.props.handleInputChange } id="temas" className="col-xs-12" placeholder="Areas de Especialidad" >
+        <label className="medium">Temas: </label>
+        <select required title="CTRL + Click para seleccionar" value={this.props.temas} multiple onChange={ this.props.handleInputChange } id="temas" className="col-xs-12" placeholder="Temas" >
           
           {
-            this.state.temas.map(tema => <option key={tema.uid} value={tema.uid}>{tema.nombre}</option>)
+            this.state.temas.map(tema => <option className="gray" key={tema.uid} value={tema.uid}>{tema.nombre}</option>)
           }
   
         </select>

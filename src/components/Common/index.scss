@@ -130,7 +130,7 @@ input[type="password"], input[type="text"], textarea, select, input[type="date"]
   box-sizing: border-box;
 }
 
-input:invalid, textarea:invalid {
+input:invalid, textarea:invalid, select:invalid {
   border: 1px solid $red;
   box-shadow: 0 0 5px $red;
 }
