@@ -3,7 +3,6 @@ import 'flexboxgrid2';
 import './Landing.scss';
 import { ImageCard, IconCard } from '../Cards';
 import { Section, CallToAction, Modal } from '../Common';
-import Footer from '../Footer';
 import * as ROUTES from '../../constants/routes';
 import Img from './simg-2.jpg';
 
@@ -147,7 +146,6 @@ const Landing = props => {
           <iframe title="google maps" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7468.84153735977!2d-100.40841390000004!3d20.6116992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1550018878206" width="600" height="450" frameBorder="0"  allowFullScreen></iframe>
         </article>
       </Section>
-      <Footer></Footer>
     </>
   );
 };
