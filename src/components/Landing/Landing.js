@@ -5,13 +5,54 @@ import { ImageCard, IconCard } from '../Cards';
 import { Section, CallToAction, Modal } from '../Common';
 import * as ROUTES from '../../constants/routes';
 import Img from './simg-2.jpg';
+import { withFirebase } from '../Firebase/context';
+import { withToast } from 'react-awesome-toasts';
 
-const Landing = props => {
+const Landing = ({firebase, toast}) => {
   const [ videoVisibility, setVideoVisibility ] = useState(false);
 
   const handleClickOpenVideo = e => {
     if(videoVisibility) setVideoVisibility(false);
     else setVideoVisibility(true);
+  }
+
+  const [ nombre, setNombre ] = useState('');
+  const [ email, setEmail ] = useState('');
+  const [ telefono, setTelefono ] = useState('');
+  const [ mensaje, setMensaje ] = useState('');
+
+  const sendMensaje = async e => {
+    e.preventDefault();
+    try {
+      await firebase.db.collection('mensajes').add({
+        nombre,
+        email,
+        telefono,
+        mensaje
+      });
+      toast.show({ text: 'Mensaje enviado correctamente' });
+      clean();
+    } catch(e) {
+      console.error(e);
+      toast.show({ text: 'Ocurrió un error' });
+    }
+  }
+
+  const handleChange = e => {
+    const value = e.target.value;
+    switch(e.target.id) {
+      case 'nombre': setNombre(value); break;
+      case 'email': setEmail(value); break;
+      case 'telefono': setTelefono(value); break;
+      case 'mensaje': setMensaje(value); break;
+    }
+  }
+
+  const clean = () => {
+    setNombre('');
+    setEmail('');
+    setTelefono('');
+    setMensaje('');
   }
   
   return(
@@ -135,11 +176,11 @@ const Landing = props => {
         </section>
         <article className="form1 col-xs-12 col-md-6 row">
           <h4 className="subtitle col-xs-12 start-xs">Pongámonos en contacto.</h4>
-          <form>
-            <input required className="col-xs-12" type="text" placeholder="Nombre" />
-            <input required className="col-xs-12" type="email" placeholder="Email" />
-            <input required className="col-xs-12" type="text" placeholder="Teléfono" />
-            <textarea required className="col-xs-12" placeholder="Mensajes" />
+          <form onSubmit={sendMensaje}>
+            <input onChange={handleChange} value={nombre} required className="col-xs-12" name="nombre" id="nombre" type="text" placeholder="Nombre" />
+            <input onChange={handleChange} value={email} required className="col-xs-12" name="email" id="email" type="email" placeholder="Email" />
+            <input onChange={handleChange} value={telefono} required className="col-xs-12" name="telefono" id="telefono" type="text" placeholder="Teléfono" />
+            <textarea onChange={handleChange} value={mensaje} required className="col-xs-12" name="mensaje" id="mensaje" placeholder="Mensaje" />
             <div className="col-xs-12 start-xs">
               <button className=" button">Enviar</button>
             </div>
@@ -153,4 +194,4 @@ const Landing = props => {
   );
 };
 
-export default Landing;
+export default withToast(withFirebase(Landing));
