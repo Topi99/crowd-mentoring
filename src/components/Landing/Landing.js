@@ -135,12 +135,15 @@ const Landing = props => {
         </section>
         <article className="form1 col-xs-12 col-md-6 row">
           <h4 className="subtitle col-xs-12 start-xs">Pongámonos en contacto.</h4>
-          <input className="col-xs-12" type="text" placeholder="Nombre" />
-          <input className="col-xs-12" type="text" placeholder="Email" />
-          <textarea className="col-xs-12" placeholder="Mensajes" />
-          <div className="col-xs-12 start-xs">
-            <button className=" button">Registrarme</button>
-          </div>
+          <form>
+            <input required className="col-xs-12" type="text" placeholder="Nombre" />
+            <input required className="col-xs-12" type="email" placeholder="Email" />
+            <input required className="col-xs-12" type="text" placeholder="Teléfono" />
+            <textarea required className="col-xs-12" placeholder="Mensajes" />
+            <div className="col-xs-12 start-xs">
+              <button className=" button">Enviar</button>
+            </div>
+          </form>
         </article>
         <article className="form1 col-xs-12 col-md-6 row">
           <iframe title="google maps" src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7468.84153735977!2d-100.40841390000004!3d20.6116992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2smx!4v1550018878206" width="600" height="450" frameBorder="0"  allowFullScreen></iframe>
